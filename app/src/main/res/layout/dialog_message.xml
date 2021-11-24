@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:cardBackgroundColor="@color/color_white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:id="@+id/layout_box"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/topLayout"
+                android:paddingBottom="24dp"
+                android:paddingHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="7sp"
+                    android:padding="10dp"
+                    android:text="공지사항 등록한 내용을\n반영 하시겠습니까?"
+                    android:textColor="#333333"
+                    android:textSize="17sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="32dp"
+                    android:gravity="center"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/txtDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="차량 전면, 후면, 좌측, 우측, 계기판, 실내 사진은 필수 등록 사진입니다."
+                    android:textColor="#979797"
+                    android:textSize="16dp"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@id/txtTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#f1f1f1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnDetail"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/color_white"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#f1f1f1" />
+
+                <Button
+                    android:id="@+id/btnConfirm"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/color_white"
+                    android:textColor="@color/color_70AB34"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

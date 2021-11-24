@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_conatiner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSearchExercise_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/etSearchExercise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp"
+                android:hint="운동번호 입력 예) GSE001,PSE002"
+                android:textColor="@color/font_color_black"
+                android:textSize="20dp"
+                android:visibility="visible"
+                android:singleLine="true"
+                android:background="@drawable/bg_radius3_999999"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/ivSearchExercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src = "@drawable/ic_search"
+                android:onClick="@{clickListener}"
+                app:layout_constraintTop_toTopOf="@id/etSearchExercise"
+                app:layout_constraintBottom_toBottomOf="@id/etSearchExercise"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listHome"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/color_white"
+            android:fadeScrollbars="false"
+            android:overScrollMode="ifContentScrolls"
+            android:scrollbarSize="8dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbarTrackVertical="@color/color_999999"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@id/clSearchExercise_area"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>

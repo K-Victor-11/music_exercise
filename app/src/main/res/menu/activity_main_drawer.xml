@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_music_list"
+            android:title="@string/menu_home"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_custom_list"
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/menu_custom_list" />
+        <item
+            android:id="@+id/nav_complete"
+            android:icon="@drawable/ic_calender"
+            android:title="@string/menu_complete_list" />
+    </group>
+    <item
+        android:id="@+id/nav_kakao"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="카카오톡 문의"/>
+    <item
+        android:id="@+id/nav_webpage"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="두신경과 홈페이지" />
+</menu>

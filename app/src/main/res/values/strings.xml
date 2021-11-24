@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Dosmart Tinnitus</string>
+
+    <string name="menu_home">음향리스트</string>
+    <string name="menu_custom_list">즐겨찾기</string>
+    <string name="menu_complete_list">재생이력</string>
+
+    <string name="btn_pre">이전</string>
+    <string name="btn_next">다음</string>
+    <string name="btn_confirm">완료</string>
+
+    <string name="select_menu_list">음원리스트에서 선택</string>
+    <string name="select_menu_all">음원전체에서 선택</string>
+
+    <string name="custom_title">운동그룹의 제목을 입력해주세요.</string>
+
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!--<item name="android:textViewStyle">@style/NanumSquareTextViewStyle</item>-->
+        <!--<item name="buttonStyle">@style/NanumSquareButtonStyle</item>-->
+        <!--<item name="editTextStyle">@style/NanumSquareEditTextStyle</item>-->
+        <!--<item name="radioButtonStyle">@style/NanumSquareRadioButtonStyle</item>-->
+        <!--<item name="checkboxStyle">@style/NanumSquareCheckboxStyle</item>-->
+    </style>
+
+    <style name="CheckBox" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@color/color_99ccff</item>
+        <item name="colorControlNormal">@color/color_99ccff</item>
+        <item name="colorControlActivated">@color/font_color_black</item>
+    </style>
+
+    <style name="AppTheme.BottomSheetDialog" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+</resources>

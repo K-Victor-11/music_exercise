@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <id name="list_data"/>
+    <id name="list_position"/>
+
+    <id name="item_data"/>
+    <id name="item_position"/>
+    <id name="item_checked"/>
+</resources>

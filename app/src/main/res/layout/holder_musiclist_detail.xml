@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clMusicDetailItem_Root"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:background="@drawable/bg_radius3_999999">
+    <CheckBox
+        android:id="@+id/cbMusicDetailItem_Check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/color_99ccff"
+        android:checked="true"
+        android:clickable="false"
+        android:textColor="@color/font_color_black"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvMusicDetailItem_Title"
+        app:layout_constraintBottom_toBottomOf="@id/tvMusicDetailItem_Title"/>
+
+    <TextView
+        android:id="@+id/tvMusicDetailItem_Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="TextView"
+        android:textColor="@color/color_font_black"
+        android:textSize="16dp"
+        android:singleLine="true"
+        app:layout_constraintStart_toEndOf="@id/cbMusicDetailItem_Check"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivMusicDetailItem_Image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMusicDetailItem_Title"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvMusicDetailItem_Index"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/color_black_200"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="100dp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cbMusicDetailItem_Check"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
