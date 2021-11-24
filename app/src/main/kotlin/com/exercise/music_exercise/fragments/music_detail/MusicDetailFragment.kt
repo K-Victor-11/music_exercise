@@ -16,7 +16,6 @@ import com.exercise.music_exercise.adapters.MusicListDetailAdapter
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.fragments.BaseFragment
 import com.exercise.music_exercise.utils.decorations.GridItemDecoration
-import com.exercise.music_exercise.viewmodels.HomeViewModel
 import com.exercise.music_exercise.viewmodels.MusicDetailViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -80,7 +79,7 @@ class MusicDetailFragment:BaseFragment(),MusicListDetailAdapter.onMusicListDetai
         }
 
 
-        detailViewModel.getDetailList(idx)?.observe(viewLifecycleOwner, Observer {
+        detailViewModel.detailItemList.observe(viewLifecycleOwner, Observer {
             if(adapter == null){
                 adapter = MusicListDetailAdapter(mContext!!, this, viewType)
                 listHome.adapter = adapter
@@ -88,8 +87,11 @@ class MusicDetailFragment:BaseFragment(),MusicListDetailAdapter.onMusicListDetai
                 listHome.addItemDecoration(GridItemDecoration(mContext!!))
             }
 
-            adapter!!.updateList(it)
+            if(it != null)
+                adapter!!.updateList(it)
         })
+
+        detailViewModel.getDetailList(idx)
 
 //        detailViewModel.getCustomAllList(idx)?.observe(viewLifecycleOwner, Observer {
 //            if (adapter == null) {
@@ -117,5 +119,6 @@ class MusicDetailFragment:BaseFragment(),MusicListDetailAdapter.onMusicListDetai
         if(baseActivity is ListAddActivity){
             (baseActivity as ListAddActivity).addListViewModel.itemList.add(data)
         }
+        detailViewModel.checkDetailItem(baseActivity!!, position, data, !data.checked)
     }
 }

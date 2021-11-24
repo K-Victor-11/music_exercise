@@ -28,8 +28,9 @@ data class List_ItemsDataModel(
     val musicTitle_eng:String,
     val hertz:Int,
     val playTime:Int,
-    val sortOrder:Int,
 ):Serializable{
     @PrimaryKey(autoGenerate = true)
     var idx:Int = 0
+    var checked:Boolean = false
+    var sortOrder:Int = -1
 }

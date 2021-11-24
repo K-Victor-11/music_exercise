@@ -13,7 +13,8 @@ import com.exercise.music_exercise.data_models.List_HeaderDataModel
 
 class MusicListItemHolder(val context : Context,
                           var itemView:View,
-                          val listener:MusicListItemHolder.onMusicListItemHolderListener):RecyclerView.ViewHolder(itemView), View.OnClickListener {
+                          val listener:MusicListItemHolder.onMusicListItemHolderListener,
+                          val viewType:String):RecyclerView.ViewHolder(itemView), View.OnClickListener {
     interface onMusicListItemHolderListener{
         fun onSelectItem(data:List_HeaderDataModel, position:Int)
         fun onChecked(data:List_HeaderDataModel, position:Int)
@@ -43,7 +44,10 @@ class MusicListItemHolder(val context : Context,
         tvListTitle.text = data.listTitle_kor
 
         ivListMenu.visibility = View.INVISIBLE
-        chkList.visibility = View.VISIBLE
+
+        if(viewType == "add")
+            chkList.visibility = View.INVISIBLE
+        else chkList.visibility = View.VISIBLE
 
     }
 

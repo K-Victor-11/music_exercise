@@ -22,7 +22,7 @@ class CustomMusicListAdapter(val context: Context, val listener:CustomMusicListA
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(context)
         val itemView: View = inflater.inflate(R.layout.holder_musiclist, parent, false)
-        var holder: RecyclerView.ViewHolder = MusicListItemHolder(context, itemView, this)
+        var holder: RecyclerView.ViewHolder = MusicListItemHolder(context, itemView, this, "add")
         return holder
     }
 

@@ -30,6 +30,8 @@ class MusicDetailItemHolder(itemView: View, var listener : onDetailItemListener)
                 }
             } else if(type == "add"){
                 cbMusicDetailItem_Check.visibility = View.VISIBLE
+                cbMusicDetailItem_Check.isChecked = itemData.checked
+
                 clMusicDetailItem_Root.setOnClickListener {
                     var exerciseItem: List_ItemsDataModel =
                         it.getTag(R.id.list_data) as List_ItemsDataModel

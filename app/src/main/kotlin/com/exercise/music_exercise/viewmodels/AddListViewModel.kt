@@ -17,6 +17,7 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
     var topTitle:String = ""
     var addTitle:String = ""
     var itemList = ArrayList<List_ItemsDataModel>()
+    var selectItemList : LinkedHashMap<Int, List_ItemsDataModel> = LinkedHashMap()
     var step:Int = 1;
 
     fun getGroupInfo(index:Int):List_HeaderDataModel?{
@@ -28,10 +29,27 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
             return null
     }
 
-
     fun setGroupTitle(title:String){
         appRepository.setGroupTitle(title, "C")
     }
+
+    fun checkSelectList(idx:Int, data:List_ItemsDataModel, isCheck:Boolean){
+        if(selectItemList != null){
+            if(isCheck && !selectItemList.containsKey(idx)){
+                selectItemList.put(idx, data)
+            } else {
+                if(!isCheck && selectItemList.containsKey(idx))
+                    selectItemList.remove(idx)
+            }
+
+            var order:Int = 0
+            for (key in selectItemList.keys) {
+                selectItemList.get(key)!!.sortOrder = order
+                order ++
+            }
+        }
+    }
+
     class Factory(val application: Application): ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return AddListViewModel(application) as T

@@ -36,7 +36,7 @@ onAddHolderListener {
         val inflater = LayoutInflater.from(context)
         if (viewType == VIEWTYPE_ITME) {
             val itemView: View = inflater.inflate(R.layout.holder_musiclist, parent, false)
-            var holder: RecyclerView.ViewHolder = MusicListItemHolder(context, itemView, this)
+            var holder: RecyclerView.ViewHolder = MusicListItemHolder(context, itemView, this, "View")
             return holder
         } else {
             val itemView: View = inflater.inflate(R.layout.holder_addlist, parent, false)

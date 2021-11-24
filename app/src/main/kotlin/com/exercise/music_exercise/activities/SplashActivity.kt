@@ -78,10 +78,10 @@ class SplashActivity: AppCompatActivity() {
                     var parentTitle_kor = it.listTitle_kor
                     var parentTitle_eng = it.listTitle_eng
 
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,0, 1, 0))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,2, 1, 0))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,4, 1, 0))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,8, 1, 0))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,0, 1))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,2, 1))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,4, 1))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,8, 1))
                 }
             })
 
