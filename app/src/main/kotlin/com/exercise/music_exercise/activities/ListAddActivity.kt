@@ -10,6 +10,7 @@ import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.fragments.add_list.CustomList_AddGroupListFragment
 import com.exercise.music_exercise.fragments.add_list.CustomList_AddMenuFragment
+import com.exercise.music_exercise.fragments.add_list.CustomList_AddSettingFragment
 import com.exercise.music_exercise.fragments.add_list.CustomList_AddTitleFragment
 import com.exercise.music_exercise.fragments.music_detail.MusicDetailFragment
 import com.exercise.music_exercise.viewmodels.AddListViewModel
@@ -99,6 +100,9 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
                 pushFragment(R.id.layout_fragment, menuFragment, "add_menu")
             } else if(addListViewModel.getStep() == 2){
                 /** 세부 셋팅으로 이동 **/
+                var settingFragment = CustomList_AddSettingFragment()
+                settingFragment.baseActivity = this
+                pushFragment(R.id.layout_fragment, settingFragment, "setting")
             }
 //            if (listViewModel.getStep() == 1) {
 //                /** 운동리스트의 세부 셋팅으로 이동 **/
