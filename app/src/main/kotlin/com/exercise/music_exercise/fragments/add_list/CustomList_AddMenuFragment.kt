@@ -28,6 +28,10 @@ class CustomList_AddMenuFragment:BaseFragment() {
             if(baseActivity is ListAddActivity)
                 (baseActivity as ListAddActivity).setAllFragment()
         }
+
+        if (baseActivity is ListAddActivity) {
+            (baseActivity as ListAddActivity).addListViewModel.setStep(2)
+        }
         return root
     }
 }

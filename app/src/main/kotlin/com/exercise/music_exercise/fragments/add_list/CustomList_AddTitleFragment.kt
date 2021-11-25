@@ -86,7 +86,7 @@ class CustomList_AddTitleFragment:BaseFragment() {
 
         if (MusicApplication.currentActivity is ListAddActivity) {
             (MusicApplication.currentActivity as ListAddActivity).setButtonEnable(false)
-//            (MusicApplication.currentActivity as ListAddActivity).listViewModel.setStep(3)
+            (MusicApplication.currentActivity as ListAddActivity).addListViewModel.setStep(1)
         }
     }
 

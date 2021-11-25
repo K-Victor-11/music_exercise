@@ -18,7 +18,7 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
     var addTitle:String = ""
     var itemList = ArrayList<List_ItemsDataModel>()
     var selectItemList : LinkedHashMap<Int, List_ItemsDataModel> = LinkedHashMap()
-    var step:Int = 1;
+    private var step:Int = 0
 
     fun getGroupInfo(index:Int):List_HeaderDataModel?{
         var list = appRepository.getMusicGroupList(index)
@@ -48,6 +48,14 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
                 order ++
             }
         }
+    }
+
+    fun setStep(step:Int){
+        this.step = step
+    }
+
+    fun getStep():Int{
+        return this.step
     }
 
     class Factory(val application: Application): ViewModelProvider.Factory{

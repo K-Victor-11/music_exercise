@@ -25,6 +25,7 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
 
     val addListViewModel:AddListViewModel by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_list)
@@ -91,11 +92,13 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
 
     override fun onClick(v: View) {
         if (v == btn_Next) {
-            if(addListViewModel.step == 1){
-                /** title -> 리스트 선택 **/
+            if(addListViewModel.getStep() == 1){
+                /** title -> menu 리스트 선택 **/
                 var menuFragment = CustomList_AddMenuFragment()
                 menuFragment.baseActivity = this
                 pushFragment(R.id.layout_fragment, menuFragment, "add_menu")
+            } else if(addListViewModel.getStep() == 2){
+                /** 세부 셋팅으로 이동 **/
             }
 //            if (listViewModel.getStep() == 1) {
 //                /** 운동리스트의 세부 셋팅으로 이동 **/
