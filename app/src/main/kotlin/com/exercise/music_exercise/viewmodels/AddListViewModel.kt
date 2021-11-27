@@ -14,7 +14,9 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
         AppRepository(application)
     }
 
+    /** 선택 메뉴 타이틀 **/
     var topTitle:String = ""
+    /** 저장 타이틀 **/
     var addTitle:String = ""
     var itemList = ArrayList<List_ItemsDataModel>()
     var selectItemList : LinkedHashMap<Int, List_ItemsDataModel> = LinkedHashMap()
@@ -31,6 +33,14 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
 
     fun setGroupTitle(title:String){
         appRepository.setGroupTitle(title, "C")
+    }
+
+    fun setMusicItem(parentIdx:Int, data:List_ItemsDataModel){
+        appRepository.setMusicDetail(parentIdx, data)
+    }
+
+    fun getGroupLastIndex():Int{
+        return appRepository.getGroupLastIndex()
     }
 
     fun checkSelectList(idx:Int, data:List_ItemsDataModel, isCheck:Boolean){

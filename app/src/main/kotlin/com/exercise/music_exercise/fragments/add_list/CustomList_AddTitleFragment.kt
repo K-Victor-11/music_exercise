@@ -77,7 +77,7 @@ class CustomList_AddTitleFragment:BaseFragment() {
                         (MusicApplication.currentActivity as ListAddActivity).setButtonEnable(false)
                     } else {
                         (MusicApplication.currentActivity as ListAddActivity).setButtonEnable(true)
-                        (MusicApplication.currentActivity as ListAddActivity).title = s.toString()
+                        (MusicApplication.currentActivity as ListAddActivity).addListViewModel.addTitle = s.toString()
                     }
                 }
             }

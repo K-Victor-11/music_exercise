@@ -2,12 +2,17 @@ package com.exercise.music_exercise.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.data_models.List_HeaderDataModel
+import com.exercise.music_exercise.database.AppDataBase
 import com.exercise.music_exercise.fragments.add_list.CustomList_AddGroupListFragment
 import com.exercise.music_exercise.fragments.add_list.CustomList_AddMenuFragment
 import com.exercise.music_exercise.fragments.add_list.CustomList_AddSettingFragment
@@ -103,6 +108,20 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
                 var settingFragment = CustomList_AddSettingFragment()
                 settingFragment.baseActivity = this
                 pushFragment(R.id.layout_fragment, settingFragment, "setting")
+            } else if(addListViewModel.getStep() == 3){
+                var musicDao = AppDataBase.getInstance(this, callback).musicListDao()
+                var musicDetailDao = AppDataBase.getInstance(this, callback).musicListDetailDao()
+
+                addListViewModel.setGroupTitle(addListViewModel.addTitle)
+                var parentIdx = addListViewModel.getGroupLastIndex()
+
+                addListViewModel.itemList.forEach {
+                    addListViewModel.setMusicItem(parentIdx, it)
+                }
+
+                setResult(RESULT_OK)
+                finish()
+
             }
 //            if (listViewModel.getStep() == 1) {
 //                /** 운동리스트의 세부 셋팅으로 이동 **/
@@ -141,6 +160,25 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
 //                setResult(RESULT_OK, intentData)
 //                finish()
 //            }
+        }
+    }
+
+    var callback: RoomDatabase.Callback = object : RoomDatabase.Callback() {
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            //DO AS NEEDED
+            Log.d("kamuel", "onCreate!!!!")
+        }
+
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            //DO AS NEEDED
+            Log.d("kamuel", "onOpen!!!!")
+        }
+
+        override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+            super.onDestructiveMigration(db)
+            Log.d("kamuel", "onDestructiveMigration!!!!")
         }
     }
 }
