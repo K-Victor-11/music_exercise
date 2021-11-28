@@ -21,6 +21,10 @@ class AppRepository(application: Application) {
         return musicListDao.getGroupList()
     }
 
+    fun getMusicGroupListForCustom():LiveData<List<List_HeaderDataModel>>{
+        return musicListDao.getGroupListForCustom()
+    }
+
     fun getMusicGroupList(index:Int):LiveData<List<List_HeaderDataModel>>{
         return musicListDao.getGroupList(index)
     }

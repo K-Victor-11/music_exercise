@@ -39,4 +39,19 @@ class MusicDetailActivity:BaseActivity() {
         var musicDetailFragment: MusicDetailFragment = MusicDetailFragment.newInstance(longExerciseIndex, "view")
         pushFragment(R.id.flContent, musicDetailFragment, MusicDetailFragment::class.simpleName.toString())
     }
+
+    override fun onBackPressed() {
+
+        var countFragment : Int = supportFragmentManager.backStackEntryCount
+        if(countFragment == 1) {
+            finish()
+        }else{
+            super.onBackPressed()
+//            if (currentFragment() is ExerciseDetailFragment) {
+//                toolbar.title = strTitle
+//                btnExerciseDetail_Detail.visibility = View.VISIBLE
+//                btnExerciseDetail_Start.visibility = View.VISIBLE
+//            }
+        }
+    }
 }

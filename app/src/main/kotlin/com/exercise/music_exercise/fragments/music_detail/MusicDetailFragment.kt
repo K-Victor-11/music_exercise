@@ -91,7 +91,7 @@ class MusicDetailFragment:BaseFragment(),MusicListDetailAdapter.onMusicListDetai
                 adapter!!.updateList(it)
         })
 
-        detailViewModel.getDetailList(idx)
+        detailViewModel.getDetailList(viewLifecycleOwner, idx)
 
 //        detailViewModel.getCustomAllList(idx)?.observe(viewLifecycleOwner, Observer {
 //            if (adapter == null) {

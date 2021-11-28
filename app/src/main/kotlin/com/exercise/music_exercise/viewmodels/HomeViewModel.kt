@@ -21,6 +21,10 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
         return appRepository.getMusicGroupList()
     }
 
+    fun getCustomMusicList(context:Context) : LiveData<List<List_HeaderDataModel>>{
+        return appRepository.getMusicGroupListForCustom()
+    }
+
     class Factory(val application: Application): ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return HomeViewModel(application) as T

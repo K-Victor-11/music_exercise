@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.exercise.music_exercise.MusicApplication
 import com.exercise.music_exercise.activities.BaseActivity
 import com.exercise.music_exercise.activities.ListAddActivity
+import com.exercise.music_exercise.activities.MainActivity
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.database.AppRepository
 import com.exercise.music_exercise.fragments.music_detail.MusicDetailFragment
@@ -18,14 +19,24 @@ class MusicDetailViewModel(application:Application):AndroidViewModel(application
     val detailItemList : LiveData<List<List_ItemsDataModel>>
         get() = _detailItemList
 
-    fun getDetailList(parentIdx:Int){
+    fun getDetailList(owner: LifecycleOwner, parentIdx:Int){
+        if(parentIdx == -1){
+            appRepository.getMusicDetailList().observe(owner, Observer {
+                _detailItemList.postValue(it)
+        })} else{
+            appRepository.getMusicDetailList(parentIdx).observe(owner, Observer {
+                _detailItemList.postValue(it)
+        })}
+    }
+
+    fun getDetailListForListAdd(parentIdx:Int){
         if(parentIdx == -1){
             appRepository.getMusicDetailList().observe(MusicApplication.currentActivity as ListAddActivity, Observer {
                 _detailItemList.postValue(it)
-        })} else{
+            })} else{
             appRepository.getMusicDetailList(parentIdx).observe(MusicApplication.currentActivity as ListAddActivity, Observer {
                 _detailItemList.postValue(it)
-        })}
+            })}
     }
 
     fun checkDetailItem(baseActivity: BaseActivity, position: Int, data:List_ItemsDataModel, isCheck: Boolean){

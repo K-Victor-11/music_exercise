@@ -1,4 +1,4 @@
-package com.exercise.music_exercise.fragments.main
+package com.exercise.music_exercise.fragments.custom_list
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
@@ -28,7 +28,7 @@ import com.exercise.music_exercise.viewmodels.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.OnClickListener {
+class CustomListFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.OnClickListener {
 
     interface onHomeFragmentListener {
         fun onListMore(position: Int, data: List_HeaderDataModel)
@@ -57,8 +57,8 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
 
     companion object {
         @JvmStatic
-        fun newInstance(listener: onHomeFragmentListener?): HomeFragment {
-            var fragment = HomeFragment()
+        fun newInstance(listener: onHomeFragmentListener?): CustomListFragment {
+            var fragment = CustomListFragment()
             fragment.listener = listener
 
             return fragment
@@ -87,7 +87,7 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
     }
 
     fun initView() {
-        adapter = MusicListAdapter(mContext!!, this@HomeFragment)
+        adapter = MusicListAdapter(mContext!!, this@CustomListFragment)
         listView = rootView.findViewById(R.id.listHome)
         listView.adapter = adapter
         listView.itemAnimator = null
@@ -96,7 +96,7 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
     }
 
     fun initObservers() {
-        homeViewModel.getMusicList(mContext!!).observe(viewLifecycleOwner, Observer {
+        homeViewModel.getCustomMusicList(mContext!!).observe(viewLifecycleOwner, Observer {
             adapter!!.updateList(it)
         })
     }
