@@ -1,11 +1,13 @@
 package com.exercise.music_exercise.viewmodels
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 
-class PlayerViewModel : ViewModel() {
+class PlayerViewModel(val application: Application) : ViewModel() {
 
     var title : String = "음원 타이틀"
     var selectPos : Int = 0
@@ -19,4 +21,9 @@ class PlayerViewModel : ViewModel() {
     }
 
 
+    class Factory(val application: Application): ViewModelProvider.Factory{
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return PlayerViewModel(application) as T
+        }
+    }
 }

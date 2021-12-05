@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Music_exercise"
         tools:ignore="Instantiatable">
+        <receiver android:name=".service.MusicService"/>
+        <service android:name=".service.ClearFromRecentService"/>
+
         <activity android:name=".activities.SplashActivity"
             android:theme="@style/Theme.Music_exercise.NoActionBar">
             <intent-filter>
@@ -26,6 +29,8 @@
         <activity android:name=".activities.MusicDetailActivity"
             android:theme="@style/Theme.Music_exercise.NoActionBar"/>
         <activity android:name=".activities.ListAddActivity"
+            android:theme="@style/Theme.Music_exercise.NoActionBar"/>
+        <activity android:name=".activities.PlayerActivity"
             android:theme="@style/Theme.Music_exercise.NoActionBar"/>
     </application>
 

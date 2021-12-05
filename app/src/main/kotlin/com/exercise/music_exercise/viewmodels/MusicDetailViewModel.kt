@@ -6,6 +6,7 @@ import com.exercise.music_exercise.MusicApplication
 import com.exercise.music_exercise.activities.BaseActivity
 import com.exercise.music_exercise.activities.ListAddActivity
 import com.exercise.music_exercise.activities.MainActivity
+import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.database.AppRepository
 import com.exercise.music_exercise.fragments.music_detail.MusicDetailFragment
@@ -14,6 +15,11 @@ class MusicDetailViewModel(application:Application):AndroidViewModel(application
     val appRepository by lazy {
         AppRepository(application)
     }
+
+    var selectPos : Int = 0
+    var _customType : MutableLiveData<String> = MutableLiveData()
+    val customType : LiveData<String>
+        get() = _customType
 
     var _detailItemList : MutableLiveData<List<List_ItemsDataModel>> = MutableLiveData()
     val detailItemList : LiveData<List<List_ItemsDataModel>>
@@ -57,6 +63,14 @@ class MusicDetailViewModel(application:Application):AndroidViewModel(application
 
             _detailItemList.value = _detailItemList.value
         }
+    }
+
+    fun getGroupType(parentIdx:Int){
+        appRepository.getMusicGroupList(parentIdx).observe(MusicApplication.currentActivity as BaseActivity, Observer {
+            if(it.size > 0)
+                _customType.postValue(it[0].customType)
+
+        })
     }
 
     class Factory(val application: Application): ViewModelProvider.Factory{

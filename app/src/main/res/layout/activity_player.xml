@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <import type="android.view.View.OnClickListener" />
-
-        <variable
-            name="onclickListener"
-            type="android.view.View.OnClickListener" />
-
-        <variable
-            name="vm"
-            type="com.exercise.music_exercise.viewmodels.PlayerViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white">
@@ -76,7 +62,7 @@
                 android:id="@+id/btnPlay_TimeSetting"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:onClick="@{onclickListener}"
+                android:onClick="@{ClickListener}"
                 android:background="@drawable/bg_radius3_line_999999"
                 android:text="재생시간설정"
                 android:textColor="@color/color_font_black"
@@ -108,5 +94,3 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
