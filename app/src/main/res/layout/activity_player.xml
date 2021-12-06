@@ -62,7 +62,6 @@
                 android:id="@+id/btnPlay_TimeSetting"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:onClick="@{ClickListener}"
                 android:background="@drawable/bg_radius3_line_999999"
                 android:text="재생시간설정"
                 android:textColor="@color/color_font_black"

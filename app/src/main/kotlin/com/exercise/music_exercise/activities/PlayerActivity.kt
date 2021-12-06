@@ -1,18 +1,18 @@
 package com.exercise.music_exercise.activities
 
 import android.content.res.AssetFileDescriptor
+import android.database.ContentObservable
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnPreparedListener
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
@@ -37,6 +37,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var tvTitle:TextView
     lateinit var ivPlayer:ImageView
     lateinit var seekVolume : SeekBar
+    lateinit var btnTimeSetting: Button
 
     var isPlaying:Boolean = false
 
@@ -47,15 +48,38 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     }
 
     private var isStarting = false
+    lateinit var audioManager:AudioManager
+    var volume_level:Int = 0
+    var volume_max_level:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
 
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+        volume_level = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        volume_max_level = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
 
         ivPlayer = findViewById<ImageView>(R.id.ivPlay_Button)
         tvTitle = findViewById(R.id.tvPlay_Title)
         seekVolume = findViewById(R.id.skPlay_Sound)
+        seekVolume.max = volume_max_level
+        seekVolume.setProgress(volume_level)
+
+        btnTimeSetting = findViewById(R.id.btnPlay_TimeSetting)
+        btnTimeSetting.setOnClickListener(this)
+
+        seekVolume.setOnSeekBarChangeListener(object: OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, position: Int, fromUser: Boolean) {
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+
+        })
 
         ivPlayer.setOnClickListener(this)
 
@@ -75,24 +99,31 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         super.onKeyDown(keyCode, event);
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)
         {
-            Toast.makeText(this,"Down working",Toast.LENGTH_SHORT).show();
-//            getVolumeLevel()
+            getVolumeLevel(false)
             return true
         } else if(keyCode == KeyEvent.KEYCODE_VOLUME_UP){
-            Toast.makeText(this,"UP working",Toast.LENGTH_SHORT).show();
-//            getVolumeLevel()
+            getVolumeLevel(true)
             return true
         }
         return false
     }
 
-    fun getVolumeLevel(){
-        val am = getSystemService(AUDIO_SERVICE) as AudioManager
-        val volume_level = am.getStreamVolume(AudioManager.STREAM_MUSIC)
-        val volume_max_level = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+    fun getVolumeLevel(isUp:Boolean){
+        if(isUp) {
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)
+            volume_level ++
 
+            if(volume_max_level <= volume_level)
+                volume_level = volume_max_level
+        }else {
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI)
+
+            volume_level --
+
+            if(volume_level <= 0)
+                volume_level = 0
+        }
 //        am.setStreamVolume(AudioManager.STREAM_MUSIC, volume_level, 0)
-        seekVolume.max = volume_max_level
         seekVolume.setProgress(volume_level)
     }
 
@@ -269,6 +300,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                     onPlay(item.musicTitle_kor, item.hertz)
                 }
+            }
+
+            R.id.btnPlay_TimeSetting -> {
+
             }
         }
     }
