@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
 
-        <!--<item name="android:textViewStyle">@style/NanumSquareTextViewStyle</item>-->
-        <!--<item name="buttonStyle">@style/NanumSquareButtonStyle</item>-->
-        <!--<item name="editTextStyle">@style/NanumSquareEditTextStyle</item>-->
-        <!--<item name="radioButtonStyle">@style/NanumSquareRadioButtonStyle</item>-->
-        <!--<item name="checkboxStyle">@style/NanumSquareCheckboxStyle</item>-->
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_dialog</item>
     </style>
 
     <style name="CheckBox" parent="Theme.AppCompat.NoActionBar">

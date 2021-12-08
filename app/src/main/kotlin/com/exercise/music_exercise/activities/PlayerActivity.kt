@@ -1,24 +1,26 @@
 package com.exercise.music_exercise.activities
 
 import android.content.res.AssetFileDescriptor
-import android.database.ContentObservable
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnPreparedListener
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
+import com.exercise.music_exercise.utils.DialogUtils
 import com.exercise.music_exercise.viewmodels.PlayerViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.io.File
 
 
@@ -69,7 +71,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         btnTimeSetting = findViewById(R.id.btnPlay_TimeSetting)
         btnTimeSetting.setOnClickListener(this)
 
-        seekVolume.setOnSeekBarChangeListener(object: OnSeekBarChangeListener{
+        seekVolume.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, position: Int, fromUser: Boolean) {
             }
 
@@ -108,7 +110,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         return false
     }
 
-    fun getVolumeLevel(isUp:Boolean){
+    fun getVolumeLevel(isUp: Boolean){
         if(isUp) {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)
             volume_level ++
@@ -303,7 +305,21 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             }
 
             R.id.btnPlay_TimeSetting -> {
+                var bottomDialogItem:LinkedHashMap<String, String> = LinkedHashMap()
+                bottomDialogItem.put("1분", "1")
+                bottomDialogItem.put("3분", "3")
+                bottomDialogItem.put("5분", "5")
+                bottomDialogItem.put("10분", "10")
+                bottomDialogItem.put("15분", "15")
+                bottomDialogItem.put("30분", "30")
+                bottomDialogItem.put("60분", "60")
 
+                DialogUtils.showBottomSheetDialog(this, bottomDialogItem, "닫기", R.color.color_font_black, true, object:DialogUtils.OnBottomSheetSelectedListener{
+                    override fun onSelected(index: Int, text: String, value: String) {
+
+                    }
+
+                })
             }
         }
     }
