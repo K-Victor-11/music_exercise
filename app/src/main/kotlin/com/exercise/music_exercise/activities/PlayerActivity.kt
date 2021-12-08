@@ -6,6 +6,10 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnPreparedListener
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.text.TextUtils
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -30,6 +34,11 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         ViewModelProvider(this, PlayerViewModel.Factory(this.application)).get(PlayerViewModel::class.java)
     }
 
+    private val HANDLER_WHAT_SETTING = 0
+    private val HANDLER_WHAT_PLAYING = 1
+    private val HANDLER_WHAT_NEXT = 2
+    private val HANDLER_WHAT_COMPLETE = 3
+
     private var mAfd: AssetFileDescriptor? = null
     private var mFile: File? = null
 
@@ -53,6 +62,54 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var audioManager:AudioManager
     var volume_level:Int = 0
     var volume_max_level:Int = 0
+    var playTime_millisecond:Int = 1000 * 60 /** 1분 **/
+    var runningTime:Int = 0 /** 실제 음악이 나온 시간 **/
+
+    val handler:Handler by lazy {
+        object : Handler(Looper.getMainLooper()){
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+
+                /** groupType에 따라서 설정되는 시간값을 확인 한다. **/
+                /** 사용자 리스트도 시간 설정을 해야 하는가?? **/
+                if(msg.what == 0){
+                    if(isPlaying){
+                        /** 초기화 **/
+                        runningTime = 0
+                        handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
+                    }
+                } else if(msg.what == 1) {
+                    if(isPlaying){
+                        runningTime += 1000
+
+                        /** if(무한반복이면)
+                         *      handler.sendEmptyMessageDelayed(1, 1000)
+                         */
+                        if(runningTime == playTime_millisecond){
+                            if(playerViewModel.groupType == "C"){
+                                /** 음원 Next **/
+                                Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
+                                handler.sendEmptyMessageDelayed(HANDLER_WHAT_NEXT, 1000)
+                            }
+                        }
+                        handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
+                    }
+                } else if(msg.what == 2){
+                    playerViewModel.selectPos ++
+                    if(playerViewModel.selectPos >= playerViewModel.playList.value!!.size){
+                        handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
+                    } else {
+                        var item = playerViewModel.playList.value!![playerViewModel.selectPos]
+                        onPlay(item.musicTitle_kor, item.hertz)
+                        handler.sendEmptyMessage(HANDLER_WHAT_SETTING)
+                    }
+                } else if(msg.what == 3){
+                    /** 음원리스트 모두 플레이 완료 **/
+                }
+
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,6 +167,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         return false
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
     fun getVolumeLevel(isUp: Boolean){
         if(isUp) {
             audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI)
@@ -130,6 +191,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     }
 
     fun initIntent() {
+        playerViewModel.groupType = if(TextUtils.isEmpty(intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE))) "D" else intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE).toString()
         playerViewModel.selectPos = intent.getIntExtra(AppContents.INTENT_DATA_LIST_POSITION, 0)
         playerViewModel.setPlayList(intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_ItemsDataModel>)
     }
@@ -301,6 +363,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 else {
                     var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                     onPlay(item.musicTitle_kor, item.hertz)
+                    handler.sendEmptyMessage(HANDLER_WHAT_SETTING)
                 }
             }
 
@@ -316,12 +379,19 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
                 DialogUtils.showBottomSheetDialog(this, bottomDialogItem, "닫기", R.color.color_font_black, true, object:DialogUtils.OnBottomSheetSelectedListener{
                     override fun onSelected(index: Int, text: String, value: String) {
-
+                        /** delete **/
+                        Toast.makeText(this@PlayerActivity, value, Toast.LENGTH_SHORT).show()
+                        playerViewModel.changePlayTime(value.toInt())
+                        setMilliseconds(value.toInt())
                     }
 
                 })
             }
         }
+    }
+
+    fun setMilliseconds(minute:Int){
+        playTime_millisecond = 1000 * 60 * minute
     }
 
     fun onMusicPause() {

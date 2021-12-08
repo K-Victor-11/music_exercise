@@ -11,6 +11,7 @@ class PlayerViewModel(val application: Application) : ViewModel() {
 
     var title : String = "음원 타이틀"
     var selectPos : Int = 0
+    var groupType : String = "D"
 
     var _playList : MutableLiveData<ArrayList<List_ItemsDataModel>> = MutableLiveData()
     val playList : LiveData<ArrayList<List_ItemsDataModel>>
@@ -18,6 +19,10 @@ class PlayerViewModel(val application: Application) : ViewModel() {
 
     fun setPlayList(list:ArrayList<List_ItemsDataModel>){
         _playList.postValue(list)
+    }
+
+    fun changePlayTime(playTime:Int){
+        _playList.value?.get(selectPos)!!.playTime = playTime
     }
 
 
