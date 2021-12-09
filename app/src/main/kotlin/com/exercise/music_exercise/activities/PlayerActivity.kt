@@ -38,6 +38,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     private val HANDLER_WHAT_PLAYING = 1
     private val HANDLER_WHAT_NEXT = 2
     private val HANDLER_WHAT_COMPLETE = 3
+    private val HANDLER_WHAT_PROGRESS = 4
 
     private var mAfd: AssetFileDescriptor? = null
     private var mFile: File? = null
@@ -49,6 +50,8 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var ivPlayer:ImageView
     lateinit var seekVolume : SeekBar
     lateinit var btnTimeSetting: Button
+    lateinit var pgPlayTime:ProgressBar
+    lateinit var tvRunningTime : TextView
 
     var isPlaying:Boolean = false
 
@@ -76,20 +79,28 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     if(isPlaying){
                         /** 초기화 **/
                         runningTime = 0
+                        pgPlayTime.progress = 0
+
+                        tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
                         handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                     }
                 } else if(msg.what == 1) {
                     if(isPlaying){
                         runningTime += 1000
-
+                        pgPlayTime.progress = runningTime
                         /** if(무한반복이면)
                          *      handler.sendEmptyMessageDelayed(1, 1000)
                          */
-                        if(runningTime == playTime_millisecond){
+                        tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
+
+                        if(runningTime >= playTime_millisecond){
                             if(playerViewModel.groupType == "C"){
                                 /** 음원 Next **/
                                 Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
                                 handler.sendEmptyMessageDelayed(HANDLER_WHAT_NEXT, 1000)
+                            } else if(playerViewModel.groupType == "D"){
+                                Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
+                                handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
                             }
                         }
                         handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
@@ -105,10 +116,27 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     }
                 } else if(msg.what == 3){
                     /** 음원리스트 모두 플레이 완료 **/
+                    stop()
                 }
 
             }
         }
+    }
+
+    fun timeFormat(milliseconds:Int):String {
+        var second : Int = 0
+        var min : Int = 0
+
+        var playTimeFormat : String = ""
+
+        /** 1분 = 1000 * 60 **/
+        second = milliseconds / 1000
+        min = second/60
+        var mod_seconds = second % 60
+
+        playTimeFormat = "${String.format("%02d", min)}:${String.format("%02d", mod_seconds)}"
+
+        return playTimeFormat
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,6 +155,9 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
         btnTimeSetting = findViewById(R.id.btnPlay_TimeSetting)
         btnTimeSetting.setOnClickListener(this)
+
+        pgPlayTime = findViewById(R.id.pbPlay_PlayTime)
+        tvRunningTime = findViewById(R.id.tvPlay_RunningTime)
 
         seekVolume.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, position: Int, fromUser: Boolean) {
@@ -201,7 +232,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         mCurrentPlayer?.let {
             it.isLooping = false
             it.setOnPreparedListener {
-                isStarting = true;
+                isStarting = true
                 it.start()
                 it.setOnCompletionListener(onCompletionListener)
             }
@@ -240,6 +271,8 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             } else {
                 var titleName = playerViewModel.playList.value!!.get(playerViewModel.selectPos).musicTitle_kor
                 var hertz = playerViewModel.playList.value!!.get(playerViewModel.selectPos).hertz
+                playTime_millisecond = 1000 * 60 * playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime
+                pgPlayTime.max = playTime_millisecond
 
                 var rawId = resources.getIdentifier(getRawName(titleName, hertz), "raw", "com.exercise.music_exercise")
                 mNextPlayer = MediaPlayer.create(this, rawId)
@@ -377,12 +410,14 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 bottomDialogItem.put("30분", "30")
                 bottomDialogItem.put("60분", "60")
 
+                stop()
                 DialogUtils.showBottomSheetDialog(this, bottomDialogItem, "닫기", R.color.color_font_black, true, object:DialogUtils.OnBottomSheetSelectedListener{
                     override fun onSelected(index: Int, text: String, value: String) {
                         /** delete **/
                         Toast.makeText(this@PlayerActivity, value, Toast.LENGTH_SHORT).show()
                         playerViewModel.changePlayTime(value.toInt())
                         setMilliseconds(value.toInt())
+                        runningTime = 0
                     }
 
                 })
@@ -436,6 +471,9 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
     @Throws(IllegalStateException::class)
     fun stop() {
+        isStarting = false
+        isPlaying = false
+        ivPlayer.setImageResource(R.drawable.ic_play)
         if(mCurrentPlayer != null)
             mCurrentPlayer!!.stop()
 

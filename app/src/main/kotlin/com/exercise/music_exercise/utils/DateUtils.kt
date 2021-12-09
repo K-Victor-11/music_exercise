@@ -30,7 +30,7 @@ class DateUtils {
         }
 
         @JvmStatic
-        fun getFirtDateOfWeek(year: Int, month: Int): Int {
+        fun getFirstDateOfWeek(year: Int, month: Int): Int {
             if (month >= 0 && month < 12) {
                 var calendar: Calendar = Calendar.getInstance()
                 calendar.set(Calendar.YEAR, year)

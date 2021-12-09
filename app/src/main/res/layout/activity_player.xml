@@ -83,12 +83,23 @@
                 android:id="@+id/pbPlay_PlayTime"
                 style="@android:style/Widget.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="30dp"
                 android:max="60"
                 android:progress="10"
                 android:progressDrawable="@drawable/bg_progressbar"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnPlay_TimeSetting"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvPlay_RunningTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="00:00/01:00"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="@id/pbPlay_PlayTime"
+                app:layout_constraintBottom_toBottomOf="@id/pbPlay_PlayTime"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
