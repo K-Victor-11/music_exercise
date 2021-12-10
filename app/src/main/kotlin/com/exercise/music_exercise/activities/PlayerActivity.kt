@@ -52,6 +52,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var btnTimeSetting: Button
     lateinit var pgPlayTime:ProgressBar
     lateinit var tvRunningTime : TextView
+    lateinit var chkLoop:CheckBox
 
     var isPlaying:Boolean = false
 
@@ -79,28 +80,36 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     if(isPlaying){
                         /** 초기화 **/
                         runningTime = 0
-                        pgPlayTime.progress = 0
 
-                        tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
+                        if(!chkLoop.isChecked) {
+                            pgPlayTime.progress = 0
+                            tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
+                        } else {
+                            tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                        }
+
                         handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                     }
                 } else if(msg.what == 1) {
                     if(isPlaying){
                         runningTime += 1000
-                        pgPlayTime.progress = runningTime
                         /** if(무한반복이면)
                          *      handler.sendEmptyMessageDelayed(1, 1000)
                          */
-                        tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
-
-                        if(runningTime >= playTime_millisecond){
-                            if(playerViewModel.groupType == "C"){
-                                /** 음원 Next **/
-                                Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
-                                handler.sendEmptyMessageDelayed(HANDLER_WHAT_NEXT, 1000)
-                            } else if(playerViewModel.groupType == "D"){
-                                Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
-                                handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
+                        if(chkLoop.isChecked){
+                            tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                        } else {
+                            pgPlayTime.progress = runningTime
+                            tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
+                            if (runningTime >= playTime_millisecond) {
+                                if (playerViewModel.groupType == "C") {
+                                    /** 음원 Next **/
+                                    Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
+                                    handler.sendEmptyMessageDelayed(HANDLER_WHAT_NEXT, 1000)
+                                } else if (playerViewModel.groupType == "D") {
+                                    Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
+                                    handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
+                                }
                             }
                         }
                         handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
@@ -158,6 +167,17 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
         pgPlayTime = findViewById(R.id.pbPlay_PlayTime)
         tvRunningTime = findViewById(R.id.tvPlay_RunningTime)
+
+        chkLoop = findViewById(R.id.cbnPlay_loop)
+        chkLoop.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                stop()
+                runningTime = 0
+                pgPlayTime.progress = 1
+                pgPlayTime.max = 1
+            }
+
+        })
 
         seekVolume.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, position: Int, fromUser: Boolean) {
@@ -271,8 +291,11 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             } else {
                 var titleName = playerViewModel.playList.value!!.get(playerViewModel.selectPos).musicTitle_kor
                 var hertz = playerViewModel.playList.value!!.get(playerViewModel.selectPos).hertz
-                playTime_millisecond = 1000 * 60 * playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime
-                pgPlayTime.max = playTime_millisecond
+
+                if(!chkLoop.isChecked) {
+                    playTime_millisecond = 1000 * 60 * playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime
+                    pgPlayTime.max = playTime_millisecond
+                }
 
                 var rawId = resources.getIdentifier(getRawName(titleName, hertz), "raw", "com.exercise.music_exercise")
                 mNextPlayer = MediaPlayer.create(this, rawId)

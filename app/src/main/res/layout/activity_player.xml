@@ -67,9 +67,9 @@
                 android:textColor="@color/color_font_black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/cbnPlay_Roof"/>
+                app:layout_constraintEnd_toStartOf="@id/cbnPlay_loop"/>
             <CheckBox
-                android:id="@+id/cbnPlay_Roof"
+                android:id="@+id/cbnPlay_loop"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:checked="false"
