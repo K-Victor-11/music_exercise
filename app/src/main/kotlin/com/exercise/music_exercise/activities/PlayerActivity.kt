@@ -148,6 +148,13 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         return playTimeFormat
     }
 
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            /** onBackPressed 만으로 작동이 안되서 키 이멘트 추가 **/
+            onBackPressed()
+        }
+        return super.onKeyUp(keyCode, event)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
@@ -220,6 +227,8 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
     override fun onBackPressed() {
         super.onBackPressed()
+        stop()
+        finish()
     }
 
     fun getVolumeLevel(isUp: Boolean){
