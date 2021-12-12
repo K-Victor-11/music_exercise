@@ -4,17 +4,21 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
+import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.database.dao.MusicListDao
 import com.exercise.music_exercise.database.dao.MusicListDetailDao
+import com.exercise.music_exercise.database.dao.PlayReportDao
 
 class AppRepository(application: Application) {
     private var musicListDao : MusicListDao
     private var musicDetailListDao : MusicListDetailDao
+    private var playReportDao:PlayReportDao
 
     init {
         val database = AppDataBase.getInstance(application)!!
         musicListDao = (database as AppDataBase).musicListDao()
         musicDetailListDao = (database as AppDataBase).musicListDetailDao()
+        playReportDao = (database as AppDataBase).playReportDao()
     }
 
     fun getMusicGroupList():LiveData<List<List_HeaderDataModel>>{
@@ -51,5 +55,9 @@ class AppRepository(application: Application) {
 
     fun getGroupLastIndex():Int{
         return musicListDao.getLastGroupList()
+    }
+
+    fun setPlayReport(playReportData:PlayReportDataModel){
+        playReportDao.insert(playReportData)
     }
 }

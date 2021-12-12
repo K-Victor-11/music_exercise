@@ -9,6 +9,7 @@ import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.database.dao.MusicListDao
 import com.exercise.music_exercise.database.dao.MusicListDetailDao
+import com.exercise.music_exercise.database.dao.PlayReportDao
 
 @Database(entities = arrayOf(List_HeaderDataModel::class, List_ItemsDataModel::class,
     PlayReportDataModel::class), version = 1, exportSchema = true)
@@ -16,9 +17,10 @@ open abstract class AppDataBase : RoomDatabase() {
 
     abstract fun musicListDao() : MusicListDao
     abstract fun musicListDetailDao() : MusicListDetailDao
+    abstract fun playReportDao() : PlayReportDao
 //    abstract fun customListHeaderDao() : CustomListHeaderDao
 //    abstract fun customListItemsDao() : CustomListItemsDao
-//    abstract fun playReportDao() : PlayReportDao
+
 
     companion object{
         var mContext: Context?= null

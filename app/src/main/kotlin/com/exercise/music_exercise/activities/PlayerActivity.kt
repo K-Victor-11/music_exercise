@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
+import com.exercise.music_exercise.data_models.PlayReportDataModel
+import com.exercise.music_exercise.utils.DateUtils
 import com.exercise.music_exercise.utils.DialogUtils
 import com.exercise.music_exercise.viewmodels.PlayerViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -93,26 +95,34 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 } else if(msg.what == 1) {
                     if(isPlaying){
                         runningTime += 1000
-                        /** if(무한반복이면)
-                         *      handler.sendEmptyMessageDelayed(1, 1000)
-                         */
                         if(chkLoop.isChecked){
+                            if(runningTime == 60000) {
+                                var item = playerViewModel.playList.value!![playerViewModel.selectPos]
+                                saveExercise(item)
+                            }
                             tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                            handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                         } else {
                             pgPlayTime.progress = runningTime
                             tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
                             if (runningTime >= playTime_millisecond) {
+
+                                stop()
+                                var item = playerViewModel.playList.value!![playerViewModel.selectPos]
+                                saveExercise(item)
+
                                 if (playerViewModel.groupType == "C") {
                                     /** 음원 Next **/
                                     Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
-                                    handler.sendEmptyMessageDelayed(HANDLER_WHAT_NEXT, 1000)
+                                    handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
                                 } else if (playerViewModel.groupType == "D") {
                                     Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
                                     handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
                                 }
+                            } else {
+                                handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                             }
                         }
-                        handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                     }
                 } else if(msg.what == 2){
                     playerViewModel.selectPos ++
@@ -125,7 +135,6 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     }
                 } else if(msg.what == 3){
                     /** 음원리스트 모두 플레이 완료 **/
-                    stop()
                 }
 
             }
@@ -148,6 +157,11 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         return playTimeFormat
     }
 
+    fun saveExercise(playListItem:List_ItemsDataModel){
+        Toast.makeText(this, "음원 Report 저장!!", Toast.LENGTH_SHORT).show()
+        var reportData : PlayReportDataModel = PlayReportDataModel(playListItem.musicTitle_kor, playListItem.musicCode, playListItem.idx, playListItem.hertz, DateUtils.getNowDate("yyyy-MM-dd"))
+        playerViewModel.saveExercise(reportData)
+    }
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             /** onBackPressed 만으로 작동이 안되서 키 이멘트 추가 **/
@@ -227,8 +241,6 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
     override fun onBackPressed() {
         super.onBackPressed()
-        stop()
-        finish()
     }
 
     fun getVolumeLevel(isUp: Boolean){
@@ -471,7 +483,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     }
 
     fun onPlay(title: String, hertz: Int) {
-        if (isStarting == true) {
+        if (isStarting) {
             stop()
         }
 
