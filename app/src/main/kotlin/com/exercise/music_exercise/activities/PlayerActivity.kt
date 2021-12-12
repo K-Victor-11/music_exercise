@@ -101,25 +101,28 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                                 saveExercise(item)
                             }
                             tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                            handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                         } else {
                             pgPlayTime.progress = runningTime
                             tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
                             if (runningTime >= playTime_millisecond) {
 
+                                stop()
                                 var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                                 saveExercise(item)
 
                                 if (playerViewModel.groupType == "C") {
                                     /** 음원 Next **/
                                     Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
-                                    handler.sendEmptyMessageDelayed(HANDLER_WHAT_NEXT, 1000)
+                                    handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
                                 } else if (playerViewModel.groupType == "D") {
                                     Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
                                     handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
                                 }
+                            } else {
+                                handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                             }
                         }
-                        handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                     }
                 } else if(msg.what == 2){
                     playerViewModel.selectPos ++
@@ -132,7 +135,6 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     }
                 } else if(msg.what == 3){
                     /** 음원리스트 모두 플레이 완료 **/
-                    stop()
                 }
 
             }
@@ -481,7 +483,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     }
 
     fun onPlay(title: String, hertz: Int) {
-        if (isStarting == true) {
+        if (isStarting) {
             stop()
         }
 
