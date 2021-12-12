@@ -6,12 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
+import com.exercise.music_exercise.data_models.PlayReportDataModel
+import com.exercise.music_exercise.database.AppRepository
 
 class PlayerViewModel(val application: Application) : ViewModel() {
 
     var title : String = "음원 타이틀"
     var selectPos : Int = 0
     var groupType : String = "D"
+
+    val appRepository by lazy {
+        AppRepository(application)
+    }
 
     var _playList : MutableLiveData<ArrayList<List_ItemsDataModel>> = MutableLiveData()
     val playList : LiveData<ArrayList<List_ItemsDataModel>>
@@ -23,6 +29,10 @@ class PlayerViewModel(val application: Application) : ViewModel() {
 
     fun changePlayTime(playTime:Int){
         _playList.value?.get(selectPos)!!.playTime = playTime
+    }
+
+    fun saveExercise(reportData:PlayReportDataModel){
+        appRepository.setPlayReport(reportData)
     }
 
 

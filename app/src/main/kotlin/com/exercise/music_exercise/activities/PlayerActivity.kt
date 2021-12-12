@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
+import com.exercise.music_exercise.data_models.PlayReportDataModel
+import com.exercise.music_exercise.utils.DateUtils
 import com.exercise.music_exercise.utils.DialogUtils
 import com.exercise.music_exercise.viewmodels.PlayerViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -93,15 +95,20 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 } else if(msg.what == 1) {
                     if(isPlaying){
                         runningTime += 1000
-                        /** if(무한반복이면)
-                         *      handler.sendEmptyMessageDelayed(1, 1000)
-                         */
                         if(chkLoop.isChecked){
+                            if(runningTime == 60000) {
+                                var item = playerViewModel.playList.value!![playerViewModel.selectPos]
+                                saveExercise(item)
+                            }
                             tvRunningTime.text = "${timeFormat(runningTime)} / -"
                         } else {
                             pgPlayTime.progress = runningTime
                             tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
                             if (runningTime >= playTime_millisecond) {
+
+                                var item = playerViewModel.playList.value!![playerViewModel.selectPos]
+                                saveExercise(item)
+
                                 if (playerViewModel.groupType == "C") {
                                     /** 음원 Next **/
                                     Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
@@ -146,6 +153,12 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         playTimeFormat = "${String.format("%02d", min)}:${String.format("%02d", mod_seconds)}"
 
         return playTimeFormat
+    }
+
+    fun saveExercise(playListItem:List_ItemsDataModel){
+        Toast.makeText(this, "음원 Report 저장!!", Toast.LENGTH_SHORT).show()
+        var reportData : PlayReportDataModel = PlayReportDataModel(playListItem.musicTitle_kor, playListItem.musicCode, playListItem.idx, playListItem.hertz, DateUtils.getNowDate("yyyy-MM-dd"))
+        playerViewModel.saveExercise(reportData)
     }
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
