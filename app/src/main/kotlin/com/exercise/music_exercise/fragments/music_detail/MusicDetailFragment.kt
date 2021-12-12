@@ -55,7 +55,7 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
     var idx: Int = 0
     var viewType: String = "view"
 
-    private val detailViewModel: MusicDetailViewModel by lazy {
+    val detailViewModel: MusicDetailViewModel by lazy {
         ViewModelProvider(
             this,
             MusicDetailViewModel.Factory(MusicApplication.currentActivity!!.application)
@@ -99,9 +99,7 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
 
             var playIntent = Intent(mContext, PlayerActivity::class.java)
 
-            playIntent.putExtra(AppContents.INTENT_DATA_LIST_POSITION, detailViewModel.selectPos)
-
-
+            playIntent.putExtra(AppContents.INTENT_DATA_LIST_POSITION, 0)
             playIntent.putExtra(AppContents.INTENT_DATA_PLAY_LIST, detailViewModel.detailItemList.value as ArrayList<List_ItemsDataModel>)
             playIntent.putExtra(INTENT_DATA_GROUP_TYPE, it)
 
@@ -109,6 +107,8 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
 
             if (it == "C")
                 Toast.makeText(mContext, "사용자 정의 리스트", Toast.LENGTH_SHORT).show()
+            else if(it == "D")
+                Toast.makeText(mContext, "기본 정의 리스트", Toast.LENGTH_SHORT).show()
         })
 
         detailViewModel.getDetailList(viewLifecycleOwner, idx)

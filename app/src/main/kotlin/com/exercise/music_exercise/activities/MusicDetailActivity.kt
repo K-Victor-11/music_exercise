@@ -6,7 +6,9 @@ import android.view.View
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.MusicApplication
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.fragments.music_detail.MusicDetailFragment
+import com.exercise.music_exercise.viewmodels.MusicDetailViewModel
 import kotlinx.android.synthetic.main.activity_musicdetail.*
 
 class MusicDetailActivity:BaseActivity() {
@@ -23,11 +25,25 @@ class MusicDetailActivity:BaseActivity() {
         longExerciseIndex = intent.getIntExtra(AppContents.INTENT_DATA_LIST_INDEX, 0)
         strTitle = intent.getStringExtra(AppContents.INTENT_DATA_LIST_TITLE)!!
 
-//        btnMusicDetail_Start.setOnClickListener {
-//            var exerciseStartItent : Intent = Intent(this@MusicDetailActivity, ExerciseActivity::class.java)
-//            exerciseStartItent.putExtra(AppContents.INTENT_DATA_LIST_INDEX, longExerciseIndex)
-//            startActivity(exerciseStartItent)
-//        }
+        btnMusicDetail_Start.setOnClickListener {
+
+            var detailViewmodel : MusicDetailViewModel? = null
+            if( supportFragmentManager.fragments[0] is MusicDetailFragment){
+                detailViewmodel = (supportFragmentManager.fragments[0] as MusicDetailFragment).detailViewModel
+            }
+
+            if(detailViewmodel != null){
+                detailViewmodel.getGroupType(longExerciseIndex)
+
+//                var playIntent = Intent(this@MusicDetailActivity, PlayerActivity::class.java)
+//
+//                playIntent.putExtra(AppContents.INTENT_DATA_LIST_POSITION, detailViewmodel!!.selectPos)
+//                playIntent.putExtra(AppContents.INTENT_DATA_PLAY_LIST, detailViewmodel!!.detailItemList.value as ArrayList<List_ItemsDataModel>)
+//                playIntent.putExtra(AppContents.INTENT_DATA_GROUP_TYPE, detailViewmodel!!.customType.value)
+//
+//                startActivity(playIntent)
+            }
+        }
 //
 //        btnMusicDetail_Detail.setOnClickListener {
 //            var nextFragment:ExerciseItemDetailFragment = ExerciseItemDetailFragment.newInstance(longExerciseIndex,0)
