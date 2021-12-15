@@ -10,4 +10,7 @@ import com.exercise.music_exercise.data_models.PlayReportDataModel
 interface PlayReportDao:BaseDao<PlayReportDataModel> {
     @Query("SELECT * FROM play_report")
     fun getPlayReportData() : LiveData<List<PlayReportDataModel>>
+
+    @Query("SELECT COUNT(musicTitle), * FROM play_report WHERE substr(playDate, 0,7)=:month GROUP BY playDate, musicTitle")
+    fun getPlayReportData(month:String) : LiveData<List<PlayReportDataModel>>
 }
