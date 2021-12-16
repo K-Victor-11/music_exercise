@@ -16,10 +16,14 @@ class CalendarViewModel(application: Application):ViewModel() {
         AppRepository(application)
     }
 
-    fun getReportList(owner: LifecycleOwner, date:String){
-        appRepository.getPlayReport(date).observe(owner, Observer {
+    fun getPlayReportGroup(owner: LifecycleOwner, date:String){
+        appRepository.getPlayReportGroup(date).observe(owner, Observer {
             _musicReportList.postValue(it)
         })
+    }
+
+    fun getPlayReportItem(date:String):LiveData<List<PlayReportDataModel>>{
+        return appRepository.getPlayReportItem(date)
     }
 
     class Factory(val application: Application): ViewModelProvider.Factory{

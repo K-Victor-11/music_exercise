@@ -61,7 +61,11 @@ class AppRepository(application: Application) {
         playReportDao.insert(playReportData)
     }
 
-    fun getPlayReport(date:String):LiveData<List<PlayReportDataModel>>{
-        return playReportDao.getPlayReportData(date)
+    fun getPlayReportGroup(date:String):LiveData<List<PlayReportDataModel>>{
+        return playReportDao.getPlayReportDate(date)
+    }
+
+    fun getPlayReportItem(date:String):LiveData<List<PlayReportDataModel>>{
+        return playReportDao.getPlayReportItem(date)
     }
 }

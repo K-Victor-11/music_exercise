@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:layout_marginHorizontal="20dp"
+    android:paddingHorizontal="5dp"
+    android:paddingVertical="5dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/bg_radius3_e5e5e5">
+    <TextView
+        android:id="@+id/tvCompleteItem_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textSize="16dp"
+        android:textColor="@color/color_font_black"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+        android:id="@+id/ivCompleteItem_CountIcon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/ic_stretching"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCompleteItem_Title"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/tvCompleteItem_PlayCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textSize="14dp"
+        android:textColor="@color/color_font_black"
+        app:layout_constraintStart_toEndOf="@id/ivCompleteItem_CountIcon"
+        app:layout_constraintTop_toTopOf="@id/ivCompleteItem_CountIcon"
+        app:layout_constraintBottom_toBottomOf="@id/ivCompleteItem_CountIcon"/>
+    <TextView
+        android:id="@+id/tvCompleteItem_TotalCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textSize="14dp"
+        android:textColor="@color/color_font_black"
+        app:layout_constraintStart_toEndOf="@id/tvCompleteItem_PlayCount"
+        app:layout_constraintTop_toTopOf="@id/ivCompleteItem_CountIcon"
+        app:layout_constraintBottom_toBottomOf="@id/ivCompleteItem_CountIcon"/>
+
+    <ImageView
+        android:id="@+id/ivCompleteItem_TimeIcon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="40dp"
+        android:src="@drawable/ic_timer"
+        app:layout_constraintStart_toEndOf="@id/tvCompleteItem_TotalCount"
+        app:layout_constraintTop_toBottomOf="@id/tvCompleteItem_Title"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvCompleteItem_PlayTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textSize="14dp"
+        android:textColor="@color/color_font_black"
+        app:layout_constraintStart_toEndOf="@id/ivCompleteItem_TimeIcon"
+        app:layout_constraintTop_toTopOf="@id/ivCompleteItem_TimeIcon"
+        app:layout_constraintBottom_toBottomOf="@id/ivCompleteItem_TimeIcon"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
