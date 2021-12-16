@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalendarView">
+        <attr name="selectYear" format="integer" />
+        <attr name="selectMonth" format="integer" />
+        <attr name="selectDay" format="integer" />
+    </declare-styleable>
+</resources>

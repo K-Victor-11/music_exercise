@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/llCalendar_Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivCalendar_PreMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/ic_arrow_pre" />
+
+        <TextView
+            android:id="@+id/tvCalendar_Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2020.09"
+            android:textColor="@color/font_color_black"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:id="@+id/ivCalendar_NextMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/ic_arrow_next" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCalendar_WeekHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginHorizontal="19dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llCalendar_Header">
+        <!--        <TextView-->
+        <!--            android:layout_width="34dp"-->
+        <!--            android:layout_height="32dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginEnd="7dp"-->
+        <!--            android:text="일"-->
+        <!--            android:textColor="@color/font_color_black"-->
+        <!--            android:textSize="15dp"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="34dp"-->
+        <!--            android:layout_height="32dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginHorizontal="7dp"-->
+        <!--            android:text="월"-->
+        <!--            android:textColor="@color/font_color_black"-->
+        <!--            android:textSize="15dp"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="34dp"-->
+        <!--            android:layout_height="32dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginHorizontal="7dp"-->
+        <!--            android:text="화"-->
+        <!--            android:textColor="@color/font_color_black"-->
+        <!--            android:textSize="15dp"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="34dp"-->
+        <!--            android:layout_height="32dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginHorizontal="7dp"-->
+        <!--            android:text="수"-->
+        <!--            android:textColor="@color/font_color_black"-->
+        <!--            android:textSize="15dp"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="34dp"-->
+        <!--            android:layout_height="32dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginHorizontal="7dp"-->
+        <!--            android:text="목"-->
+        <!--            android:textColor="@color/font_color_black"-->
+        <!--            android:textSize="15dp"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="34dp"-->
+        <!--            android:layout_height="32dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginHorizontal="7dp"-->
+        <!--            android:text="금"-->
+        <!--            android:textColor="@color/font_color_black"-->
+        <!--            android:textSize="15dp"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="34dp"-->
+        <!--            android:layout_height="32dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:layout_marginStart="7dp"-->
+        <!--            android:text="토"-->
+        <!--            android:textColor="@color/font_color_black"-->
+        <!--            android:textSize="15dp"/>-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCalendar_Area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginHorizontal="19dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llCalendar_WeekHeader">
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
