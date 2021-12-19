@@ -289,7 +289,7 @@ class CalendarView : LinearLayout, View.OnClickListener {
     }
 
     private fun setDateTextView(tvDays: TextView, s: String) {
-        var isReservation: Boolean = tvDays.getTag(R.id.item_data) as Boolean
+        var isReservation: Boolean = if(tvDays.getTag(R.id.item_data) == null) false else tvDays.getTag(R.id.item_data) as Boolean
         var weekPos: Int = tvDays.getTag(R.id.item_position).toString().toInt()
 
 

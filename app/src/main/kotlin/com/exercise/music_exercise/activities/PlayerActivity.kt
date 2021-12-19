@@ -159,7 +159,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
     fun saveExercise(playListItem:List_ItemsDataModel){
         Toast.makeText(this, "음원 Report 저장!!", Toast.LENGTH_SHORT).show()
-        var reportData : PlayReportDataModel = PlayReportDataModel(playListItem.musicTitle_kor, playListItem.musicCode, playListItem.idx, playListItem.hertz, DateUtils.getNowDate("yyyy-MM-dd"))
+        var reportData : PlayReportDataModel = PlayReportDataModel(playListItem.musicTitle_kor, playListItem.musicCode, playListItem.idx, playListItem.hertz, DateUtils.getNowDate("yyyyMMdd"))
         playerViewModel.saveExercise(reportData)
     }
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
@@ -202,6 +202,8 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
         seekVolume.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, position: Int, fromUser: Boolean) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, position, AudioManager.FLAG_SHOW_UI)
+                volume_level = position
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -221,7 +223,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 //            if (mCurrentPlayer != null) {
 //                mCurrentPlayer.set()
 //            }
-            tvTitle.text = it.get(playerViewModel.selectPos).musicTitle_kor
+            getPlayTitle(it.get(playerViewModel.selectPos).musicTitle_kor, it.get(playerViewModel.selectPos).hertz)
         })
     }
 
@@ -479,7 +481,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         pause()
         ivPlayer.setImageResource(R.drawable.ic_play)
         isPlaying = false
-        tvTitle.text = item.musicTitle_kor
+        getPlayTitle(item.musicTitle_kor, item.hertz)
     }
 
     fun onPlay(title: String, hertz: Int) {
@@ -510,7 +512,8 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
         ivPlayer.setImageResource(R.drawable.ic_pause)
         isPlaying = true
-        tvTitle.text = item.musicTitle_kor
+        getPlayTitle(item.musicTitle_kor, item.hertz)
+
     }
 
     @Throws(IllegalStateException::class)
@@ -531,6 +534,19 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             mCurrentPlayer!!.pause()
         if(mNextPlayer != null)
             mNextPlayer!!.pause()
+    }
+
+    fun getPlayTitle(title:String, hertz:Int){
+        var strHertz:String = ""
+        when(hertz){
+            0 -> {
+                strHertz = "원본"
+            }
+            else ->{
+                strHertz = "${hertz}KHz"
+            }
+        }
+        tvTitle.text = "${title}(${strHertz})"
     }
 
     override fun onDestroy() {

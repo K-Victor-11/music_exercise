@@ -14,4 +14,5 @@ data class PlayReportDataModel(
 ):Serializable{
     @PrimaryKey(autoGenerate = true)
     var idx:Int = 0
+    var playCount:Int = 0
 }

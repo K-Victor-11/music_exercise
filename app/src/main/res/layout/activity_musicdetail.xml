@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="bottom"
+        android:visibility="gone"
         android:paddingBottom="10dp">
         <Button
             android:id="@+id/btnMusicDetail_Detail"

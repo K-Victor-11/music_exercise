@@ -12,22 +12,14 @@
     android:background="@drawable/bg_radius3_e5e5e5">
     <TextView
         android:id="@+id/tvCompleteItem_Title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textSize="16dp"
         android:textColor="@color/color_font_black"
-        android:layout_marginTop="10dp"
+        android:layout_marginVertical="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-    <ImageView
-        android:id="@+id/ivCompleteItem_CountIcon"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:src="@drawable/ic_stretching"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCompleteItem_Title"
         app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
         android:id="@+id/tvCompleteItem_PlayCount"
@@ -36,39 +28,8 @@
         android:gravity="center_vertical"
         android:textSize="14dp"
         android:textColor="@color/color_font_black"
-        app:layout_constraintStart_toEndOf="@id/ivCompleteItem_CountIcon"
-        app:layout_constraintTop_toTopOf="@id/ivCompleteItem_CountIcon"
-        app:layout_constraintBottom_toBottomOf="@id/ivCompleteItem_CountIcon"/>
-    <TextView
-        android:id="@+id/tvCompleteItem_TotalCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:textSize="14dp"
-        android:textColor="@color/color_font_black"
-        app:layout_constraintStart_toEndOf="@id/tvCompleteItem_PlayCount"
-        app:layout_constraintTop_toTopOf="@id/ivCompleteItem_CountIcon"
-        app:layout_constraintBottom_toBottomOf="@id/ivCompleteItem_CountIcon"/>
-
-    <ImageView
-        android:id="@+id/ivCompleteItem_TimeIcon"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="40dp"
-        android:src="@drawable/ic_timer"
-        app:layout_constraintStart_toEndOf="@id/tvCompleteItem_TotalCount"
-        app:layout_constraintTop_toBottomOf="@id/tvCompleteItem_Title"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <TextView
-        android:id="@+id/tvCompleteItem_PlayTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:textSize="14dp"
-        android:textColor="@color/color_font_black"
-        app:layout_constraintStart_toEndOf="@id/ivCompleteItem_TimeIcon"
-        app:layout_constraintTop_toTopOf="@id/ivCompleteItem_TimeIcon"
-        app:layout_constraintBottom_toBottomOf="@id/ivCompleteItem_TimeIcon"/>
+        app:layout_constraintStart_toEndOf="@id/tvCompleteItem_Title"
+        app:layout_constraintTop_toTopOf="@id/tvCompleteItem_Title"
+        app:layout_constraintBottom_toBottomOf="@id/tvCompleteItem_Title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
