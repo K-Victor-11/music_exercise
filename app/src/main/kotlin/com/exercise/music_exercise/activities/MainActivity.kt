@@ -18,6 +18,7 @@ import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.fragments.DialogFragment
 import com.exercise.music_exercise.fragments.custom_list.CustomListFragment
 import com.exercise.music_exercise.fragments.main.HomeFragment
+import com.exercise.music_exercise.fragments.report.ReportFragment
 import com.exercise.music_exercise.utils.DialogUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -204,6 +205,9 @@ class MainActivity:BaseActivity(), View.OnClickListener, HomeFragment.onHomeFrag
             3 -> {
 //                var fragment: CompleteExerciseFragment = CompleteExerciseFragment.newInstance()
 //                pushFragment(R.id.nav_host_fragment, fragment)
+                var fragment : ReportFragment = ReportFragment.newInstance()
+                pushFragment(R.id.nav_host_fragment, fragment)
+
                 nav_view.menu.getItem(2).isChecked = true
                 clMain_BottomMenu1.setBackgroundColor(
                     ContextCompat.getColor(

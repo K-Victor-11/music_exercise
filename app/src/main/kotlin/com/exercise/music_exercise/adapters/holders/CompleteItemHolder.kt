@@ -3,23 +3,23 @@ package com.exercise.health_exercise.adapters.viewHolders.completeList
 import android.text.TextUtils
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.exercise.health_exercise.data.playExerciseItem.PlayExerciseItemHeaderData
+import com.exercise.music_exercise.data_models.PlayReportDataModel
 import kotlinx.android.synthetic.main.holder_complete_item.view.*
 
 class CompleteItemHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
-    fun setItem(data : PlayExerciseItemHeaderData){
+    fun setItem(data : PlayReportDataModel){
         with(itemView){
-            tvCompleteItem_Title.text = if(TextUtils.isEmpty(data.title)) "" else data.title
-            tvCompleteItem_PlayCount.text = data.completeCount.toString()
-            tvCompleteItem_TotalCount.text = String.format("/%s", data.playTotalCount.toString())
-
-            var playSec : Int = (data.playTime / 1000L).toInt()
-
-            var playMin : Int = playSec / 60
-            playSec = playSec % 60
-
-            var playStr : String = String.format("%02d:%02d", playMin, playSec)
-            tvCompleteItem_PlayTime.text = playStr
+            var strHertz:String = ""
+            when(data.hertz){
+                0 ->{
+                    strHertz = "(원본)"
+                }
+                else ->{
+                    strHertz = "(${data.hertz}KHz)"
+                }
+            }
+            tvCompleteItem_Title.text = if(TextUtils.isEmpty(data.musicTitle)) "" else "${data.musicTitle}${strHertz}"
+            tvCompleteItem_PlayCount.text = " - ${data.playCount} 회"
         }
     }
 }

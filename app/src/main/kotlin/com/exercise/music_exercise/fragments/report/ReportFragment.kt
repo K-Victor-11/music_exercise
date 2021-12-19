@@ -1,5 +1,6 @@
 package com.exercise.music_exercise.fragments.report
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,11 @@ import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.MusicApplication
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.adapters.CompleteListAdapter
+import com.exercise.music_exercise.custom_view.CalendarView
 import com.exercise.music_exercise.data_models.CommonListDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.fragments.BaseFragment
+import com.exercise.music_exercise.fragments.main.HomeFragment
 import com.exercise.music_exercise.viewmodels.CalendarViewModel
 import com.exercise.music_exercise.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_play_report.*
@@ -34,25 +37,49 @@ class ReportFragment : BaseFragment() {
 
     var adapter:CompleteListAdapter ?= null
 
+    companion object {
+        @JvmStatic
+        fun newInstance(): ReportFragment {
+            var fragment = ReportFragment()
+            return fragment
+
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         var view:View = inflater.inflate(R.layout.fragment_play_report, container, false)
-        var month:String = calComplete_Calendar.getMonth()
-        var year:String = calComplete_Calendar.getYear()
 
         initObserve()
-        setData(year+month)
+
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        var month:String = view.findViewById<CalendarView>(R.id.calComplete_Calendar).getMonth()
+        var year:String = view.findViewById<CalendarView>(R.id.calComplete_Calendar).getYear()
+        setData("${year}${month}")
     }
 
     fun initObserve(){
         viewModel.musicReportList.observe(viewLifecycleOwner, Observer {
             var list:ArrayList<PlayReportDataModel> = ArrayList<PlayReportDataModel>()
             list.addAll(it)
-            calComplete_Calendar.setReservationData(list)
+            with(view){
+                if(view != null)
+                    requireView().findViewById<CalendarView>(R.id.calComplete_Calendar).setReservationData(list)
+            }
         })
     }
 

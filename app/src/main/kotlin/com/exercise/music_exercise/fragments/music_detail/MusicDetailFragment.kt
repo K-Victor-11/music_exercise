@@ -99,7 +99,7 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
 
             var playIntent = Intent(mContext, PlayerActivity::class.java)
 
-            playIntent.putExtra(AppContents.INTENT_DATA_LIST_POSITION, 0)
+            playIntent.putExtra(AppContents.INTENT_DATA_LIST_POSITION, detailViewModel.selectPos)
             playIntent.putExtra(AppContents.INTENT_DATA_PLAY_LIST, detailViewModel.detailItemList.value as ArrayList<List_ItemsDataModel>)
             playIntent.putExtra(INTENT_DATA_GROUP_TYPE, it)
 
