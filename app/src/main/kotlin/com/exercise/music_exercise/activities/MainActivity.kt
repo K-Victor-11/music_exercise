@@ -71,6 +71,13 @@ class MainActivity:BaseActivity(), View.OnClickListener, HomeFragment.onHomeFrag
                     setMenu(resources.getString(R.string.menu_complete_list), 3)
                 }
 
+                R.id.nav_kakao ->{
+                    var uri: Uri = Uri.parse("https://pf.kakao.com/_xoxouCj")
+                    var intent: Intent = Intent(Intent.ACTION_VIEW)
+                    intent.setData(uri)
+                    startActivity(intent)
+                }
+
                 R.id.nav_webpage -> {
                     var uri: Uri = Uri.parse("http://www.doclinic.kr")
                     var intent: Intent = Intent(Intent.ACTION_VIEW)
