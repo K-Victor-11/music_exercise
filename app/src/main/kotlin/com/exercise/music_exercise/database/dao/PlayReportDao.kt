@@ -11,7 +11,7 @@ interface PlayReportDao:BaseDao<PlayReportDataModel> {
     @Query("SELECT * FROM play_report")
     fun getPlayReportData() : LiveData<List<PlayReportDataModel>>
 
-    @Query("SELECT COUNT(musicTitle) AS playCount, * FROM play_report WHERE substr(playDate, 0,7)=:month GROUP BY playDate, musicTitle")
+    @Query("SELECT COUNT(musicTitle) AS playCount, * FROM play_report WHERE substr(playDate, 0,7)=:month GROUP BY playDate, musicTitle, hertz")
     fun getPlayReportItem(month:String) : LiveData<List<PlayReportDataModel>>
 
     @Query("SELECT * FROM play_report WHERE substr(playDate, 0, 7) = :month GROUP BY playDate")

@@ -62,6 +62,34 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
 
     }
 
+    override fun onBackPressed() {
+        btn_Next.text = getString(R.string.btn_next)
+        if(currentFragment() is CustomList_AddTitleFragment){
+            llMenuTitle.visibility = View.GONE
+
+            if(btn_Next.visibility == View.GONE)
+                llBottomArea.visibility = View.GONE
+            btn_Pre.visibility = View.GONE
+
+            addListViewModel.setStep(1)
+        } else if(currentFragment() is CustomList_AddMenuFragment){
+            if(isGroupSelect)
+                finish()
+            else
+                addListViewModel.setStep(1)
+
+            btn_Pre.visibility = View.GONE
+
+        } else if(currentFragment() is CustomList_AddSettingFragment){
+            addListViewModel.setStep(3)
+        } else {
+            addListViewModel.setStep(2)
+        }
+
+        super.onBackPressed()
+
+    }
+
 
     fun setButtonEnable(isEnabled: Boolean) {
 
@@ -100,6 +128,9 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
         if (v == btn_Next) {
             if(addListViewModel.getStep() == 1){
                 /** title -> menu 리스트 선택 **/
+                btn_Pre.visibility = View.VISIBLE
+                llBottomArea.visibility = View.VISIBLE
+
                 var menuFragment = CustomList_AddMenuFragment()
                 menuFragment.baseActivity = this
                 pushFragment(R.id.layout_fragment, menuFragment, "add_menu")

@@ -110,8 +110,11 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
             isChange = false
         }
 
-        if(isChange)
+        if(isChange) {
             settingViewModel._setList!!.value!!.get(position).playTime = time
+            settingViewModel.setSettingList(settingViewModel._setList!!.value!!)
+        }
+
     }
 
     override fun onCountDown(data: List_ItemsDataModel, position: Int) {
@@ -141,8 +144,10 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
             isChange = false
         }
 
-        if(isChange)
+        if(isChange) {
             settingViewModel._setList!!.value!!.get(position).playTime = time
+            settingViewModel.setSettingList(settingViewModel._setList!!.value!!)
+        }
     }
 
     override fun onSortUp(data: List_ItemsDataModel, position: Int) {
