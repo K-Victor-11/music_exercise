@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
@@ -191,11 +192,20 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
         chkLoop = findViewById(R.id.cbnPlay_loop)
         chkLoop.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+            override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
                 stop()
                 runningTime = 0
-                pgPlayTime.progress = 1
-                pgPlayTime.max = 1
+                if(isChecked) {
+                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_line_e5e5e5)
+                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_979797))
+                    pgPlayTime.progress = 1
+                    pgPlayTime.max = 1
+                } else {
+                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_line_999999)
+                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
+                    pgPlayTime.progress = 0
+                    pgPlayTime.max = playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime * 60 * 1000
+                }
             }
 
         })
@@ -447,26 +457,37 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             }
 
             R.id.btnPlay_TimeSetting -> {
-                var bottomDialogItem:LinkedHashMap<String, String> = LinkedHashMap()
-                bottomDialogItem.put("1분", "1")
-                bottomDialogItem.put("3분", "3")
-                bottomDialogItem.put("5분", "5")
-                bottomDialogItem.put("10분", "10")
-                bottomDialogItem.put("15분", "15")
-                bottomDialogItem.put("30분", "30")
-                bottomDialogItem.put("60분", "60")
+                if(chkLoop.isChecked){
+                    Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
+                    bottomDialogItem.put("1분", "1")
+                    bottomDialogItem.put("3분", "3")
+                    bottomDialogItem.put("5분", "5")
+                    bottomDialogItem.put("10분", "10")
+                    bottomDialogItem.put("15분", "15")
+                    bottomDialogItem.put("30분", "30")
+                    bottomDialogItem.put("60분", "60")
 
-                stop()
-                DialogUtils.showBottomSheetDialog(this, bottomDialogItem, "닫기", R.color.color_font_black, true, object:DialogUtils.OnBottomSheetSelectedListener{
-                    override fun onSelected(index: Int, text: String, value: String) {
-                        /** delete **/
-                        Toast.makeText(this@PlayerActivity, value, Toast.LENGTH_SHORT).show()
-                        playerViewModel.changePlayTime(value.toInt())
-                        setMilliseconds(value.toInt())
-                        runningTime = 0
-                    }
+                    stop()
+                    DialogUtils.showBottomSheetDialog(
+                        this,
+                        bottomDialogItem,
+                        "닫기",
+                        R.color.color_font_black,
+                        true,
+                        object : DialogUtils.OnBottomSheetSelectedListener {
+                            override fun onSelected(index: Int, text: String, value: String) {
+                                /** delete **/
+                                Toast.makeText(this@PlayerActivity, value, Toast.LENGTH_SHORT)
+                                    .show()
+                                playerViewModel.changePlayTime(value.toInt())
+                                setMilliseconds(value.toInt())
+                                runningTime = 0
+                            }
 
-                })
+                        })
+                }
             }
         }
     }
