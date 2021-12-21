@@ -42,15 +42,15 @@ class AppRepository(application: Application) {
     }
 
     fun setGroupTitle(title:String){
-        musicListDao.insert(List_HeaderDataModel(title, title, "C"))
+        musicListDao.insert(List_HeaderDataModel(title, title, "", "C"))
     }
 
     fun setGroupTitle(title:String, type:String){
-        musicListDao.insert(List_HeaderDataModel(title, title, "C"))
+        musicListDao.insert(List_HeaderDataModel(title, title, "", "C"))
     }
 
     fun setMusicDetail(parentIndex:Int, data : List_ItemsDataModel){
-        musicDetailListDao.insert(List_ItemsDataModel(parentIndex, data.musicCode, data.musicTitle_kor, data.musicTitle_eng, data.hertz, data.playTime, data.sortOrder))
+        musicDetailListDao.insert(List_ItemsDataModel(parentIndex, data.musicCode, data.musicTitle_kor, data.musicTitle_eng, data.image_path, data.hertz, data.playTime, data.sortOrder))
     }
 
     fun getGroupLastIndex():Int{

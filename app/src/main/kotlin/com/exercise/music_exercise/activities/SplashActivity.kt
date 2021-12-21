@@ -57,13 +57,13 @@ class SplashActivity: AppCompatActivity() {
         var prefUtils: PreferenceUtils = PreferenceUtils.getInstance(this)
         if (!prefUtils.getBoolean("default_data", false)) {
             var groupList:ArrayList<List_HeaderDataModel> = arrayListOf()
-            groupList.add(List_HeaderDataModel("개울소리1","개울소리1", "D"))
-            groupList.add(List_HeaderDataModel("개울소리2","개울소리2","D"))
-            groupList.add(List_HeaderDataModel("개울소리3","개울소리3","D"))
-            groupList.add(List_HeaderDataModel("개울소리4","개울소리4","D"))
-            groupList.add(List_HeaderDataModel("개울소리5","개울소리5","D"))
-            groupList.add(List_HeaderDataModel("개울소리6","개울소리6","D"))
-            groupList.add(List_HeaderDataModel("개울소리7","개울소리7","D"))
+            groupList.add(List_HeaderDataModel("개울소리1","개울소리1","water_01","D"))
+            groupList.add(List_HeaderDataModel("개울소리2","개울소리2","water_02","D"))
+            groupList.add(List_HeaderDataModel("개울소리3","개울소리3","water_03","D"))
+            groupList.add(List_HeaderDataModel("개울소리4","개울소리4","water_01", "D"))
+            groupList.add(List_HeaderDataModel("개울소리5","개울소리5","water_02","D"))
+            groupList.add(List_HeaderDataModel("개울소리6","개울소리6","water_03","D"))
+            groupList.add(List_HeaderDataModel("개울소리7","개울소리7","water_01","D"))
 
             var musicDao = AppDataBase.getInstance(this, callback).musicListDao()
             var musicDetailDao = AppDataBase.getInstance(this, callback).musicListDetailDao()
@@ -77,11 +77,12 @@ class SplashActivity: AppCompatActivity() {
                     var parentIdx = it.idx
                     var parentTitle_kor = it.listTitle_kor
                     var parentTitle_eng = it.listTitle_eng
+                    var parentImage = it.image_path
 
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,0))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,2))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,4))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,8))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_01",0))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_02",2))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_03",4))
+                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_04",8))
                 }
             })
 
