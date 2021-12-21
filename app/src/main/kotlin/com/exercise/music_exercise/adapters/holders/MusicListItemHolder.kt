@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
+import com.exercise.music_exercise.utils.ViewUtils
 
 class MusicListItemHolder(val context : Context,
                           var itemView:View,
@@ -25,6 +26,7 @@ class MusicListItemHolder(val context : Context,
     lateinit var tvListTitle:TextView
     lateinit var ivListMenu:ImageView
     lateinit var chkList:CheckBox
+    lateinit var ivTitleImage:ImageView
 
     init {
         clListRoot = itemView.findViewById(R.id.clList_Root)
@@ -33,6 +35,7 @@ class MusicListItemHolder(val context : Context,
         tvListTitle = itemView.findViewById(R.id.tvList_Title)
         ivListMenu = itemView.findViewById(R.id.ivListMenu)
         chkList = itemView.findViewById(R.id.chkList)
+        ivTitleImage = itemView.findViewById(R.id.ivList_Exercise)
     }
 
     fun setMusicListItem(data:List_HeaderDataModel, position:Int){
@@ -40,6 +43,7 @@ class MusicListItemHolder(val context : Context,
         clListRoot.setTag(R.id.list_position, position)
         clListRoot.background = ContextCompat.getDrawable(context,R.drawable.bg_radius3_e5e5e5)
 
+        ViewUtils.loadImage(data.image_path, null).into(ivTitleImage)
 
         tvListTitle.text = data.listTitle_kor
 

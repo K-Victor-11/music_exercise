@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
+import com.exercise.music_exercise.utils.ViewUtils
 import kotlinx.android.synthetic.main.holder_musiclist_detail.view.*
 
 class MusicDetailItemHolder(itemView: View, var listener : onDetailItemListener): RecyclerView.ViewHolder(itemView) {
@@ -16,6 +17,7 @@ class MusicDetailItemHolder(itemView: View, var listener : onDetailItemListener)
     fun setDetailItem(itemData:List_ItemsDataModel, position:Int, type:String){
         with(itemView){
             tvMusicDetailItem_Title.text = String.format("%s\n(%s)", itemData.musicTitle_kor, if(itemData.hertz == 0)  "원본" else "${itemData.hertz}KHz".toString())
+            ViewUtils.loadImage(itemData.image_path, null).into(ivMusicDetailItem_Image)
             clMusicDetailItem_Root.setTag(R.id.list_data, itemData)
             clMusicDetailItem_Root.setTag(R.id.list_position, position)
 

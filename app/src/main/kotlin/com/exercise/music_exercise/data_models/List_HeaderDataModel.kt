@@ -8,6 +8,7 @@ import java.io.Serializable
 data class List_HeaderDataModel(
         val listTitle_kor:String,
         val listTitle_eng:String,
+        val image_path:String,
         val customType:String/** D:Default, C:Custom **/
 ):Serializable{
         @PrimaryKey(autoGenerate = true)

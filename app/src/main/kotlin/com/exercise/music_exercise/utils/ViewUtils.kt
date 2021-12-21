@@ -43,8 +43,13 @@ class ViewUtils {
             var application : MusicApplication = MusicApplication.getInstance()!!
             var context:Context = application.applicationContext
 
+            var pName:String = application.packageName
+            var id:String = url
+            var resourceID : Int = application.resources.getIdentifier(id, "raw", pName)
+
+
             return Glide.with(context)
-                .load(url)
+                .load(resourceID)
                 .apply(options)
 
         }
