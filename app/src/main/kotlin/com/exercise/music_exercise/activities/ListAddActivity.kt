@@ -135,10 +135,14 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
                 menuFragment.baseActivity = this
                 pushFragment(R.id.layout_fragment, menuFragment, "add_menu")
             } else if(addListViewModel.getStep() == 2){
-                /** 세부 셋팅으로 이동 **/
-                var settingFragment = CustomList_AddSettingFragment()
-                settingFragment.baseActivity = this
-                pushFragment(R.id.layout_fragment, settingFragment, "setting")
+                if(addListViewModel.itemList != null && addListViewModel.itemList.size > 0){
+                    /** 세부 셋팅으로 이동 **/
+                    var settingFragment = CustomList_AddSettingFragment()
+                    settingFragment.baseActivity = this
+                    pushFragment(R.id.layout_fragment, settingFragment, "setting")
+                } else{
+                    Toast.makeText(this, "음원이 선택 되지 않았습니다.\n음원을 선택해 주세요.", Toast.LENGTH_SHORT).show()
+                }
             } else if(addListViewModel.getStep() == 3){
                 var musicDao = AppDataBase.getInstance(this, callback).musicListDao()
                 var musicDetailDao = AppDataBase.getInstance(this, callback).musicListDetailDao()
@@ -154,43 +158,6 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
                 finish()
 
             }
-//            if (listViewModel.getStep() == 1) {
-//                /** 운동리스트의 세부 셋팅으로 이동 **/
-//                if (listViewModel.getSelectList().size > 0) {
-//                    btn_Pre.visibility = View.VISIBLE
-//
-//                    var nextFragment: CustomExerciseFragment =
-//                        CustomExerciseFragment.newInstance(listViewModel.getSelectList())
-//                    nextFragment.baseActivity = this;
-//                    pushFragment(R.id.layout_fragment, nextFragment, "list_detail")
-//                } else {
-//                    Toast.makeText(this, "운동을 1개 이상 선택 해주세요.", Toast.LENGTH_SHORT).show()
-//                }
-//
-//            } else if (listViewModel.getStep() == 2) {
-//                /** 운동리스트의 Title을 입력 하는 화면으로 이동 **/
-//                btn_Pre.visibility = View.VISIBLE
-//                var nextFragment: CustomTitleFragment = CustomTitleFragment()
-//                var bundle: Bundle = Bundle()
-//                bundle.putBoolean(AppContents.INTENT_DATA_EDIT_MODE, isEdit)
-//                bundle.putLong(AppContents.INTENT_DATA_LIST_INDEX, selectIndex)
-//
-//                nextFragment.arguments = bundle
-//                nextFragment.baseActivity = this;
-//                pushFragment(R.id.layout_fragment, nextFragment, "list_title")
-//
-//                btn_Next.text = getString(R.string.btn_confirm)
-//            } else if (listViewModel.getStep() == 3) {
-//                var listData: HealthListData = HealthListData(selectIndex, title, listType)
-//
-//                var intentData: Intent = Intent()
-//                intentData.putExtra(AppContents.RESULT_DATA_LISTDATA, listData)
-//                intentData.putExtra(AppContents.RESULT_DATA_HEALTHLIST, listViewModel.getSelectList())
-//                intentData.putExtra(AppContents.INTENT_DATA_EDIT_MODE, isEdit)
-//                intentData.putExtra(AppContents.INTENT_DATA_LIST_INDEX, selectIndex)
-//                setResult(RESULT_OK, intentData)
-//                finish()
-//            }
         }
     }
 
