@@ -42,16 +42,16 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
     }
 
     fun setMusicItem(parentIdx:Int, data:List_ItemsDataModel){
-        appRepository.setCustomMusicDetail(parentIdx, data)
+        appRepository.setMusicDetail(parentIdx, data)
     }
 
     fun getMusicItem(parentIdx:Int):LiveData<List<List_ItemsDataModel>>{
         return appRepository.getMusicDetailList(parentIdx)
     }
 
-    fun getCustomMusicDetail(parentIdx: Int):LiveData<List<List_ItemsDataModel>>{
-        return appRepository.getCustomMusicDetail(parentIdx)
-    }
+//    fun getCustomMusicDetail(parentIdx: Int):LiveData<List<List_ItemsDataModel>>{
+//        return appRepository.getCustomMusicDetail(parentIdx)
+//    }
 
     fun getGroupLastIndex():Int{
         return appRepository.getGroupLastIndex()
@@ -82,9 +82,9 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
         return this.step
     }
 
-    fun deleteMusicDetailList(headerIdx:Int){
-        appRepository.deleteMusicDetail(headerIdx)
-    }
+//    fun deleteMusicDetailList(headerIdx:Int){
+//        appRepository.deleteMusicDetail(headerIdx)
+//    }
 
     class Factory(val application: Application): ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

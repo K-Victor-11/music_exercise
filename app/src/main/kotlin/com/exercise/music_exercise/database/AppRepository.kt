@@ -15,14 +15,14 @@ class AppRepository(application: Application) {
     private var musicListDao : MusicListDao
     private var musicDetailListDao : MusicListDetailDao
     private var playReportDao:PlayReportDao
-    private var customListDao : CustomListDetailDao
+//    private var customListDao : CustomListDetailDao
 
     init {
         val database = AppDataBase.getInstance(application)!!
         musicListDao = (database as AppDataBase).musicListDao()
         musicDetailListDao = (database as AppDataBase).musicListDetailDao()
         playReportDao = (database as AppDataBase).playReportDao()
-        customListDao = (database as AppDataBase).customListDetailDao()
+//        customListDao = (database as AppDataBase).customListDetailDao()
     }
 
     fun getMusicGroupList():LiveData<List<List_HeaderDataModel>>{
@@ -79,16 +79,8 @@ class AppRepository(application: Application) {
         return playReportDao.getPlayReportItem(date)
     }
 
-    fun getCustomMusicDetail(parentIdx: Int):LiveData<List<List_ItemsDataModel>>{
-        return customListDao.getCustomListDetail(parentIdx)
-    }
-
-    fun setCustomMusicDetail(parentIdx: Int, data:List_ItemsDataModel){
-        var customListData : CustomList_ItemDataModel = CustomList_ItemDataModel( parentIdx, data.idx, data.playTime, data.sortOrder)
-        customListDao.insert(customListData)
-    }
-
-    fun deleteMusicDetail(parentIdx:Int){
-        customListDao.deleteCustomListDetail(parentIdx)
+    fun delCustomListHeader(idx:Int){
+        musicListDao.delCustomGroup(idx)
+        musicDetailListDao.deleteDetailList(idx)
     }
 }

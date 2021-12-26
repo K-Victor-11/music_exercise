@@ -151,7 +151,7 @@ class CustomListFragment : BaseFragment(), MusicListAdapter.onMusicListListener,
 
         var hsMenu: LinkedHashMap<String, String> = LinkedHashMap<String, String>()
 
-        hsMenu.put("Edit", "edit")
+//        hsMenu.put("Edit", "edit")
         hsMenu.put("Delete", "delete")
         hsMenu.put("Cancel", "cancel")
 
@@ -171,10 +171,11 @@ class CustomListFragment : BaseFragment(), MusicListAdapter.onMusicListListener,
 //                    Log.d("kamuel", "selectData!!.idx 2 :: "+selectData!!.idx)
 //
 //                    baseActivity!!.startActivityForResult(intent, AppContents.REQUEST_CODE_ADDLIST)
-//                } else if(value == "delete"){
-////                    Toast.makeText(this@MainActivity, "작업 중 입니다. ㅠㅠ", Toast.LENGTH_SHORT).show()
-//                    homeViewModel.healthListDelete(selectData!!.idx)
-//                }
+//                } else
+                    if(value == "delete"){
+    //                    Toast.makeText(this@MainActivity, "작업 중 입니다. ㅠㅠ", Toast.LENGTH_SHORT).show()
+                        homeViewModel.deleteCustomMusicList(selectData!!.idx)
+                    }
                 }
             })
     }

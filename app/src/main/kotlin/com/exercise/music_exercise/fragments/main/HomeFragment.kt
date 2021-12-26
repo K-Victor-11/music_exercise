@@ -160,7 +160,7 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
 
         var hsMenu: LinkedHashMap<String, String> = LinkedHashMap<String, String>()
 
-        hsMenu.put("Edit", "edit")
+//        hsMenu.put("Edit", "edit")
         hsMenu.put("Delete", "delete")
         hsMenu.put("Cancel", "cancel")
 

@@ -64,7 +64,7 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
             bundle.putInt(AppContents.INTENT_DATA_LIST_INDEX, selectIndex)
             titleFragment.arguments = bundle
 
-            addListViewModel.getCustomMusicDetail(selectIndex).observe(this, Observer {
+            addListViewModel.getMusicItem(selectIndex).observe(this, Observer {
                 it.forEach {
                     addListViewModel.checkSelectList(it.idx, it, true)
                 }
@@ -163,7 +163,7 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
                 var parentIdx : Int = 0
                 if(addListViewModel.isEditMode){
                     addListViewModel.setGroupTitle(addListViewModel.addTitle, selectIndex)
-                    addListViewModel.deleteMusicDetailList(selectIndex)
+//                    addListViewModel.deleteMusicDetailList(selectIndex)
                     parentIdx = selectIndex
                 } else {
                     addListViewModel.setGroupTitle(addListViewModel.addTitle)

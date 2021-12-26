@@ -19,9 +19,7 @@ open abstract class AppDataBase : RoomDatabase() {
     abstract fun musicListDao() : MusicListDao
     abstract fun musicListDetailDao() : MusicListDetailDao
     abstract fun playReportDao() : PlayReportDao
-    abstract fun customListDetailDao() : CustomListDetailDao
-//    abstract fun customListHeaderDao() : CustomListHeaderDao
-//    abstract fun customListItemsDao() : CustomListItemsDao
+//    abstract fun customListDetailDao() : CustomListDetailDao
 
 
     companion object{

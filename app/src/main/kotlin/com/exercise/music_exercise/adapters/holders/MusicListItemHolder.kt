@@ -53,9 +53,10 @@ class MusicListItemHolder(val context : Context,
 
         if(viewType == "add") {
             chkList.visibility = View.INVISIBLE
+            ivListMenu.visibility = View.GONE
         }else {
             if(data.customType == "D") {
-                chkList.visibility = View.VISIBLE
+                chkList.visibility = View.GONE
                 ivListMenu.visibility = View.GONE
             }else{
                 chkList.visibility = View.GONE
