@@ -280,7 +280,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     fun initIntent() {
         playerViewModel.groupType = if(TextUtils.isEmpty(intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE))) "D" else intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE).toString()
         playerViewModel.selectPos = intent.getIntExtra(AppContents.INTENT_DATA_LIST_POSITION, 0)
-        playerViewModel.setPlayList(intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_ItemsDataModel>)
+        var playList:ArrayList<List_ItemsDataModel> = intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_ItemsDataModel>
+        playerViewModel.setPlayList(playList)
+        ViewUtils.loadImage(playList.get(playerViewModel.selectPos).image_path, null).into(ivBackground)
+
     }
 
     fun initCurrentPlayer() {
