@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
+import com.exercise.music_exercise.database.dao.CustomListDetailDao
 import com.exercise.music_exercise.database.dao.MusicListDao
 import com.exercise.music_exercise.database.dao.MusicListDetailDao
 import com.exercise.music_exercise.database.dao.PlayReportDao
@@ -18,6 +19,7 @@ open abstract class AppDataBase : RoomDatabase() {
     abstract fun musicListDao() : MusicListDao
     abstract fun musicListDetailDao() : MusicListDetailDao
     abstract fun playReportDao() : PlayReportDao
+    abstract fun customListDetailDao() : CustomListDetailDao
 //    abstract fun customListHeaderDao() : CustomListHeaderDao
 //    abstract fun customListItemsDao() : CustomListItemsDao
 

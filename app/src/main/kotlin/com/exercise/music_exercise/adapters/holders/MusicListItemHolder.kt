@@ -36,6 +36,7 @@ class MusicListItemHolder(val context : Context,
         ivListMenu = itemView.findViewById(R.id.ivListMenu)
         chkList = itemView.findViewById(R.id.chkList)
         ivTitleImage = itemView.findViewById(R.id.ivList_Exercise)
+        ivListMenu.setOnClickListener(this)
     }
 
     fun setMusicListItem(data:List_HeaderDataModel, position:Int){
@@ -47,11 +48,20 @@ class MusicListItemHolder(val context : Context,
 
         tvListTitle.text = data.listTitle_kor
 
-        ivListMenu.visibility = View.INVISIBLE
+        ivListMenu.setTag(R.id.list_data, data)
+        ivListMenu.setTag(R.id.list_position, position)
 
-        if(viewType == "add")
+        if(viewType == "add") {
             chkList.visibility = View.INVISIBLE
-        else chkList.visibility = View.VISIBLE
+        }else {
+            if(data.customType == "D") {
+                chkList.visibility = View.VISIBLE
+                ivListMenu.visibility = View.GONE
+            }else{
+                chkList.visibility = View.GONE
+                ivListMenu.visibility = View.VISIBLE
+            }
+        }
 
     }
 
@@ -61,6 +71,12 @@ class MusicListItemHolder(val context : Context,
                 var listData : List_HeaderDataModel = v.getTag(R.id.list_data) as List_HeaderDataModel
                 var pos : Int = v.getTag(R.id.list_position).toString().toInt()
                 listener.onSelectItem(listData, pos)
+            }
+
+            R.id.ivListMenu -> {
+                var listData : List_HeaderDataModel = v.getTag(R.id.list_data) as List_HeaderDataModel
+                var pos : Int = v.getTag(R.id.list_position).toString().toInt()
+                listener.onMore(listData, pos)
             }
         }
     }

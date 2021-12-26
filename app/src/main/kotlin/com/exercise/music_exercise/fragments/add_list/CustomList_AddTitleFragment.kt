@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.MusicApplication
@@ -46,15 +47,16 @@ class CustomList_AddTitleFragment:BaseFragment() {
             selectIndex = requireArguments().getInt(AppContents.INTENT_DATA_LIST_INDEX, -1)
         }
 
-        if(isEditMode) {
-            var itemData = customListAddViewModel.getGroupInfo(selectIndex)
-
-            if( itemData != null ){
-                tvCustom_Title.setText(itemData.listTitle_kor)
-
-//                (ExerciseApplication.currentActivity as ListAddActivity).listType =
-//                    it.get(0).list_type
+        customListAddViewModel.headerDataModel.observe(viewLifecycleOwner, Observer {
+            if(it != null) {
+                if (it.size > 0 && isEditMode) {
+                    tvCustom_Title.setText(it.get(0).listTitle_kor)
+                }
             }
+        })
+
+        if(isEditMode) {
+            customListAddViewModel.getGroupInfo(selectIndex)
         }
 
         return rootView

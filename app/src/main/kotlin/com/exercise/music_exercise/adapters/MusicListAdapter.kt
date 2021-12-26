@@ -36,7 +36,7 @@ onAddHolderListener {
         val inflater = LayoutInflater.from(context)
         if (viewType == VIEWTYPE_ITME) {
             val itemView: View = inflater.inflate(R.layout.holder_musiclist, parent, false)
-            var holder: RecyclerView.ViewHolder = MusicListItemHolder(context, itemView, this, "View")
+            var holder: RecyclerView.ViewHolder = MusicListItemHolder(context, itemView, this, "view")
             return holder
         } else {
             val itemView: View = inflater.inflate(R.layout.holder_addlist, parent, false)
@@ -83,7 +83,7 @@ onAddHolderListener {
     }
 
     override fun onMore(data: List_HeaderDataModel, position: Int) {
-        TODO("Not yet implemented")
+        listener.onMore(data,position)
     }
 
     override fun onAddClick() {

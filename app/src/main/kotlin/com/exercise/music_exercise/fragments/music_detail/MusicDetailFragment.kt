@@ -91,8 +91,19 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
                 listHome.addItemDecoration(GridItemDecoration(mContext!!))
             }
 
-            if (it != null)
+            if (it != null) {
+
+                if(viewType == "add") {
+                    if ((baseActivity as ListAddActivity).addListViewModel.isEditMode) {
+                        it.forEach {
+                            if ((baseActivity as ListAddActivity).addListViewModel.selectItemList.containsKey(it.idx))
+                                it.checked = true
+                        }
+                    }
+                }
+
                 adapter!!.updateList(it)
+            }
         })
 
         detailViewModel.customType.observe(viewLifecycleOwner, Observer {

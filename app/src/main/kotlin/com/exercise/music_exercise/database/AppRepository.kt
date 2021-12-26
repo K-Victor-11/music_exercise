@@ -2,9 +2,11 @@ package com.exercise.music_exercise.database
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import com.exercise.music_exercise.data_models.CustomList_ItemDataModel
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
+import com.exercise.music_exercise.database.dao.CustomListDetailDao
 import com.exercise.music_exercise.database.dao.MusicListDao
 import com.exercise.music_exercise.database.dao.MusicListDetailDao
 import com.exercise.music_exercise.database.dao.PlayReportDao
@@ -13,12 +15,14 @@ class AppRepository(application: Application) {
     private var musicListDao : MusicListDao
     private var musicDetailListDao : MusicListDetailDao
     private var playReportDao:PlayReportDao
+    private var customListDao : CustomListDetailDao
 
     init {
         val database = AppDataBase.getInstance(application)!!
         musicListDao = (database as AppDataBase).musicListDao()
         musicDetailListDao = (database as AppDataBase).musicListDetailDao()
         playReportDao = (database as AppDataBase).playReportDao()
+        customListDao = (database as AppDataBase).customListDetailDao()
     }
 
     fun getMusicGroupList():LiveData<List<List_HeaderDataModel>>{
@@ -49,6 +53,12 @@ class AppRepository(application: Application) {
         musicListDao.insert(List_HeaderDataModel(title, title, "", "C"))
     }
 
+    fun setGroupTitle(title:String, idx:Int){
+        var updateData : List_HeaderDataModel = List_HeaderDataModel(title, title, "", "C")
+        updateData.idx = idx
+        musicListDao.update(updateData)
+    }
+
     fun setMusicDetail(parentIndex:Int, data : List_ItemsDataModel){
         musicDetailListDao.insert(List_ItemsDataModel(parentIndex, data.musicCode, data.musicTitle_kor, data.musicTitle_eng, data.image_path, data.hertz, data.playTime, data.sortOrder))
     }
@@ -67,5 +77,18 @@ class AppRepository(application: Application) {
 
     fun getPlayReportItem(date:String):LiveData<List<PlayReportDataModel>>{
         return playReportDao.getPlayReportItem(date)
+    }
+
+    fun getCustomMusicDetail(parentIdx: Int):LiveData<List<List_ItemsDataModel>>{
+        return customListDao.getCustomListDetail(parentIdx)
+    }
+
+    fun setCustomMusicDetail(parentIdx: Int, data:List_ItemsDataModel){
+        var customListData : CustomList_ItemDataModel = CustomList_ItemDataModel( parentIdx, data.idx, data.playTime, data.sortOrder)
+        customListDao.insert(customListData)
+    }
+
+    fun deleteMusicDetail(parentIdx:Int){
+        customListDao.deleteCustomListDetail(parentIdx)
     }
 }
