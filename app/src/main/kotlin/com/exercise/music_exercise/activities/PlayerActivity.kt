@@ -366,42 +366,6 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 strReturn = "water_05"
             }
 
-            "개울소리6" -> {
-                strReturn = "water_06"
-            }
-
-            "개울소리7" -> {
-                strReturn = "water_07"
-            }
-
-            "바람소리1" -> {
-                strReturn = "wind_01"
-            }
-
-            "바람소리4" -> {
-                strReturn = "wind_04"
-            }
-
-            "파도소리1" -> {
-                strReturn = "wave_01"
-            }
-
-            "파도소리2" -> {
-                strReturn = "wave_02"
-            }
-
-            "음악1" -> {
-                strReturn = "music_01"
-            }
-
-            "음악2" -> {
-                strReturn = "music_02"
-            }
-
-            "음악3" -> {
-                strReturn = "music_03"
-            }
-
             "비소리1" -> {
                 strReturn = "rain_01"
             }
@@ -414,20 +378,40 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 strReturn = "rain_03"
             }
 
-            "비소리4" -> {
-                strReturn = "rain_04"
+            "바람소리1" -> {
+                strReturn = "wind_01"
             }
 
-            "비소리5" -> {
-                strReturn = "rain_05"
+            "바람소리2" -> {
+                strReturn = "wind_02"
             }
 
-            "화이트노이즈" -> {
-                strReturn = "white_noise"
+            "파도소리1" -> {
+                strReturn = "wave_01"
             }
 
-            "핑크노이즈" -> {
-                strReturn = "pink_noise"
+            "파도소리2" -> {
+                strReturn = "wave_02"
+            }
+
+            "화이트노이즈1" -> {
+                strReturn = "whitenoise_01"
+            }
+
+            "화이트노이즈2" -> {
+                strReturn = "whitenoise_02"
+            }
+
+            "치료음악1" -> {
+                strReturn = "music_01"
+            }
+
+            "치료음악2" -> {
+                strReturn = "music_02"
+            }
+
+            "치료음악3" -> {
+                strReturn = "music_03"
             }
         }
 
