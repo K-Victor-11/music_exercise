@@ -53,6 +53,7 @@ class MusicDetailActivity:BaseActivity() {
 //        }
 
         var musicDetailFragment: MusicDetailFragment = MusicDetailFragment.newInstance(longExerciseIndex, "view")
+        musicDetailFragment.baseActivity = this
         pushFragment(R.id.flContent, musicDetailFragment, MusicDetailFragment::class.simpleName.toString())
     }
 

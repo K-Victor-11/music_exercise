@@ -1,10 +1,9 @@
 package com.exercise.music_exercise.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import com.exercise.music_exercise.MusicApplication
+import com.exercise.music_exercise.activities.BaseActivity
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.database.AppRepository
@@ -21,23 +20,38 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
     var itemList = ArrayList<List_ItemsDataModel>()
     var selectItemList : LinkedHashMap<Int, List_ItemsDataModel> = LinkedHashMap()
     private var step:Int = 0
+    var isEditMode:Boolean = false
 
-    fun getGroupInfo(index:Int):List_HeaderDataModel?{
-        var list = appRepository.getMusicGroupList(index)
+    var _headerDataModel : MutableLiveData<List<List_HeaderDataModel>> = MutableLiveData()
+    val headerDataModel : LiveData<List<List_HeaderDataModel>>
+        get() = _headerDataModel
 
-        if(list != null && list.value != null && list.value!!.size > 0){
-            return list.value!!.get(0)
-        } else
-            return null
+    fun getGroupInfo(index:Int){
+        appRepository.getMusicGroupList(index).observe(MusicApplication.currentActivity as BaseActivity, Observer {
+            if (it.size > 0)
+                _headerDataModel.postValue(it)
+        })
     }
 
     fun setGroupTitle(title:String){
         appRepository.setGroupTitle(title, "C")
     }
 
+    fun setGroupTitle(title:String, idx:Int){
+        appRepository.setGroupTitle(title, idx)
+    }
+
     fun setMusicItem(parentIdx:Int, data:List_ItemsDataModel){
         appRepository.setMusicDetail(parentIdx, data)
     }
+
+    fun getMusicItem(parentIdx:Int):LiveData<List<List_ItemsDataModel>>{
+        return appRepository.getMusicDetailList(parentIdx)
+    }
+
+//    fun getCustomMusicDetail(parentIdx: Int):LiveData<List<List_ItemsDataModel>>{
+//        return appRepository.getCustomMusicDetail(parentIdx)
+//    }
 
     fun getGroupLastIndex():Int{
         return appRepository.getGroupLastIndex()
@@ -67,6 +81,10 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
     fun getStep():Int{
         return this.step
     }
+
+//    fun deleteMusicDetailList(headerIdx:Int){
+//        appRepository.deleteMusicDetail(headerIdx)
+//    }
 
     class Factory(val application: Application): ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

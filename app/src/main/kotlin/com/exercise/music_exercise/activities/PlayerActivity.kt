@@ -25,6 +25,7 @@ import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.utils.DateUtils
 import com.exercise.music_exercise.utils.DialogUtils
+import com.exercise.music_exercise.utils.ViewUtils
 import com.exercise.music_exercise.viewmodels.PlayerViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -51,6 +52,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
     lateinit var tvTitle:TextView
     lateinit var ivPlayer:ImageView
+    lateinit var ivBackground :ImageView
     lateinit var seekVolume : SeekBar
     lateinit var btnTimeSetting: Button
     lateinit var pgPlayTime:ProgressBar
@@ -178,6 +180,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         volume_level = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         volume_max_level = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
 
+        ivBackground = findViewById(R.id.ivPlay_Background)
         ivPlayer = findViewById<ImageView>(R.id.ivPlay_Button)
         tvTitle = findViewById(R.id.tvPlay_Title)
         seekVolume = findViewById(R.id.skPlay_Sound)
@@ -277,7 +280,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     fun initIntent() {
         playerViewModel.groupType = if(TextUtils.isEmpty(intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE))) "D" else intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE).toString()
         playerViewModel.selectPos = intent.getIntExtra(AppContents.INTENT_DATA_LIST_POSITION, 0)
-        playerViewModel.setPlayList(intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_ItemsDataModel>)
+        var playList:ArrayList<List_ItemsDataModel> = intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_ItemsDataModel>
+        playerViewModel.setPlayList(playList)
+        ViewUtils.loadImage(playList.get(playerViewModel.selectPos).image_path, null).into(ivBackground)
+
     }
 
     fun initCurrentPlayer() {
@@ -515,6 +521,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
         var item = playerViewModel.playList.value!!.get(playerViewModel.selectPos)
 
+        ViewUtils.loadImage(item.image_path, null).into(ivBackground)
         ivPlayer.setImageResource(R.drawable.ic_pause)
         isPlaying = true
         getPlayTitle(item.musicTitle_kor, item.hertz)

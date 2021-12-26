@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.exercise.music_exercise.AppContents
@@ -37,7 +38,7 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
         setContentView(R.layout.activity_add_list)
 
         if (intent.hasExtra(AppContents.INTENT_DATA_EDIT_MODE)) {
-            isEdit = intent.getBooleanExtra(AppContents.INTENT_DATA_EDIT_MODE, false)
+            addListViewModel.isEditMode = intent.getBooleanExtra(AppContents.INTENT_DATA_EDIT_MODE, false)
         }
 
         if (intent.hasExtra(AppContents.INTENT_DATA_LIST_INDEX)) {
@@ -57,6 +58,18 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
         }
 
         var titleFragment : CustomList_AddTitleFragment = CustomList_AddTitleFragment()
+        if(addListViewModel.isEditMode) {
+            var bundle: Bundle = Bundle()
+            bundle.putBoolean(AppContents.INTENT_DATA_EDIT_MODE, addListViewModel.isEditMode)
+            bundle.putInt(AppContents.INTENT_DATA_LIST_INDEX, selectIndex)
+            titleFragment.arguments = bundle
+
+            addListViewModel.getMusicItem(selectIndex).observe(this, Observer {
+                it.forEach {
+                    addListViewModel.checkSelectList(it.idx, it, true)
+                }
+            })
+        }
         titleFragment.baseActivity = this
         pushFragment(R.id.layout_fragment, titleFragment)
 
@@ -147,12 +160,20 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
                 var musicDao = AppDataBase.getInstance(this, callback).musicListDao()
                 var musicDetailDao = AppDataBase.getInstance(this, callback).musicListDetailDao()
 
-                addListViewModel.setGroupTitle(addListViewModel.addTitle)
-                var parentIdx = addListViewModel.getGroupLastIndex()
+                var parentIdx : Int = 0
+                if(addListViewModel.isEditMode){
+                    addListViewModel.setGroupTitle(addListViewModel.addTitle, selectIndex)
+//                    addListViewModel.deleteMusicDetailList(selectIndex)
+                    parentIdx = selectIndex
+                } else {
+                    addListViewModel.setGroupTitle(addListViewModel.addTitle)
+                    parentIdx = addListViewModel.getGroupLastIndex()
+                }
 
                 addListViewModel.itemList.forEach {
                     addListViewModel.setMusicItem(parentIdx, it)
                 }
+
 
                 setResult(RESULT_OK)
                 finish()

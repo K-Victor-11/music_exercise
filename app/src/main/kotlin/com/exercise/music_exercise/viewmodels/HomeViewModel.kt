@@ -25,6 +25,10 @@ class HomeViewModel(application: Application): AndroidViewModel(application) {
         return appRepository.getMusicGroupListForCustom()
     }
 
+    fun deleteCustomMusicList(idx:Int){
+        appRepository.delCustomListHeader(idx)
+    }
+
     class Factory(val application: Application): ViewModelProvider.Factory{
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return HomeViewModel(application) as T

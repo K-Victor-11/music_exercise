@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +52,7 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
     }
 
     var addResultLauncher: ActivityResultLauncher<Intent>? = null
+    var modifyResultLauncher:ActivityResultLauncher<Intent>? = null
 
     private lateinit var rootView: View
     private lateinit var listView: RecyclerView
@@ -111,6 +113,13 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
                 }
             }
         }
+
+        modifyResultLauncher = registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+        ){
+            result: ActivityResult ->
+
+        }
     }
 
     override fun onAdd() {
@@ -151,7 +160,7 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
 
         var hsMenu: LinkedHashMap<String, String> = LinkedHashMap<String, String>()
 
-        hsMenu.put("Edit", "edit")
+//        hsMenu.put("Edit", "edit")
         hsMenu.put("Delete", "delete")
         hsMenu.put("Cancel", "cancel")
 
@@ -163,18 +172,18 @@ class HomeFragment : BaseFragment(), MusicListAdapter.onMusicListListener, View.
             true,
             object : DialogUtils.OnBottomSheetSelectedListener {
                 override fun onSelected(index: Int, text: String, value: String) {
-//                if(value == "edit"){
-//                    Log.d("kamuel", "selectData!!.idx :: "+selectData!!.idx)
-//                    var intent : Intent = Intent(baseActivity!!, ListAddActivity::class.java)
-//                    intent.putExtra(AppContents.INTENT_DATA_EDIT_MODE, true)
-//                    intent.putExtra(AppContents.INTENT_DATA_LIST_INDEX, selectData!!.idx)
-//                    Log.d("kamuel", "selectData!!.idx 2 :: "+selectData!!.idx)
-//
-//                    baseActivity!!.startActivityForResult(intent, AppContents.REQUEST_CODE_ADDLIST)
-//                } else if(value == "delete"){
-////                    Toast.makeText(this@MainActivity, "작업 중 입니다. ㅠㅠ", Toast.LENGTH_SHORT).show()
+                if(value == "edit"){
+                    Log.d("kamuel", "selectData!!.idx :: "+selectData!!.idx)
+                    var intent : Intent = Intent(baseActivity!!, ListAddActivity::class.java)
+                    intent.putExtra(AppContents.INTENT_DATA_EDIT_MODE, true)
+                    intent.putExtra(AppContents.INTENT_DATA_LIST_INDEX, selectData!!.idx)
+                    Log.d("kamuel", "selectData!!.idx 2 :: "+selectData!!.idx)
+
+                    modifyResultLauncher!!.launch(intent)
+                } else if(value == "delete"){
+//                    Toast.makeText(this@MainActivity, "작업 중 입니다. ㅠㅠ", Toast.LENGTH_SHORT).show()
 //                    homeViewModel.healthListDelete(selectData!!.idx)
-//                }
+                }
                 }
             })
     }

@@ -17,6 +17,7 @@ class MusicDetailViewModel(application:Application):AndroidViewModel(application
     }
 
     var selectPos : Int = 0
+    var isLoading : Boolean = true
     var _customType : MutableLiveData<String> = MutableLiveData()
     val customType : LiveData<String>
         get() = _customType
