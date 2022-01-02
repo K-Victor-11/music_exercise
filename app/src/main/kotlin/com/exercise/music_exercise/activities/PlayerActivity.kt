@@ -116,10 +116,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
                                 if (playerViewModel.groupType == "C") {
                                     /** 음원 Next **/
-                                    Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
+//                                    Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
                                     handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
                                 } else if (playerViewModel.groupType == "D") {
-                                    Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
+//                                    Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
                                     handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
                                 }
                             } else {
@@ -161,7 +161,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     }
 
     fun saveExercise(playListItem:List_ItemsDataModel){
-        Toast.makeText(this, "음원 Report 저장!!", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "음원 Report 저장!!", Toast.LENGTH_SHORT).show()
         var reportData : PlayReportDataModel = PlayReportDataModel(playListItem.musicTitle_kor, playListItem.musicCode, playListItem.idx, playListItem.hertz, DateUtils.getNowDate("yyyyMMdd"))
         playerViewModel.saveExercise(reportData)
     }
