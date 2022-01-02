@@ -12,6 +12,6 @@
     <string name="select_menu_list">음원리스트에서 선택</string>
     <string name="select_menu_all">음원전체에서 선택</string>
 
-    <string name="custom_title">운동그룹의 제목을 입력해주세요.</string>
+    <string name="custom_title">음원그룹의 제목을 입력해주세요.</string>
 
 </resources>
