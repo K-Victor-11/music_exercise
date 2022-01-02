@@ -352,71 +352,71 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     fun getRawName(title: String, hertz: Int): String {
         var strReturn = ""
         when (title) {
-            "개울소리1" -> {
+            "1. 개울소리1" -> {
                 strReturn = "water_01"
             }
 
-            "개울소리2" -> {
+            "2. 개울소리2" -> {
                 strReturn = "water_02"
             }
 
-            "개울소리3" -> {
+            "3. 개울소리3" -> {
                 strReturn = "water_03"
             }
 
-            "개울소리4" -> {
+            "4. 개울소리4" -> {
                 strReturn = "water_04"
             }
 
-            "개울소리5" -> {
+            "5. 개울소리5" -> {
                 strReturn = "water_05"
             }
 
-            "비소리1" -> {
+            "6. 비소리1" -> {
                 strReturn = "rain_01"
             }
 
-            "비소리2" -> {
+            "7. 비소리2" -> {
                 strReturn = "rain_02"
             }
 
-            "비소리3" -> {
+            "8. 비소리3" -> {
                 strReturn = "rain_03"
             }
 
-            "바람소리1" -> {
+            "9. 바람소리1" -> {
                 strReturn = "wind_01"
             }
 
-            "바람소리2" -> {
+            "10. 바람소리2" -> {
                 strReturn = "wind_02"
             }
 
-            "파도소리1" -> {
+            "11. 파도소리1" -> {
                 strReturn = "wave_01"
             }
 
-            "파도소리2" -> {
+            "12. 파도소리2" -> {
                 strReturn = "wave_02"
             }
 
-            "화이트노이즈1" -> {
+            "13. 화이트노이즈1" -> {
                 strReturn = "pink_noise"
             }
 
-            "화이트노이즈2" -> {
+            "14. 화이트노이즈2" -> {
                 strReturn = "white_noise"
             }
 
-            "치료음악1" -> {
+            "15. 치료음악1" -> {
                 strReturn = "music_01"
             }
 
-            "치료음악2" -> {
+            "16. 치료음악2" -> {
                 strReturn = "music_02"
             }
 
-            "치료음악3" -> {
+            "17. 치료음악3" -> {
                 strReturn = "music_03"
             }
         }
