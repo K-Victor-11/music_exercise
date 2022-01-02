@@ -401,11 +401,11 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             }
 
             "화이트노이즈1" -> {
-                strReturn = "whitenoise_01"
+                strReturn = "pink_noise"
             }
 
             "화이트노이즈2" -> {
-                strReturn = "whitenoise_02"
+                strReturn = "white_noise"
             }
 
             "치료음악1" -> {

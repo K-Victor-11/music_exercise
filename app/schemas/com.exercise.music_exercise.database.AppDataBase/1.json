@@ -1,0 +1,217 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "62ee4e47fe0a9524742fe994d59bad59",
+    "entities": [
+      {
+        "tableName": "list_header",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idx` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `listTitle_kor` TEXT NOT NULL, `listTitle_eng` TEXT NOT NULL, `image_path` TEXT NOT NULL, `customType` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "idx",
+            "columnName": "idx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "listTitle_kor",
+            "columnName": "listTitle_kor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "listTitle_eng",
+            "columnName": "listTitle_eng",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "image_path",
+            "columnName": "image_path",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "customType",
+            "columnName": "customType",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idx"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "list_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idx` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `checked` INTEGER NOT NULL, `header_idx` INTEGER NOT NULL, `musicCode` TEXT NOT NULL, `musicTitle_kor` TEXT NOT NULL, `musicTitle_eng` TEXT NOT NULL, `image_path` TEXT NOT NULL, `hertz` INTEGER NOT NULL, `playTime` INTEGER NOT NULL, `sortOrder` INTEGER NOT NULL, FOREIGN KEY(`header_idx`) REFERENCES `list_header`(`idx`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "idx",
+            "columnName": "idx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "checked",
+            "columnName": "checked",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "header_idx",
+            "columnName": "header_idx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "musicCode",
+            "columnName": "musicCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "musicTitle_kor",
+            "columnName": "musicTitle_kor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "musicTitle_eng",
+            "columnName": "musicTitle_eng",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "image_path",
+            "columnName": "image_path",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hertz",
+            "columnName": "hertz",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playTime",
+            "columnName": "playTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sortOrder",
+            "columnName": "sortOrder",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idx"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_list_items_idx",
+            "unique": false,
+            "columnNames": [
+              "idx"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_list_items_idx` ON `${TABLE_NAME}` (`idx`)"
+          },
+          {
+            "name": "index_list_items_header_idx",
+            "unique": false,
+            "columnNames": [
+              "header_idx"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_list_items_header_idx` ON `${TABLE_NAME}` (`header_idx`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "list_header",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "header_idx"
+            ],
+            "referencedColumns": [
+              "idx"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "play_report",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idx` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `playCount` INTEGER NOT NULL, `musicTitle` TEXT NOT NULL, `musicCode` TEXT NOT NULL, `musicItemIdx` INTEGER NOT NULL, `hertz` INTEGER NOT NULL, `playDate` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "idx",
+            "columnName": "idx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playCount",
+            "columnName": "playCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "musicTitle",
+            "columnName": "musicTitle",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "musicCode",
+            "columnName": "musicCode",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "musicItemIdx",
+            "columnName": "musicItemIdx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hertz",
+            "columnName": "hertz",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playDate",
+            "columnName": "playDate",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idx"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '62ee4e47fe0a9524742fe994d59bad59')"
+    ]
+  }
+}
