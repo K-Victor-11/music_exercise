@@ -199,12 +199,12 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 stop()
                 runningTime = 0
                 if(isChecked) {
-                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_line_e5e5e5)
-                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_979797))
+                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_999999)
+                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
                     pgPlayTime.progress = 1
                     pgPlayTime.max = 1
                 } else {
-                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_line_999999)
+                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_99ccff)
                     btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
                     pgPlayTime.progress = 0
                     pgPlayTime.max = playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime * 60 * 1000
@@ -448,7 +448,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 
             R.id.btnPlay_TimeSetting -> {
                 if(chkLoop.isChecked){
-                    Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_LONG).show()
                 } else {
                     var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
                     bottomDialogItem.put("1분", "1")
@@ -469,7 +469,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                         object : DialogUtils.OnBottomSheetSelectedListener {
                             override fun onSelected(index: Int, text: String, value: String) {
                                 /** delete **/
-                                Toast.makeText(this@PlayerActivity, value, Toast.LENGTH_SHORT)
+                                Toast.makeText(this@PlayerActivity, value+"분 설정되었습니다.", Toast.LENGTH_SHORT)
                                     .show()
                                 playerViewModel.changePlayTime(value.toInt())
                                 setMilliseconds(value.toInt())

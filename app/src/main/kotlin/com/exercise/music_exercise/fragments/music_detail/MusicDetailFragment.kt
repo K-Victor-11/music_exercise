@@ -116,10 +116,10 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
 
             startActivity(playIntent)
 
-            if (it == "C")
-                Toast.makeText(mContext, "사용자 정의 리스트", Toast.LENGTH_SHORT).show()
-            else if(it == "D")
-                Toast.makeText(mContext, "기본 정의 리스트", Toast.LENGTH_SHORT).show()
+//            if (it == "C")
+//                Toast.makeText(mContext, "사용자 정의 리스트", Toast.LENGTH_SHORT).show()
+//            else if(it == "D")
+//                Toast.makeText(mContext, "기본 정의 리스트", Toast.LENGTH_SHORT).show()
         })
 
         detailViewModel.getDetailList(viewLifecycleOwner, idx)
