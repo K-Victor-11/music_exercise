@@ -21,7 +21,7 @@
     </group>
     <item
         android:id="@+id/nav_kakao"
-        android:icon="@android:drawable/ic_dialog_map"
+        android:icon="@android:drawable/sym_action_chat"
         android:title="카카오톡 문의"/>
     <item
         android:id="@+id/nav_webpage"
