@@ -50,7 +50,7 @@ class SplashActivity: AppCompatActivity() {
             var intent: Intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 5000)
+        }, 2000)
     }
 
     fun init(){
