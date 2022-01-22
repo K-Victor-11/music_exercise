@@ -17,7 +17,8 @@
         <service android:name=".service.ClearFromRecentService"/>
 
         <activity android:name=".activities.SplashActivity"
-            android:theme="@style/Theme.Music_exercise.NoActionBar">
+            android:theme="@style/Theme.Music_exercise.NoActionBar"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
