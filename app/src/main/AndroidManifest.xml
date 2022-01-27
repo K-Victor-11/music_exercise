@@ -18,7 +18,7 @@
 
         <activity android:name=".activities.SplashActivity"
             android:theme="@style/Theme.Music_exercise.NoActionBar"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
