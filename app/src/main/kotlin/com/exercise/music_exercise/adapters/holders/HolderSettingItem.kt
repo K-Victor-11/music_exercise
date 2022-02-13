@@ -5,18 +5,19 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.utils.ViewUtils
 import kotlinx.android.synthetic.main.holder_setting_list.view.*
 
 class HolderSettingItem(var context:Context, itemView:View, var listener:HolderSettingItem.onSelectExerciseItemListener):RecyclerView.ViewHolder(itemView) {
     interface onSelectExerciseItemListener{
-        fun onCountUp(data:List_ItemsDataModel, position: Int)
-        fun onCountDown(data:List_ItemsDataModel, position:Int)
-        fun onSortUp(data:List_ItemsDataModel, position:Int)
-        fun onSortDown(data:List_ItemsDataModel, position:Int)
+        fun onCountUp(data:List_DefaultItemDataModel, position: Int)
+        fun onCountDown(data:List_DefaultItemDataModel, position:Int)
+        fun onSortUp(data:List_DefaultItemDataModel, position:Int)
+        fun onSortDown(data:List_DefaultItemDataModel, position:Int)
     }
-    fun setSelectExercise(data:List_ItemsDataModel, position:Int, max:Int){
+    fun setSelectExercise(data: List_DefaultItemDataModel, position:Int, max:Int){
         with(itemView){
             var musicHertz = "원본"
 
@@ -38,21 +39,21 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
             ivSettingItem_SortDown.setTag(R.id.list_position, position)
 
             ivSettingItem_CountLeft.setOnClickListener {
-                var data:List_ItemsDataModel = it.getTag(R.id.list_data) as List_ItemsDataModel
+                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
                 var pos:Int = it.getTag(R.id.list_position).toString().toInt()
 
                 listener.onCountDown(data, pos)
             }
 
             ivSettingItem_CountRight.setOnClickListener {
-                var data:List_ItemsDataModel = it.getTag(R.id.list_data) as List_ItemsDataModel
+                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
                 var pos:Int = it.getTag(R.id.list_position).toString().toInt()
 
                 listener.onCountUp(data, pos)
             }
 
             ivSettingItem_SortUp.setOnClickListener {
-                var data:List_ItemsDataModel = it.getTag(R.id.list_data) as List_ItemsDataModel
+                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
                 var pos:Int = it.getTag(R.id.list_position).toString().toInt()
 
                 if(pos == 0)
@@ -62,7 +63,7 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
             }
 
             ivSettingItem_SortDown.setOnClickListener {
-                var data:List_ItemsDataModel = it.getTag(R.id.list_data) as List_ItemsDataModel
+                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
                 var pos:Int = it.getTag(R.id.list_position).toString().toInt()
 
                 if(pos >= max-1)

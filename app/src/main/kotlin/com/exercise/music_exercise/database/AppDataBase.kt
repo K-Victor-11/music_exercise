@@ -4,20 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
-import com.exercise.music_exercise.database.dao.CustomListDetailDao
-import com.exercise.music_exercise.database.dao.MusicListDao
-import com.exercise.music_exercise.database.dao.MusicListDetailDao
-import com.exercise.music_exercise.database.dao.PlayReportDao
+import com.exercise.music_exercise.database.dao.*
 
-@Database(entities = arrayOf(List_HeaderDataModel::class, List_ItemsDataModel::class,
-    PlayReportDataModel::class), version = 1, exportSchema = true)
+@Database(entities = arrayOf(List_HeaderDataModel::class, List_ItemsDataModel::class, List_DefaultItemDataModel::class, PlayReportDataModel::class), version = 1, exportSchema = true)
 open abstract class AppDataBase : RoomDatabase() {
 
     abstract fun musicListDao() : MusicListDao
     abstract fun musicListDetailDao() : MusicListDetailDao
+    abstract fun musicListDefaultDetailDao() :MusicListDefaultDetailDao
     abstract fun playReportDao() : PlayReportDao
 //    abstract fun customListDetailDao() : CustomListDetailDao
 

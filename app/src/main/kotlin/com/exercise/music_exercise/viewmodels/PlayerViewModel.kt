@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.database.AppRepository
@@ -19,11 +20,11 @@ class PlayerViewModel(val application: Application) : ViewModel() {
         AppRepository(application)
     }
 
-    var _playList : MutableLiveData<ArrayList<List_ItemsDataModel>> = MutableLiveData()
-    val playList : LiveData<ArrayList<List_ItemsDataModel>>
+    var _playList : MutableLiveData<ArrayList<List_DefaultItemDataModel>> = MutableLiveData()
+    val playList : LiveData<ArrayList<List_DefaultItemDataModel>>
         get() = _playList
 
-    fun setPlayList(list:ArrayList<List_ItemsDataModel>){
+    fun setPlayList(list:ArrayList<List_DefaultItemDataModel>){
         _playList.postValue(list)
     }
 

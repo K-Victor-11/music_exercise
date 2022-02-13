@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.utils.DateUtils
@@ -160,7 +161,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         return playTimeFormat
     }
 
-    fun saveExercise(playListItem:List_ItemsDataModel){
+    fun saveExercise(playListItem: List_DefaultItemDataModel){
 //        Toast.makeText(this, "음원 Report 저장!!", Toast.LENGTH_SHORT).show()
         var reportData : PlayReportDataModel = PlayReportDataModel(playListItem.musicTitle_kor, playListItem.musicCode, playListItem.idx, playListItem.hertz, DateUtils.getNowDate("yyyyMMdd"))
         playerViewModel.saveExercise(reportData)
@@ -280,7 +281,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     fun initIntent() {
         playerViewModel.groupType = if(TextUtils.isEmpty(intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE))) "D" else intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE).toString()
         playerViewModel.selectPos = intent.getIntExtra(AppContents.INTENT_DATA_LIST_POSITION, 0)
-        var playList:ArrayList<List_ItemsDataModel> = intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_ItemsDataModel>
+        var playList:ArrayList<List_DefaultItemDataModel> = intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_DefaultItemDataModel>
         playerViewModel.setPlayList(playList)
         ViewUtils.loadImage(playList.get(playerViewModel.selectPos).image_path, null).into(ivBackground)
 

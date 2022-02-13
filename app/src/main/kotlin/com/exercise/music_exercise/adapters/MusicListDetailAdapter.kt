@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.adapters.holders.MusicDetailItemHolder
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 
 class MusicListDetailAdapter(val context: Context, val listener:MusicListDetailAdapter.onMusicListDetailListener, val viewType:String) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 MusicDetailItemHolder.onDetailItemListener{
 
-    var list : List<List_ItemsDataModel> ?= null
+    var list : List<List_DefaultItemDataModel> ?= null
 
     interface onMusicListDetailListener{
-        fun onItemSelect(data:List_ItemsDataModel, position:Int)
-        fun onItemChecked(data:List_ItemsDataModel, position:Int)
+        fun onItemSelect(data:List_DefaultItemDataModel, position:Int)
+        fun onItemChecked(data:List_DefaultItemDataModel, position:Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -38,15 +39,15 @@ MusicDetailItemHolder.onDetailItemListener{
             return 0
     }
 
-    override fun onItemSelect(data: List_ItemsDataModel, position: Int) {
+    override fun onItemSelect(data: List_DefaultItemDataModel, position: Int) {
         listener.onItemSelect(data, position)
     }
 
-    override fun onItemCheck(data: List_ItemsDataModel, position: Int) {
+    override fun onItemCheck(data: List_DefaultItemDataModel, position: Int) {
         listener.onItemChecked(data, position)
     }
 
-    fun updateList(list:List<List_ItemsDataModel>){
+    fun updateList(list:List<List_DefaultItemDataModel>){
         this.list = list
         notifyDataSetChanged()
     }

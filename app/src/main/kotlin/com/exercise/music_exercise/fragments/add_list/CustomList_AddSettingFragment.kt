@@ -14,6 +14,7 @@ import com.exercise.music_exercise.R
 import com.exercise.music_exercise.activities.ListAddActivity
 import com.exercise.music_exercise.adapters.CustomListSettingAdapter
 import com.exercise.music_exercise.adapters.CustomMusicListAdapter
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.fragments.BaseFragment
 import com.exercise.music_exercise.viewmodels.AddListSettingViewModel
@@ -49,7 +50,7 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
         if (baseActivity is ListAddActivity) {
             (baseActivity as ListAddActivity).addListViewModel.setStep(3)
 
-            var selectList: ArrayList<List_ItemsDataModel> = arrayListOf()
+            var selectList: ArrayList<List_DefaultItemDataModel> = arrayListOf()
             (baseActivity as ListAddActivity).addListViewModel.selectItemList.forEach { i, listItemsdatamodel ->
                 selectList.add(listItemsdatamodel)
             }
@@ -83,7 +84,7 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
         })
     }
 
-    override fun onCountUp(data: List_ItemsDataModel, position: Int) {
+    override fun onCountUp(data: List_DefaultItemDataModel, position: Int) {
         var time = settingViewModel._setList!!.value!!.get(position).playTime
         var isChange: Boolean = true
 
@@ -117,7 +118,7 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
 
     }
 
-    override fun onCountDown(data: List_ItemsDataModel, position: Int) {
+    override fun onCountDown(data: List_DefaultItemDataModel, position: Int) {
         var time = settingViewModel._setList!!.value!!.get(position).playTime
         var isChange: Boolean = true
 
@@ -150,7 +151,7 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
         }
     }
 
-    override fun onSortUp(data: List_ItemsDataModel, position: Int) {
+    override fun onSortUp(data: List_DefaultItemDataModel, position: Int) {
         var insertPosition = position
         var removePosition = position
 
@@ -165,7 +166,7 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
         settingViewModel.setSettingList( settingViewModel._setList!!.value!!)
     }
 
-    override fun onSortDown(data: List_ItemsDataModel, position: Int) {
+    override fun onSortDown(data: List_DefaultItemDataModel, position: Int) {
         settingViewModel._setList!!.value!!.add(position+2, data)
         settingViewModel._setList!!.value!!.removeAt(position)
 

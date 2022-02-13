@@ -66,7 +66,10 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
 
             addListViewModel.getMusicItem(selectIndex).observe(this, Observer {
                 it.forEach {
-                    addListViewModel.checkSelectList(it.idx, it, true)
+                    addListViewModel.getMusicDefaultItem(it.item_idx).value?.apply {
+                        addListViewModel.checkSelectList(it.idx, this.get(0), true)
+                    }
+
                 }
             })
         }

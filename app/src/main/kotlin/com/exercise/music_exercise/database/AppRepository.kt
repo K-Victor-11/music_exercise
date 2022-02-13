@@ -2,18 +2,13 @@ package com.exercise.music_exercise.database
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.exercise.music_exercise.data_models.CustomList_ItemDataModel
-import com.exercise.music_exercise.data_models.List_HeaderDataModel
-import com.exercise.music_exercise.data_models.List_ItemsDataModel
-import com.exercise.music_exercise.data_models.PlayReportDataModel
-import com.exercise.music_exercise.database.dao.CustomListDetailDao
-import com.exercise.music_exercise.database.dao.MusicListDao
-import com.exercise.music_exercise.database.dao.MusicListDetailDao
-import com.exercise.music_exercise.database.dao.PlayReportDao
+import com.exercise.music_exercise.data_models.*
+import com.exercise.music_exercise.database.dao.*
 
 class AppRepository(application: Application) {
     private var musicListDao : MusicListDao
     private var musicDetailListDao : MusicListDetailDao
+    private var musicDefaultDao : MusicListDefaultDetailDao
     private var playReportDao:PlayReportDao
 //    private var customListDao : CustomListDetailDao
 
@@ -21,6 +16,7 @@ class AppRepository(application: Application) {
         val database = AppDataBase.getInstance(application)!!
         musicListDao = (database as AppDataBase).musicListDao()
         musicDetailListDao = (database as AppDataBase).musicListDetailDao()
+        musicDefaultDao = (database as AppDataBase).musicListDefaultDetailDao()
         playReportDao = (database as AppDataBase).playReportDao()
 //        customListDao = (database as AppDataBase).customListDetailDao()
     }
@@ -45,6 +41,18 @@ class AppRepository(application: Application) {
         return musicDetailListDao.getDetailList()
     }
 
+    fun getMusicDefaultDetailList(idx:Int):LiveData<List<List_DefaultItemDataModel>>{
+        return musicDefaultDao.getDefaultItem(idx)
+    }
+
+    fun getMusicDefaultDetailAllList():LiveData<List<List_DefaultItemDataModel>>{
+        return musicDefaultDao.getDefaultAllList()
+    }
+
+    fun getMusicDefaultParentDetailList(parentIdx:Int):LiveData<List<List_DefaultItemDataModel>>{
+        return musicDefaultDao.getDefaultParentList(parentIdx)
+    }
+
     fun setGroupTitle(title:String){
         musicListDao.insert(List_HeaderDataModel(title, title, "", "C"))
     }
@@ -59,8 +67,8 @@ class AppRepository(application: Application) {
         musicListDao.update(updateData)
     }
 
-    fun setMusicDetail(parentIndex:Int, data : List_ItemsDataModel){
-        musicDetailListDao.insert(List_ItemsDataModel(parentIndex, data.musicCode, data.musicTitle_kor, data.musicTitle_eng, data.image_path, data.hertz, data.playTime, data.sortOrder))
+    fun setMusicDetail(parentIndex:Int, data : List_DefaultItemDataModel){
+        musicDetailListDao.insert(List_ItemsDataModel(parentIndex, data.idx, data.playTime, data.sortOrder))
     }
 
     fun getGroupLastIndex():Int{

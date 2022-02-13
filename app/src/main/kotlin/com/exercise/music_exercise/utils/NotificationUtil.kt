@@ -10,6 +10,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.service.MusicService
 
@@ -24,7 +25,7 @@ class NotificationUtil {
         var mediaNotification : Notification ?= null
 
         @JvmStatic
-        open fun createNotification(context: Context, itemData:List_ItemsDataModel, playButton:Int, pos:Int, size:Int){
+        open fun createNotification(context: Context, itemData:List_DefaultItemDataModel, playButton:Int, pos:Int, size:Int){
             var notificationManagerCompat = NotificationManagerCompat.from(context)
             var notificationManager :NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             var mediaSessionCompat: MediaSessionCompat = MediaSessionCompat(context, "tag")

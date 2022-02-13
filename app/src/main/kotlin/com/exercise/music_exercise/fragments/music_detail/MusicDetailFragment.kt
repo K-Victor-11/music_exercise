@@ -17,6 +17,7 @@ import com.exercise.music_exercise.R
 import com.exercise.music_exercise.activities.ListAddActivity
 import com.exercise.music_exercise.activities.PlayerActivity
 import com.exercise.music_exercise.adapters.MusicListDetailAdapter
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.fragments.BaseFragment
 import com.exercise.music_exercise.utils.decorations.GridItemDecoration
@@ -142,12 +143,12 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
         return rootView
     }
 
-    override fun onItemSelect(data: List_ItemsDataModel, position: Int) {
+    override fun onItemSelect(data: List_DefaultItemDataModel, position: Int) {
         detailViewModel.selectPos = position
         detailViewModel.getGroupType(idx)
     }
 
-    override fun onItemChecked(data: List_ItemsDataModel, position: Int) {
+    override fun onItemChecked(data: List_DefaultItemDataModel, position: Int) {
         if (baseActivity is ListAddActivity) {
             (baseActivity as ListAddActivity).addListViewModel.itemList.add(data)
         }

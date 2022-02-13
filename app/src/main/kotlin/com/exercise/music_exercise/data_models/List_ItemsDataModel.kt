@@ -9,29 +9,31 @@ import java.io.Serializable
 @Entity(
     tableName = "list_items",
     foreignKeys = arrayOf(
-            ForeignKey(
-                entity = List_HeaderDataModel::class,
-                parentColumns = arrayOf("idx"),
-                childColumns = arrayOf("header_idx"),
-                onDelete = ForeignKey.CASCADE
-            )
+        ForeignKey(
+            entity = List_HeaderDataModel::class,
+            parentColumns = arrayOf("idx"),
+            childColumns = arrayOf("header_idx"),
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = List_DefaultItemDataModel::class,
+            parentColumns = arrayOf("idx"),
+            childColumns = arrayOf("item_idx"),
+            onDelete = ForeignKey.CASCADE
+        )
     ),
     indices = [
         Index("idx"),
-        Index("header_idx")
+        Index("header_idx"),
+        Index("item_idx")
     ]
 )
 data class List_ItemsDataModel(
-    val header_idx:Int,
-    val musicCode:String,
-    val musicTitle_kor:String,
-    val musicTitle_eng:String,
-    val image_path:String,
-    val hertz:Int,
+    @PrimaryKey(autoGenerate = true) val idx:Int = 0,
+    var header_idx:Int,
+    var item_idx:Int,
     var playTime:Int = 1,
     var sortOrder:Int = -1,
 ):Serializable{
-    @PrimaryKey(autoGenerate = true)
-    var idx:Int = 0
     var checked:Boolean = false
 }
