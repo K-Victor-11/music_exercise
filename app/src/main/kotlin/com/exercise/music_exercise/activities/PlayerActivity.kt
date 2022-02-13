@@ -61,6 +61,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var chkLoop:CheckBox
 
     var isPlaying:Boolean = false
+    var isPause:Boolean = false
 
     val onCompletionListener: MediaPlayer.OnCompletionListener = MediaPlayer.OnCompletionListener {
         it.release()
@@ -85,13 +86,16 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 if(msg.what == 0){
                     if(isPlaying){
                         /** 초기화 **/
-                        runningTime = 0
+                        if(!isPause) {
+                            runningTime = 0
 
-                        if(!chkLoop.isChecked) {
-                            pgPlayTime.progress = 0
-                            tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
-                        } else {
-                            tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                            if (!chkLoop.isChecked) {
+                                pgPlayTime.progress = 0
+                                tvRunningTime.text =
+                                    "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
+                            } else {
+                                tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                            }
                         }
 
                         handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
@@ -129,6 +133,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                         }
                     }
                 } else if(msg.what == 2){
+                    isPause = false
                     playerViewModel.selectPos ++
                     if(playerViewModel.selectPos >= playerViewModel.playList.value!!.size){
                         handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
@@ -438,9 +443,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     override fun onClick(view: View) {
         when (view.id) {
             R.id.ivPlay_Button -> {
-                if (isPlaying)
+                if (isPlaying) {
+                    isPause = true
                     onMusicPause()
-                else {
+                } else {
                     var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                     onPlay(item.musicTitle_kor, item.hertz)
                     handler.sendEmptyMessage(HANDLER_WHAT_SETTING)

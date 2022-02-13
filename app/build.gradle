@@ -91,9 +91,7 @@ dependencies {
     implementation ("androidx.room:room-rxjava2:$room_version") {
         exclude(group:'org.xerial')
     }
-    testImplementation ("androidx.room:room-testing:$room_version") {
-        exclude(group:'org.xerial')
-    }
+
     implementation 'org.xerial:sqlite-jdbc:3.34.0'
 
 }
