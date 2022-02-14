@@ -56,9 +56,11 @@ class MusicListItemHolder(val context : Context,
             ivListMenu.visibility = View.GONE
         }else {
             if(data.customType == "D") {
+                ivTitleImage.visibility = View.VISIBLE
                 chkList.visibility = View.GONE
                 ivListMenu.visibility = View.GONE
             }else{
+                ivTitleImage.visibility = View.GONE
                 chkList.visibility = View.GONE
                 ivListMenu.visibility = View.VISIBLE
             }
