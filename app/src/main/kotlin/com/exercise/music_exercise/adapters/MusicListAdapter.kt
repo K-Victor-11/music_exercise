@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ onAddHolderListener {
         fun onChecked(data:List_HeaderDataModel, position:Int)
     }
 
-    var musicList: List<List_HeaderDataModel>? = null
+    var musicList: List<List_HeaderDataModel>? = arrayListOf()
 
     val VIEWTYPE_ITME: Int = 0
     val VIEWTYPE_ADD: Int = 1
@@ -52,10 +53,10 @@ onAddHolderListener {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position != 0) {
+        if(holder is MusicListItemHolder){
             (holder as MusicListItemHolder).setMusicListItem(
-                musicList!!.get(position - 1),
-                position - 1
+                musicList!!.get(position),
+                position
             )
         }
     }
@@ -68,10 +69,11 @@ onAddHolderListener {
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position == 0){
+        if(position == musicList!!.size){
             return VIEWTYPE_ADD
-        } else
+        } else {
             return VIEWTYPE_ITME
+        }
     }
 
     override fun onSelectItem(data: List_HeaderDataModel, position: Int) {
