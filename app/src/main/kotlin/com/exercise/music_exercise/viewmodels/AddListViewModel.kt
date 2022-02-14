@@ -71,11 +71,11 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
                     selectItemList.remove(idx)
             }
 
-//            var order:Int = 0
-//            for (key in selectItemList.keys) {
-//                selectItemList.get(key)!!.sortOrder = order
-//                order ++
-//            }
+            var order:Int = 0
+            for (key in selectItemList.keys) {
+                selectItemList.get(key)!!.sortOrder = order
+                order ++
+            }
         }
     }
 

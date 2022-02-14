@@ -68,7 +68,7 @@ class AppRepository(application: Application) {
     }
 
     fun setMusicDetail(parentIndex:Int, data : List_DefaultItemDataModel){
-        musicDetailListDao.insert(List_ItemsDataModel(parentIndex, data.idx, data.playTime, data.sortOrder))
+        musicDetailListDao.insert(List_ItemsDataModel(0, parentIndex, data.idx, data.playTime, data.sortOrder))
     }
 
     fun getGroupLastIndex():Int{
