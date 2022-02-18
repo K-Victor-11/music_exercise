@@ -33,7 +33,7 @@ class AppRepository(application: Application) {
         return musicListDao.getGroupList(index)
     }
 
-    fun getMusicDetailList(parentIdx:Int):LiveData<List<List_ItemsDataModel>>{
+    fun getMusicDetailList(parentIdx:Int):LiveData<List<List_DefaultItemDataModel>>{
         return musicDetailListDao.getDetailList(parentIdx)
     }
 

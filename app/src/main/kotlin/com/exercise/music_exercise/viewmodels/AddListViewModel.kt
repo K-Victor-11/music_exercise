@@ -46,7 +46,7 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
         appRepository.setMusicDetail(parentIdx, data)
     }
 
-    fun getMusicItem(parentIdx:Int):LiveData<List<List_ItemsDataModel>>{
+    fun getMusicItem(parentIdx:Int):LiveData<List<List_DefaultItemDataModel>>{
         return appRepository.getMusicDetailList(parentIdx)
     }
 
