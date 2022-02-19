@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.exercise.music_exercise.MusicApplication
 import com.exercise.music_exercise.activities.BaseActivity
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.database.AppRepository
@@ -17,8 +18,8 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
     var topTitle:String = ""
     /** 저장 타이틀 **/
     var addTitle:String = ""
-    var itemList = ArrayList<List_ItemsDataModel>()
-    var selectItemList : LinkedHashMap<Int, List_ItemsDataModel> = LinkedHashMap()
+    var itemList = ArrayList<List_DefaultItemDataModel>()
+    var selectItemList : LinkedHashMap<Int, List_DefaultItemDataModel> = LinkedHashMap()
     private var step:Int = 0
     var isEditMode:Boolean = false
 
@@ -41,12 +42,16 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
         appRepository.setGroupTitle(title, idx)
     }
 
-    fun setMusicItem(parentIdx:Int, data:List_ItemsDataModel){
+    fun setMusicItem(parentIdx:Int, data:List_DefaultItemDataModel){
         appRepository.setMusicDetail(parentIdx, data)
     }
 
-    fun getMusicItem(parentIdx:Int):LiveData<List<List_ItemsDataModel>>{
+    fun getMusicItem(parentIdx:Int):LiveData<List<List_DefaultItemDataModel>>{
         return appRepository.getMusicDetailList(parentIdx)
+    }
+
+    fun getMusicDefaultItem(idx:Int):LiveData<List<List_DefaultItemDataModel>>{
+        return appRepository.getMusicDefaultDetailList(idx)
     }
 
 //    fun getCustomMusicDetail(parentIdx: Int):LiveData<List<List_ItemsDataModel>>{
@@ -57,7 +62,7 @@ class AddListViewModel(application:Application):AndroidViewModel(application) {
         return appRepository.getGroupLastIndex()
     }
 
-    fun checkSelectList(idx:Int, data:List_ItemsDataModel, isCheck:Boolean){
+    fun checkSelectList(idx:Int, data:List_DefaultItemDataModel, isCheck:Boolean){
         if(selectItemList != null){
             if(isCheck && !selectItemList.containsKey(idx)){
                 selectItemList.put(idx, data)

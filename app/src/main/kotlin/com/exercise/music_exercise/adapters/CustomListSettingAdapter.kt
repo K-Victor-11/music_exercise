@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.adapters.holders.HolderSettingItem
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 
 class CustomListSettingAdapter(val context: Context, val listener:CustomListSettingAdapter.onSettingListener): RecyclerView.Adapter<RecyclerView.ViewHolder>(), HolderSettingItem.onSelectExerciseItemListener {
 
-    var musicList : ArrayList<List_ItemsDataModel> = arrayListOf()
+    var musicList : ArrayList<List_DefaultItemDataModel> = arrayListOf()
 
     interface onSettingListener{
-        fun onCountUp(data:List_ItemsDataModel, position:Int)
-        fun onCountDown(data:List_ItemsDataModel, position:Int)
-        fun onSortUp(data:List_ItemsDataModel, position:Int)
-        fun onSortDown(data:List_ItemsDataModel, position:Int)
+        fun onCountUp(data:List_DefaultItemDataModel, position:Int)
+        fun onCountDown(data:List_DefaultItemDataModel, position:Int)
+        fun onSortUp(data:List_DefaultItemDataModel, position:Int)
+        fun onSortDown(data:List_DefaultItemDataModel, position:Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -37,24 +38,24 @@ class CustomListSettingAdapter(val context: Context, val listener:CustomListSett
         else return 0
     }
 
-    fun updateList(list:ArrayList<List_ItemsDataModel>){
+    fun updateList(list:ArrayList<List_DefaultItemDataModel>){
         this.musicList = list
         notifyDataSetChanged()
     }
 
-    override fun onCountUp(data: List_ItemsDataModel, position: Int) {
+    override fun onCountUp(data: List_DefaultItemDataModel, position: Int) {
         listener.onCountUp(data, position)
     }
 
-    override fun onCountDown(data: List_ItemsDataModel, position: Int) {
+    override fun onCountDown(data: List_DefaultItemDataModel, position: Int) {
         listener.onCountDown(data, position)
     }
 
-    override fun onSortUp(data: List_ItemsDataModel, position: Int) {
+    override fun onSortUp(data: List_DefaultItemDataModel, position: Int) {
         listener.onSortUp(data, position)
     }
 
-    override fun onSortDown(data: List_ItemsDataModel, position: Int) {
+    override fun onSortDown(data: List_DefaultItemDataModel, position: Int) {
         listener.onSortDown(data, position)
     }
 }

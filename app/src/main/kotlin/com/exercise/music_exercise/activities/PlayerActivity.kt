@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.utils.DateUtils
@@ -60,6 +61,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var chkLoop:CheckBox
 
     var isPlaying:Boolean = false
+    var isPause:Boolean = false
 
     val onCompletionListener: MediaPlayer.OnCompletionListener = MediaPlayer.OnCompletionListener {
         it.release()
@@ -84,13 +86,16 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 if(msg.what == 0){
                     if(isPlaying){
                         /** 초기화 **/
-                        runningTime = 0
+                        if(!isPause) {
+                            runningTime = 0
 
-                        if(!chkLoop.isChecked) {
-                            pgPlayTime.progress = 0
-                            tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
-                        } else {
-                            tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                            if (!chkLoop.isChecked) {
+                                pgPlayTime.progress = 0
+                                tvRunningTime.text =
+                                    "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
+                            } else {
+                                tvRunningTime.text = "${timeFormat(runningTime)} / -"
+                            }
                         }
 
                         handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
@@ -128,6 +133,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                         }
                     }
                 } else if(msg.what == 2){
+                    isPause = false
                     playerViewModel.selectPos ++
                     if(playerViewModel.selectPos >= playerViewModel.playList.value!!.size){
                         handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
@@ -160,7 +166,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         return playTimeFormat
     }
 
-    fun saveExercise(playListItem:List_ItemsDataModel){
+    fun saveExercise(playListItem: List_DefaultItemDataModel){
 //        Toast.makeText(this, "음원 Report 저장!!", Toast.LENGTH_SHORT).show()
         var reportData : PlayReportDataModel = PlayReportDataModel(playListItem.musicTitle_kor, playListItem.musicCode, playListItem.idx, playListItem.hertz, DateUtils.getNowDate("yyyyMMdd"))
         playerViewModel.saveExercise(reportData)
@@ -280,7 +286,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     fun initIntent() {
         playerViewModel.groupType = if(TextUtils.isEmpty(intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE))) "D" else intent.getStringExtra(AppContents.INTENT_DATA_GROUP_TYPE).toString()
         playerViewModel.selectPos = intent.getIntExtra(AppContents.INTENT_DATA_LIST_POSITION, 0)
-        var playList:ArrayList<List_ItemsDataModel> = intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_ItemsDataModel>
+        var playList:ArrayList<List_DefaultItemDataModel> = intent.getSerializableExtra(AppContents.INTENT_DATA_PLAY_LIST) as ArrayList<List_DefaultItemDataModel>
         playerViewModel.setPlayList(playList)
         ViewUtils.loadImage(playList.get(playerViewModel.selectPos).image_path, null).into(ivBackground)
 
@@ -437,9 +443,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     override fun onClick(view: View) {
         when (view.id) {
             R.id.ivPlay_Button -> {
-                if (isPlaying)
+                if (isPlaying) {
+                    isPause = true
                     onMusicPause()
-                else {
+                } else {
                     var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                     onPlay(item.musicTitle_kor, item.hertz)
                     handler.sendEmptyMessage(HANDLER_WHAT_SETTING)

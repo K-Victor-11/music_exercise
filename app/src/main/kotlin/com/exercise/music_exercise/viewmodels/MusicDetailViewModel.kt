@@ -6,6 +6,7 @@ import com.exercise.music_exercise.MusicApplication
 import com.exercise.music_exercise.activities.BaseActivity
 import com.exercise.music_exercise.activities.ListAddActivity
 import com.exercise.music_exercise.activities.MainActivity
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.database.AppRepository
@@ -22,31 +23,31 @@ class MusicDetailViewModel(application:Application):AndroidViewModel(application
     val customType : LiveData<String>
         get() = _customType
 
-    var _detailItemList : MutableLiveData<List<List_ItemsDataModel>> = MutableLiveData()
-    val detailItemList : LiveData<List<List_ItemsDataModel>>
+    var _detailItemList : MutableLiveData<List<List_DefaultItemDataModel>> = MutableLiveData()
+    val detailItemList : LiveData<List<List_DefaultItemDataModel>>
         get() = _detailItemList
 
     fun getDetailList(owner: LifecycleOwner, parentIdx:Int){
         if(parentIdx == -1){
-            appRepository.getMusicDetailList().observe(owner, Observer {
+            appRepository.getMusicDefaultDetailAllList().observe(owner, Observer {
                 _detailItemList.postValue(it)
         })} else{
-            appRepository.getMusicDetailList(parentIdx).observe(owner, Observer {
+            appRepository.getMusicDefaultParentDetailList(parentIdx).observe(owner, Observer {
                 _detailItemList.postValue(it)
         })}
     }
 
     fun getDetailListForListAdd(parentIdx:Int){
         if(parentIdx == -1){
-            appRepository.getMusicDetailList().observe(MusicApplication.currentActivity as ListAddActivity, Observer {
+            appRepository.getMusicDefaultDetailAllList().observe(MusicApplication.currentActivity as ListAddActivity, Observer {
                 _detailItemList.postValue(it)
             })} else{
-            appRepository.getMusicDetailList(parentIdx).observe(MusicApplication.currentActivity as ListAddActivity, Observer {
+            appRepository.getMusicDefaultParentDetailList(parentIdx).observe(MusicApplication.currentActivity as ListAddActivity, Observer {
                 _detailItemList.postValue(it)
             })}
     }
 
-    fun checkDetailItem(baseActivity: BaseActivity, position: Int, data:List_ItemsDataModel, isCheck: Boolean){
+    fun checkDetailItem(baseActivity: BaseActivity, position: Int, data:List_DefaultItemDataModel, isCheck: Boolean){
         if (baseActivity is ListAddActivity) {
             val addActivity:ListAddActivity = baseActivity as ListAddActivity
 

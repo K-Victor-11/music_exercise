@@ -6,15 +6,14 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_HeaderDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.database.AppDataBase
-import com.exercise.music_exercise.database.dao.MusicListDao
 import com.exercise.music_exercise.utils.PreferenceUtils
 
 class SplashActivity: AppCompatActivity() {
@@ -76,7 +75,9 @@ class SplashActivity: AppCompatActivity() {
             groupList.add(List_HeaderDataModel("17. 치료음악3","치료음악3","music_03","D"))
 
             var musicDao = AppDataBase.getInstance(this, callback).musicListDao()
+            var musicDefault = AppDataBase.getInstance(this, callback).musicListDefaultDetailDao()
             var musicDetailDao = AppDataBase.getInstance(this, callback).musicListDetailDao()
+
 
             groupList.forEachIndexed { index, musicListDataModel ->
                 musicDao.insert(musicListDataModel)
@@ -89,10 +90,18 @@ class SplashActivity: AppCompatActivity() {
                     var parentTitle_eng = it.listTitle_eng
                     var parentImage = it.image_path
 
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_01",0))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_02",2))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_03",4))
-                    musicDetailDao.insert(List_ItemsDataModel(parentIdx, "", parentTitle_kor, parentTitle_eng,"${parentImage}_04",8))
+                    musicDefault.insert(List_DefaultItemDataModel(0, "", parentTitle_kor, parentTitle_eng, "${parentImage}_01", 0))
+                    musicDefault.insert(List_DefaultItemDataModel(0, "", parentTitle_kor, parentTitle_eng, "${parentImage}_02", 2))
+                    musicDefault.insert(List_DefaultItemDataModel(0, "", parentTitle_kor, parentTitle_eng, "${parentImage}_03", 4))
+                    musicDefault.insert(List_DefaultItemDataModel(0, "", parentTitle_kor, parentTitle_eng, "${parentImage}_04", 8))
+
+                    Log.d("kamuel", "DefaultTitleName ::: ${parentTitle_kor}")
+                    musicDefault.getDefaultItemList(parentTitle_kor).observe(this, Observer {
+                        Log.d("kamuel", "DefaultItemListSize ::: ${it.size}")
+                        it.forEachIndexed { index, listDefaultitemdatamodel ->
+                            musicDetailDao.insert(List_ItemsDataModel(0, parentIdx, listDefaultitemdatamodel.idx, 1, index))
+                        }
+                    })
                 }
             })
 
