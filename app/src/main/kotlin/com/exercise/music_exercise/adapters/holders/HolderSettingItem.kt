@@ -25,12 +25,6 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
 
             tvSettingItem_MusicTitle.text = String.format("%s(%s)", data.musicTitle_kor, musicHertz)
 
-            ivSettingItem_CountLeft.setTag(R.id.list_data, data)
-            ivSettingItem_CountLeft.setTag(R.id.list_position, position)
-
-            ivSettingItem_CountRight.setTag(R.id.list_data, data)
-            ivSettingItem_CountRight.setTag(R.id.list_position, position)
-
             ivSettingItem_SortUp.setTag(R.id.list_data, data)
             ivSettingItem_SortUp.setTag(R.id.list_position, position)
 
@@ -83,7 +77,7 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
 
                 listener.onTimeChange(data, pos)
             }
-            tvSettingItem_Count.text = "${minPlayTime} : ${secPlayTime}"
+            tvSettingItem_Count.text = "${String.format("%02d", minPlayTime)} : ${String.format("%02d", secPlayTime)}"
         }
     }
 }
