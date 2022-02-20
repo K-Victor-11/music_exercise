@@ -119,12 +119,12 @@ class CustomTimePickerDialog : DialogFragment() {
 //        minPicker.displayedValues = minArrayList
 
 
-        minPicker.minValue = 1
+        minPicker.minValue = 0
         minPicker.maxValue = maxMinute
         if(minute != -1) {
             minPicker.value = minute
         } else {
-            minPicker.value = 1
+            minPicker.value = 0
         }
 
         secPicker.minValue = 0
