@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clSettingItem_Root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -52,47 +53,33 @@
         app:layout_constraintTop_toBottomOf="@id/tvSettingItem_MusicTitle"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:id="@+id/ivSettingItem_CountRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_right"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/tvSettingItem_Count"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:paddingHorizontal="5dp"
             android:text="0"
             android:textColor="@color/color_font_black"
             android:textSize="14dp"
-            android:gravity="center"
-            app:layout_constraintEnd_toStartOf="@id/ivSettingItem_CountRight"
-            app:layout_constraintTop_toTopOf="@id/ivSettingItem_CountRight"
-            app:layout_constraintBottom_toBottomOf="@id/ivSettingItem_CountRight"/>
-
-        <ImageView
-            android:id="@+id/ivSettingItem_CountLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_left"
-            app:layout_constraintEnd_toStartOf="@id/tvSettingItem_Count"
-            app:layout_constraintTop_toTopOf="@id/ivSettingItem_CountRight" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteX="314dp"
+            tools:layout_editor_absoluteY="3dp" />
 
         <TextView
             android:id="@+id/tvSettingItem_Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
             android:text="횟수"
             android:textColor="@color/color_font_black"
             android:textSize="15dp"
-            android:gravity="center_vertical"
-            app:layout_constraintEnd_toStartOf="@id/ivSettingItem_CountLeft"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/ivSettingItem_CountLeft"
-            app:layout_constraintTop_toTopOf="@id/ivSettingItem_CountRight" />
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

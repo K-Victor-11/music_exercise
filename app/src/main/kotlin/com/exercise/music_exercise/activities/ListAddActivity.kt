@@ -65,6 +65,8 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
             titleFragment.arguments = bundle
 
             addListViewModel.getMusicItem(selectIndex).observe(this, Observer {
+
+                addListViewModel.itemList.addAll(it)
                 it.forEach { defaultItem ->
                     addListViewModel.checkSelectList(defaultItem.idx, defaultItem, true)
                 }

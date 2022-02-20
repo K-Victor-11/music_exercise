@@ -15,8 +15,7 @@ class CustomListSettingAdapter(val context: Context, val listener:CustomListSett
     var musicList : ArrayList<List_DefaultItemDataModel> = arrayListOf()
 
     interface onSettingListener{
-        fun onCountUp(data:List_DefaultItemDataModel, position:Int)
-        fun onCountDown(data:List_DefaultItemDataModel, position:Int)
+        fun onTimeChange(data:List_DefaultItemDataModel, position:Int)
         fun onSortUp(data:List_DefaultItemDataModel, position:Int)
         fun onSortDown(data:List_DefaultItemDataModel, position:Int)
     }
@@ -43,12 +42,16 @@ class CustomListSettingAdapter(val context: Context, val listener:CustomListSett
         notifyDataSetChanged()
     }
 
-    override fun onCountUp(data: List_DefaultItemDataModel, position: Int) {
-        listener.onCountUp(data, position)
-    }
+//    override fun onCountUp(data: List_DefaultItemDataModel, position: Int) {
+//        listener.onCountUp(data, position)
+//    }
+//
+//    override fun onCountDown(data: List_DefaultItemDataModel, position: Int) {
+//        listener.onCountDown(data, position)
+//    }
 
-    override fun onCountDown(data: List_DefaultItemDataModel, position: Int) {
-        listener.onCountDown(data, position)
+    override fun onTimeChange(data: List_DefaultItemDataModel, position: Int) {
+        listener.onTimeChange(data, position)
     }
 
     override fun onSortUp(data: List_DefaultItemDataModel, position: Int) {
