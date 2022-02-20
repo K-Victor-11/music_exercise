@@ -55,7 +55,7 @@ onAddHolderListener {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is MusicListItemHolder){
             (holder as MusicListItemHolder).setMusicListItem(
-                musicList!!.get(position),
+                musicList!!.get(position-1),
                 position
             )
         }
@@ -69,7 +69,7 @@ onAddHolderListener {
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position == musicList!!.size){
+        if(position == 0){
             return VIEWTYPE_ADD
         } else {
             return VIEWTYPE_ITME

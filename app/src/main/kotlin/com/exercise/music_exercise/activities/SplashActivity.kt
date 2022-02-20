@@ -106,10 +106,10 @@ class SplashActivity: AppCompatActivity() {
             })
 
             groupList.clear()
-            groupList.add(List_HeaderDataModel("원본","원본","","C"))
-            groupList.add(List_HeaderDataModel("2KHz","2KHz","","C"))
-            groupList.add(List_HeaderDataModel("4KHz","4KHz","","C"))
-            groupList.add(List_HeaderDataModel("8KHz","8KHz","","C"))
+            groupList.add(List_HeaderDataModel("원본","원본","","CD"))
+            groupList.add(List_HeaderDataModel("2KHz","2KHz","","CD"))
+            groupList.add(List_HeaderDataModel("4KHz","4KHz","","CD"))
+            groupList.add(List_HeaderDataModel("8KHz","8KHz","","CD"))
 
             groupList.forEachIndexed { index, musicListDataModel ->
                 musicDao.insert(musicListDataModel)
