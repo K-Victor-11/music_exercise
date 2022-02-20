@@ -17,10 +17,12 @@ import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.custom_view.dialogs.CustomTimePickerDialog
 import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
@@ -338,7 +340,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 var hertz = playerViewModel.playList.value!!.get(playerViewModel.selectPos).hertz
 
                 if(!chkLoop.isChecked) {
-                    playTime_millisecond = 1000 * 60 * playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime
+                    playTime_millisecond = 1000 * playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime
                     pgPlayTime.max = playTime_millisecond
                 }
 
@@ -457,40 +459,55 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 if(chkLoop.isChecked){
                     Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_LONG).show()
                 } else {
-                    var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
-                    bottomDialogItem.put("1분", "1")
-                    bottomDialogItem.put("3분", "3")
-                    bottomDialogItem.put("5분", "5")
-                    bottomDialogItem.put("10분", "10")
-                    bottomDialogItem.put("15분", "15")
-                    bottomDialogItem.put("30분", "30")
-                    bottomDialogItem.put("60분", "60")
+//                    var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
+//                    bottomDialogItem.put("1분", "1")
+//                    bottomDialogItem.put("3분", "3")
+//                    bottomDialogItem.put("5분", "5")
+//                    bottomDialogItem.put("10분", "10")
+//                    bottomDialogItem.put("15분", "15")
+//                    bottomDialogItem.put("30분", "30")
+//                    bottomDialogItem.put("60분", "60")
 
+                    var minute:Int = (playTime_millisecond/1000)/60
+                    var second:Int = (playTime_millisecond/1000)%60
+
+                    DialogUtils.showTimePicker(supportFragmentManager, minute, second, "취소", "확인", object:CustomTimePickerDialog.onTimePickerListener{
+                        override fun onTimePickerCallback(hour: Int, minute: Int, second: Int) {
+                            Log.d("kamuel", "onTimePickerCallback ::: ${hour} : ${minute} : ${second}")
+
+                            Toast.makeText(this@PlayerActivity, "${minute}분 ${second}초 설정되었습니다.", Toast.LENGTH_SHORT).show()
+                            var playTime = minute * 60 + second
+                            playerViewModel.changePlayTime(playTime)
+                            setMilliseconds(playTime)
+                            runningTime = 0
+                        }
+
+                    })
                     stop()
-                    DialogUtils.showBottomSheetDialog(
-                        this,
-                        bottomDialogItem,
-                        "닫기",
-                        R.color.color_font_black,
-                        true,
-                        object : DialogUtils.OnBottomSheetSelectedListener {
-                            override fun onSelected(index: Int, text: String, value: String) {
-                                /** delete **/
-                                Toast.makeText(this@PlayerActivity, value+"분 설정되었습니다.", Toast.LENGTH_SHORT)
-                                    .show()
-                                playerViewModel.changePlayTime(value.toInt())
-                                setMilliseconds(value.toInt())
-                                runningTime = 0
-                            }
-
-                        })
+//                    DialogUtils.showBottomSheetDialog(
+//                        this,
+//                        bottomDialogItem,
+//                        "닫기",
+//                        R.color.color_font_black,
+//                        true,
+//                        object : DialogUtils.OnBottomSheetSelectedListener {
+//                            override fun onSelected(index: Int, text: String, value: String) {
+//                                /** delete **/
+//                                Toast.makeText(this@PlayerActivity, value+"분 설정되었습니다.", Toast.LENGTH_SHORT)
+//                                    .show()
+//                                playerViewModel.changePlayTime(value.toInt())
+//                                setMilliseconds(value.toInt())
+//                                runningTime = 0
+//                            }
+//
+//                        })
                 }
             }
         }
     }
 
-    fun setMilliseconds(minute:Int){
-        playTime_millisecond = 1000 * 60 * minute
+    fun setMilliseconds(second:Int){
+        playTime_millisecond = 1000 * second
     }
 
     fun onMusicPause() {

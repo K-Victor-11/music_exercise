@@ -14,9 +14,11 @@ import com.exercise.music_exercise.R
 import com.exercise.music_exercise.activities.ListAddActivity
 import com.exercise.music_exercise.adapters.CustomListSettingAdapter
 import com.exercise.music_exercise.adapters.CustomMusicListAdapter
+import com.exercise.music_exercise.custom_view.dialogs.CustomTimePickerDialog
 import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
 import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.fragments.BaseFragment
+import com.exercise.music_exercise.utils.DialogUtils
 import com.exercise.music_exercise.viewmodels.AddListSettingViewModel
 
 class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.onSettingListener {
@@ -84,71 +86,83 @@ class CustomList_AddSettingFragment : BaseFragment(), CustomListSettingAdapter.o
         })
     }
 
-    override fun onCountUp(data: List_DefaultItemDataModel, position: Int) {
-        var time = settingViewModel._setList!!.value!!.get(position).playTime
-        var isChange: Boolean = true
+//    override fun onCountUp(data: List_DefaultItemDataModel, position: Int) {
+//        var time = settingViewModel._setList!!.value!!.get(position).playTime
+//        var isChange: Boolean = true
+//
+//        if (time == 1) {
+//            time = 3
+//            isChange = true
+//        } else if (time == 3) {
+//            time = 5
+//            isChange = true
+//        } else if (time == 5) {
+//            time = 10
+//            isChange = true
+//        } else if (time == 10) {
+//            time = 15
+//            isChange = true
+//        } else if (time == 15) {
+//            time = 30
+//            isChange = true
+//        } else if (time == 30) {
+//            time = 60
+//            isChange = true
+//        } else if (time == 60) {
+//            Toast.makeText(context, "더 이상 늘릴 수 없습니다.", Toast.LENGTH_SHORT).show()
+//            isChange = false
+//        }
+//
+//        if(isChange) {
+//            settingViewModel._setList!!.value!!.get(position).playTime = time
+//            settingViewModel.setSettingList(settingViewModel._setList!!.value!!)
+//        }
+//
+//    }
+//
+//    override fun onCountDown(data: List_DefaultItemDataModel, position: Int) {
+//        var time = settingViewModel._setList!!.value!!.get(position).playTime
+//        var isChange: Boolean = true
+//
+//        if(time == 60){
+//            time = 30
+//            isChange = true
+//        } else if(time == 30){
+//            time = 15
+//            isChange = true
+//        } else if(time == 15){
+//            time = 10
+//            isChange = true
+//        } else if(time == 10){
+//            time = 5
+//            isChange = true
+//        } else if(time == 5){
+//            time = 3
+//            isChange = true
+//        } else if(time == 3){
+//            time = 1
+//            isChange = true
+//        } else if(time == 1){
+//            Toast.makeText(context, "더 이상 줄일 수 없습니다.", Toast.LENGTH_SHORT).show()
+//            isChange = false
+//        }
+//
+//        if(isChange) {
+//            settingViewModel._setList!!.value!!.get(position).playTime = time
+//            settingViewModel.setSettingList(settingViewModel._setList!!.value!!)
+//        }
+//    }
 
-        if (time == 1) {
-            time = 3
-            isChange = true
-        } else if (time == 3) {
-            time = 5
-            isChange = true
-        } else if (time == 5) {
-            time = 10
-            isChange = true
-        } else if (time == 10) {
-            time = 15
-            isChange = true
-        } else if (time == 15) {
-            time = 30
-            isChange = true
-        } else if (time == 30) {
-            time = 60
-            isChange = true
-        } else if (time == 60) {
-            Toast.makeText(context, "더 이상 늘릴 수 없습니다.", Toast.LENGTH_SHORT).show()
-            isChange = false
-        }
+    override fun onTimeChange(data: List_DefaultItemDataModel, position: Int) {
 
-        if(isChange) {
-            settingViewModel._setList!!.value!!.get(position).playTime = time
-            settingViewModel.setSettingList(settingViewModel._setList!!.value!!)
-        }
+        DialogUtils.showTimePicker(childFragmentManager, "취소", "확인", object :CustomTimePickerDialog.onTimePickerListener{
+            override fun onTimePickerCallback(hour: Int, minute: Int, second: Int) {
+                var playTime = (minute * 60) + second
+                settingViewModel._setList!!.value!!.get(position).playTime = playTime
+                settingViewModel.setSettingList(settingViewModel._setList!!.value!!)
+            }
 
-    }
-
-    override fun onCountDown(data: List_DefaultItemDataModel, position: Int) {
-        var time = settingViewModel._setList!!.value!!.get(position).playTime
-        var isChange: Boolean = true
-
-        if(time == 60){
-            time = 30
-            isChange = true
-        } else if(time == 30){
-            time = 15
-            isChange = true
-        } else if(time == 15){
-            time = 10
-            isChange = true
-        } else if(time == 10){
-            time = 5
-            isChange = true
-        } else if(time == 5){
-            time = 3
-            isChange = true
-        } else if(time == 3){
-            time = 1
-            isChange = true
-        } else if(time == 1){
-            Toast.makeText(context, "더 이상 줄일 수 없습니다.", Toast.LENGTH_SHORT).show()
-            isChange = false
-        }
-
-        if(isChange) {
-            settingViewModel._setList!!.value!!.get(position).playTime = time
-            settingViewModel.setSettingList(settingViewModel._setList!!.value!!)
-        }
+        })
     }
 
     override fun onSortUp(data: List_DefaultItemDataModel, position: Int) {

@@ -12,8 +12,7 @@ import kotlinx.android.synthetic.main.holder_setting_list.view.*
 
 class HolderSettingItem(var context:Context, itemView:View, var listener:HolderSettingItem.onSelectExerciseItemListener):RecyclerView.ViewHolder(itemView) {
     interface onSelectExerciseItemListener{
-        fun onCountUp(data:List_DefaultItemDataModel, position: Int)
-        fun onCountDown(data:List_DefaultItemDataModel, position:Int)
+        fun onTimeChange(data:List_DefaultItemDataModel, position:Int)
         fun onSortUp(data:List_DefaultItemDataModel, position:Int)
         fun onSortDown(data:List_DefaultItemDataModel, position:Int)
     }
@@ -24,7 +23,7 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
             if(data.hertz != 0)
                 musicHertz = "${data.hertz}KHz"
 
-            tvSettingItem_Title.text = String.format("%s(%s)", data.musicTitle_kor, musicHertz)
+            tvSettingItem_MusicTitle.text = String.format("%s(%s)", data.musicTitle_kor, musicHertz)
 
             ivSettingItem_CountLeft.setTag(R.id.list_data, data)
             ivSettingItem_CountLeft.setTag(R.id.list_position, position)
@@ -38,19 +37,19 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
             ivSettingItem_SortDown.setTag(R.id.list_data, data)
             ivSettingItem_SortDown.setTag(R.id.list_position, position)
 
-            ivSettingItem_CountLeft.setOnClickListener {
-                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
-                var pos:Int = it.getTag(R.id.list_position).toString().toInt()
-
-                listener.onCountDown(data, pos)
-            }
-
-            ivSettingItem_CountRight.setOnClickListener {
-                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
-                var pos:Int = it.getTag(R.id.list_position).toString().toInt()
-
-                listener.onCountUp(data, pos)
-            }
+//            ivSettingItem_CountLeft.setOnClickListener {
+//                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
+//                var pos:Int = it.getTag(R.id.list_position).toString().toInt()
+//
+//                listener.onCountDown(data, pos)
+//            }
+//
+//            ivSettingItem_CountRight.setOnClickListener {
+//                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
+//                var pos:Int = it.getTag(R.id.list_position).toString().toInt()
+//
+//                listener.onCountUp(data, pos)
+//            }
 
             ivSettingItem_SortUp.setOnClickListener {
                 var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
@@ -72,7 +71,19 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
                     listener.onSortDown(data, pos)
             }
 
-            tvSettingItem_Count.text = data.playTime.toString()
+            var minPlayTime = data.playTime/60
+            var secPlayTime = data.playTime%60
+
+            tvSettingItem_Count.setTag(R.id.list_data, data)
+            tvSettingItem_Count.setTag(R.id.list_position, position)
+
+            tvSettingItem_Count.setOnClickListener {
+                var data:List_DefaultItemDataModel = it.getTag(R.id.list_data) as List_DefaultItemDataModel
+                var pos:Int = it.getTag(R.id.list_position).toString().toInt()
+
+                listener.onTimeChange(data, pos)
+            }
+            tvSettingItem_Count.text = "${minPlayTime} : ${secPlayTime}"
         }
     }
 }

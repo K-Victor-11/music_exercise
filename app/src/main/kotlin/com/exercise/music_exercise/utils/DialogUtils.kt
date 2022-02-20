@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.exercise.music_exercise.R
+import com.exercise.music_exercise.custom_view.dialogs.CustomTimePickerDialog
 import com.exercise.music_exercise.fragments.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -123,6 +124,18 @@ class DialogUtils {
         fun showMessageDialog(fm: FragmentManager, title:String, desc:String, message:String, black:String, orange:String, listener: DialogFragment.ConfirmDialogListener){
             val dialog: DialogFragment = DialogFragment.newInstance(false, 0, title, desc, message, black, orange, null, listener)
             dialog.show(fm, DialogFragment::class.java.getName())
+        }
+
+        @JvmStatic
+        fun showTimePicker(fm:FragmentManager, cancelText:String, okText:String, listener:CustomTimePickerDialog.onTimePickerListener){
+            val dialog:CustomTimePickerDialog = CustomTimePickerDialog.newInstance(false, cancelText, okText, -1, -1, listener)
+            dialog.show(fm, CustomTimePickerDialog::class.java.name)
+        }
+
+        @JvmStatic
+        fun showTimePicker(fm:FragmentManager, minute:Int, second:Int, cancelText:String, okText:String, listener:CustomTimePickerDialog.onTimePickerListener){
+            val dialog:CustomTimePickerDialog = CustomTimePickerDialog.newInstance(false, cancelText, okText, minute, second, listener)
+            dialog.show(fm, CustomTimePickerDialog::class.java.name)
         }
     }
 }
