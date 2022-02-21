@@ -60,9 +60,14 @@ class MusicListItemHolder(val context : Context,
                 chkList.visibility = View.GONE
                 ivListMenu.visibility = View.GONE
             }else{
+                clListRoot.background = ContextCompat.getDrawable(context,R.drawable.bg_radius3_99ccff)
                 ivTitleImage.visibility = View.GONE
                 chkList.visibility = View.GONE
-                ivListMenu.visibility = View.VISIBLE
+                if(data.customType == "C") {
+                    ivListMenu.visibility = View.VISIBLE
+                } else if(data.customType == "CD"){
+                    ivListMenu.visibility = View.GONE
+                }
             }
         }
 
