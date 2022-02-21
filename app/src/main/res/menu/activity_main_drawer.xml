@@ -6,14 +6,14 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_music_list"
-            android:title="@string/menu_home"
-            android:checked="true"/>
-        <item
             android:id="@+id/nav_custom_list"
             android:icon="@drawable/ic_favorite"
-            android:title="@string/menu_custom_list" />
+            android:title="@string/menu_custom_list"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_music_list"
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_complete"
             android:icon="@drawable/ic_calender"

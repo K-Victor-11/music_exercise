@@ -105,6 +105,45 @@ class SplashActivity: AppCompatActivity() {
                 }
             })
 
+            groupList.clear()
+            groupList.add(List_HeaderDataModel("원본","원본","","CD"))
+            groupList.add(List_HeaderDataModel("2KHz","2KHz","","CD"))
+            groupList.add(List_HeaderDataModel("4KHz","4KHz","","CD"))
+            groupList.add(List_HeaderDataModel("8KHz","8KHz","","CD"))
+
+            groupList.forEachIndexed { index, musicListDataModel ->
+                musicDao.insert(musicListDataModel)
+            }
+
+            groupList.forEach {
+                musicDao.getGroupListForCustom(it.listTitle_kor)?.observe(this, Observer {
+                    it.forEach {
+                        var parentIdx = it.idx
+                        var parentTitle_kor = it.listTitle_kor
+                        var parentTitle_eng = it.listTitle_eng
+                        var parentImage = it.image_path
+
+                        var hertz = 0
+                        if(parentTitle_kor =="원본"){
+                            hertz = 0
+                        } else if(parentTitle_kor == "2KHz"){
+                            hertz = 2
+                        }else if(parentTitle_kor == "4KHz"){
+                            hertz = 4
+                        }else if(parentTitle_kor == "8KHz"){
+                            hertz = 8
+                        }
+
+                        musicDefault.getDefaultHertzList(hertz).observe(this, Observer {
+                            it.forEachIndexed { index, listDefaultitemdatamodel ->
+                                musicDetailDao.insert(List_ItemsDataModel(0, parentIdx, listDefaultitemdatamodel.idx, 1, index))
+                            }
+                        })
+                    }
+                })
+            }
+
+
             prefUtils.setBoolean("default_data", true)
         }
     }
