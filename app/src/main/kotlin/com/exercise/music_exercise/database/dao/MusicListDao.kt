@@ -25,6 +25,9 @@ interface MusicListDao:BaseDao<List_HeaderDataModel> {
     @Query("SELECT idx FROM list_header ORDER BY idx desc LIMIT 1")
     fun getLastGroupList() : Int
 
+    @Query("SELECT * FROM list_header")
+    fun getGroupAllList():LiveData<List<List_HeaderDataModel>>
+
     @Query("DELETE FROM list_header WHERE idx = :index")
     fun delCustomGroup(index:Int)
 
