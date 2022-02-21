@@ -164,13 +164,11 @@ class ListAddActivity:BaseActivity(),View.OnClickListener {
 
                 var parentIdx : Int = 0
                 if(addListViewModel.isEditMode){
-                    addListViewModel.setGroupTitle(addListViewModel.addTitle, selectIndex)
-//                    addListViewModel.deleteMusicDetailList(selectIndex)
-                    parentIdx = selectIndex
-                } else {
-                    addListViewModel.setGroupTitle(addListViewModel.addTitle)
-                    parentIdx = addListViewModel.getGroupLastIndex()
+                    addListViewModel.deleteMusicItem(selectIndex)
                 }
+
+                addListViewModel.setGroupTitle(addListViewModel.addTitle)
+                parentIdx = addListViewModel.getGroupLastIndex()
 
                 addListViewModel.itemList.forEach {
                     addListViewModel.setMusicItem(parentIdx, it)
