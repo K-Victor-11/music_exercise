@@ -6,12 +6,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_radius3_99ccff">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@raw/music_03"
+        />
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="제작 : 두신경과 / 버전 : 1.0.0"
+        android:text="제작 : 두신경과 / 버전 : 1.1.0-(20220220)"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,6 +31,7 @@
         android:text="두신경과에서 제공하는"
         android:textColor="@color/black"
         android:textSize="25sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -34,8 +40,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="330dp"
-        android:text="이명 치료용 음향 앱입니다."
+        android:layout_marginBottom="350dp"
+        android:text="이명 치료용 음향"
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,6 +68,7 @@
         android:text="(DOSMART TINNITUS)"
         android:textColor="@color/black"
         android:textSize="35dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

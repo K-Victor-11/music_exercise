@@ -1,5 +1,6 @@
 package com.exercise.music_exercise.activities
 
+import android.content.Intent
 import android.content.res.AssetFileDescriptor
 import android.media.AudioAttributes
 import android.media.AudioManager
@@ -32,6 +33,7 @@ import com.exercise.music_exercise.utils.ViewUtils
 import com.exercise.music_exercise.viewmodels.PlayerViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.exercise.music_exercise.activities.GuidePopupActivity
 import java.io.File
 
 
@@ -246,6 +248,8 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 //            }
             getPlayTitle(it.get(playerViewModel.selectPos).musicTitle_kor, it.get(playerViewModel.selectPos).hertz)
         })
+
+        openGuidePopup()
     }
 
 
@@ -306,6 +310,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         }
     }
 
+    fun openGuidePopup() {
+        var intent = Intent(this, GuidePopupActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun createNextMediaPlayer() {
         Log.d("LoopMediaPlayer", "[test]createNextMediaPlayer 1 ----------> ")

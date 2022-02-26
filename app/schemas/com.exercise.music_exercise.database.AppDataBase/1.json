@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "62ee4e47fe0a9524742fe994d59bad59",
+    "identityHash": "5e66933ea3ccd27e04c03dd1b9bc23b8",
     "entities": [
       {
         "tableName": "list_header",
@@ -50,14 +50,8 @@
       },
       {
         "tableName": "list_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idx` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `checked` INTEGER NOT NULL, `header_idx` INTEGER NOT NULL, `musicCode` TEXT NOT NULL, `musicTitle_kor` TEXT NOT NULL, `musicTitle_eng` TEXT NOT NULL, `image_path` TEXT NOT NULL, `hertz` INTEGER NOT NULL, `playTime` INTEGER NOT NULL, `sortOrder` INTEGER NOT NULL, FOREIGN KEY(`header_idx`) REFERENCES `list_header`(`idx`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`checked` INTEGER NOT NULL, `idx` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `header_idx` INTEGER NOT NULL, `item_idx` INTEGER NOT NULL, `playTime` INTEGER NOT NULL, `sortOrder` INTEGER NOT NULL, FOREIGN KEY(`header_idx`) REFERENCES `list_header`(`idx`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`item_idx`) REFERENCES `list_default_item`(`idx`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
-          {
-            "fieldPath": "idx",
-            "columnName": "idx",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "checked",
             "columnName": "checked",
@@ -65,8 +59,106 @@
             "notNull": true
           },
           {
+            "fieldPath": "idx",
+            "columnName": "idx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "header_idx",
             "columnName": "header_idx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "item_idx",
+            "columnName": "item_idx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playTime",
+            "columnName": "playTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sortOrder",
+            "columnName": "sortOrder",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idx"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_list_items_idx",
+            "unique": false,
+            "columnNames": [
+              "idx"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_list_items_idx` ON `${TABLE_NAME}` (`idx`)"
+          },
+          {
+            "name": "index_list_items_header_idx",
+            "unique": false,
+            "columnNames": [
+              "header_idx"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_list_items_header_idx` ON `${TABLE_NAME}` (`header_idx`)"
+          },
+          {
+            "name": "index_list_items_item_idx",
+            "unique": false,
+            "columnNames": [
+              "item_idx"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_list_items_item_idx` ON `${TABLE_NAME}` (`item_idx`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "list_header",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "header_idx"
+            ],
+            "referencedColumns": [
+              "idx"
+            ]
+          },
+          {
+            "table": "list_default_item",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "item_idx"
+            ],
+            "referencedColumns": [
+              "idx"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "list_default_item",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`checked` INTEGER NOT NULL, `idx` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `musicCode` TEXT NOT NULL, `musicTitle_kor` TEXT NOT NULL, `musicTitle_eng` TEXT NOT NULL, `image_path` TEXT NOT NULL, `hertz` INTEGER NOT NULL, `playTime` INTEGER NOT NULL, `sortOrder` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "checked",
+            "columnName": "checked",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idx",
+            "columnName": "idx",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -119,37 +211,8 @@
           ],
           "autoGenerate": true
         },
-        "indices": [
-          {
-            "name": "index_list_items_idx",
-            "unique": false,
-            "columnNames": [
-              "idx"
-            ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_list_items_idx` ON `${TABLE_NAME}` (`idx`)"
-          },
-          {
-            "name": "index_list_items_header_idx",
-            "unique": false,
-            "columnNames": [
-              "header_idx"
-            ],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_list_items_header_idx` ON `${TABLE_NAME}` (`header_idx`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "list_header",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "header_idx"
-            ],
-            "referencedColumns": [
-              "idx"
-            ]
-          }
-        ]
+        "indices": [],
+        "foreignKeys": []
       },
       {
         "tableName": "play_report",
@@ -211,7 +274,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '62ee4e47fe0a9524742fe994d59bad59')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e66933ea3ccd27e04c03dd1b9bc23b8')"
     ]
   }
 }
