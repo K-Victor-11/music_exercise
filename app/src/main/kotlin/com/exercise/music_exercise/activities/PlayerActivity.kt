@@ -16,25 +16,21 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.exercise.music_exercise.AppContents
 import com.exercise.music_exercise.R
 import com.exercise.music_exercise.custom_view.dialogs.CustomTimePickerDialog
 import com.exercise.music_exercise.data_models.List_DefaultItemDataModel
-import com.exercise.music_exercise.data_models.List_ItemsDataModel
 import com.exercise.music_exercise.data_models.PlayReportDataModel
 import com.exercise.music_exercise.utils.DateUtils
 import com.exercise.music_exercise.utils.DialogUtils
 import com.exercise.music_exercise.utils.ViewUtils
 import com.exercise.music_exercise.viewmodels.PlayerViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.exercise.music_exercise.activities.GuidePopupActivity
 import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PlayerActivity : BaseActivity(), View.OnClickListener{
@@ -123,14 +119,16 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                                 var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                                 saveExercise(item)
 
-                                if (playerViewModel.groupType == "C") {
-                                    /** 음원 Next **/
-//                                    Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
-                                    handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
-                                } else if (playerViewModel.groupType == "D") {
-//                                    Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
-                                    handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
-                                }
+                                // 2022.03.05_han - 모든그룹 다음곡 재생하도록
+                                handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
+//                                if (playerViewModel.groupType == "C") {
+//                                    /** 음원 Next **/
+////                                    Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
+//                                    handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
+//                                } else if (playerViewModel.groupType == "D") {
+////                                    Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
+//                                    handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
+//                                }
                             } else {
                                 handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                             }
@@ -148,13 +146,21 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     }
                 } else if(msg.what == 3){
                     /** 음원리스트 모두 플레이 완료 **/
+                    // (참고코드) 2022.03.05_han - 랜덤재생
+//                    val random = Random()
+//                    playerViewModel.selectPos = random.nextInt(17)
+                    // 2022.03.05_han - 모든그룹 다음곡 재생 무한반복
+                    playerViewModel.selectPos = 0
+                    var item = playerViewModel.playList.value!![playerViewModel.selectPos]
+                    onPlay(item.musicTitle_kor, item.hertz)
+                    handler.sendEmptyMessage(HANDLER_WHAT_SETTING)
                 }
 
             }
         }
     }
 
-    fun timeFormat(milliseconds:Int):String {
+    fun timeFormat(milliseconds: Int):String {
         var second : Int = 0
         var min : Int = 0
 
@@ -208,7 +214,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
                 stop()
                 runningTime = 0
-                if(isChecked) {
+                if (isChecked) {
                     btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_999999)
                     btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
                     pgPlayTime.progress = 1
@@ -464,7 +470,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             }
 
             R.id.btnPlay_TimeSetting -> {
-                if(chkLoop.isChecked){
+                if (chkLoop.isChecked) {
                     Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_LONG).show()
                 } else {
 //                    var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
@@ -476,10 +482,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 //                    bottomDialogItem.put("30분", "30")
 //                    bottomDialogItem.put("60분", "60")
 
-                    var minute:Int = (playTime_millisecond/1000)/60
-                    var second:Int = (playTime_millisecond/1000)%60
+                    var minute: Int = (playTime_millisecond / 1000) / 60
+                    var second: Int = (playTime_millisecond / 1000) % 60
 
-                    DialogUtils.showTimePicker(supportFragmentManager, minute, second, "취소", "확인", object:CustomTimePickerDialog.onTimePickerListener{
+                    DialogUtils.showTimePicker(supportFragmentManager, minute, second, "취소", "확인", object : CustomTimePickerDialog.onTimePickerListener {
                         override fun onTimePickerCallback(hour: Int, minute: Int, second: Int) {
                             Log.d("kamuel", "onTimePickerCallback ::: ${hour} : ${minute} : ${second}")
 
@@ -514,7 +520,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         }
     }
 
-    fun setMilliseconds(second:Int){
+    fun setMilliseconds(second: Int){
         playTime_millisecond = 1000 * second
     }
 
@@ -580,7 +586,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             mNextPlayer!!.pause()
     }
 
-    fun getPlayTitle(title:String, hertz:Int){
+    fun getPlayTitle(title: String, hertz: Int){
         var strHertz:String = ""
         when(hertz){
             0 -> {
