@@ -71,12 +71,12 @@
 
     <CheckBox
         android:id="@+id/cbnPlay_loop"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
         android:background="@android:color/holo_orange_light"
         android:buttonTint="@color/color_979797"
         android:checked="false"
-        android:text="무한반복"
+        android:text="한곡무한반복"
         android:textColor="@color/color_font_black"
         app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
         app:layout_constraintEnd_toEndOf="parent"

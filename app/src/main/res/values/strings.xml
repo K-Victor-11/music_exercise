@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">두스마트 이명</string>
 
-    <string name="menu_home">음향리스트</string>
-    <string name="menu_custom_list">즐겨찾기</string>
+    <string name="menu_home">음향그룹</string>
+    <string name="menu_custom_list">이명치료음향</string>
     <string name="menu_complete_list">재생이력</string>
 
     <string name="btn_pre">이전</string>

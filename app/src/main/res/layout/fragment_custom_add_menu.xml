@@ -1,35 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white">
+    android:background="@color/color_99ccff">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvCustom_DescriptionLabel1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="새로운 음원 추가 방법"
+            android:textColor="@color/font_color_black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCustom_DescriptionLabel2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="아래 메뉴들 중 선택하여 들어가서 추가하기를 원하는 음원에 체크하면 새로운 음원으로 추가됩니다."
+            android:textColor="@color/font_color_black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvCustom_DescriptionLabel3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text=""
+            android:textColor="@color/font_color_black"
+            android:textSize="20dp" />
+
         <LinearLayout
             android:id="@+id/llMenu_List"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:gravity="center"
+            android:background="@drawable/bg_radius3_999999"
             android:elevation="15dp"
-            android:background="@drawable/bg_radius3_line_999999"
+            android:gravity="center"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_menu_list"
+                android:text="음원그룹으로 보기"
+                android:textColor="@color/color_font_black"
                 android:textSize="16dp"
-                android:textStyle="bold"
-                android:textColor="@color/color_font_black"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -37,18 +67,48 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:background="@drawable/bg_radius3_999999"
             android:elevation="15dp"
-            android:background="@drawable/bg_radius3_line_999999"
+            android:gravity="center"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_menu_all"
+                android:text="개별음원으로 보기"
+                android:textColor="@color/color_font_black"
                 android:textSize="16dp"
-                android:textStyle="bold"
-                android:textColor="@color/color_font_black"/>
+                android:textStyle="bold" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvCustom_DescriptionLabel33"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text=""
+            android:textColor="@color/font_color_black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvCustom_DescriptionLabel11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="기존 음원 편집 방법"
+            android:textColor="@color/font_color_black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCustom_DescriptionLabel22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="위 메뉴들 중 선택하여 들어가면 선택된 음원들에 체크표시가 되어 있습니다. 추가하기를 원하는 음원에 체크하면 기존의 음원에 추가됩니다."
+            android:textColor="@color/font_color_black"
+            android:textSize="20dp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

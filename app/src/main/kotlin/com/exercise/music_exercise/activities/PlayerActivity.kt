@@ -374,71 +374,71 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     fun getRawName(title: String, hertz: Int): String {
         var strReturn = ""
         when (title) {
-            "1. 개울소리1" -> {
+            "개울1" -> {
                 strReturn = "water_01"
             }
 
-            "2. 개울소리2" -> {
+            "개울2" -> {
                 strReturn = "water_02"
             }
 
-            "3. 개울소리3" -> {
+            "개울3" -> {
                 strReturn = "water_03"
             }
 
-            "4. 개울소리4" -> {
+            "개울4" -> {
                 strReturn = "water_04"
             }
 
-            "5. 개울소리5" -> {
+            "개울5" -> {
                 strReturn = "water_05"
             }
 
-            "6. 비소리1" -> {
+            "비1" -> {
                 strReturn = "rain_01"
             }
 
-            "7. 비소리2" -> {
+            "비2" -> {
                 strReturn = "rain_02"
             }
 
-            "8. 비소리3" -> {
+            "비3" -> {
                 strReturn = "rain_03"
             }
 
-            "9. 바람소리1" -> {
+            "바람1" -> {
                 strReturn = "wind_01"
             }
 
-            "10. 바람소리2" -> {
+            "바람2" -> {
                 strReturn = "wind_02"
             }
 
-            "11. 파도소리1" -> {
+            "파도1" -> {
                 strReturn = "wave_01"
             }
 
-            "12. 파도소리2" -> {
+            "파도2" -> {
                 strReturn = "wave_02"
             }
 
-            "13. 화이트노이즈1" -> {
+            "화이트노이즈1" -> {
                 strReturn = "pink_noise"
             }
 
-            "14. 화이트노이즈2" -> {
+            "화이트노이즈2" -> {
                 strReturn = "white_noise"
             }
 
-            "15. 치료음악1" -> {
+            "치료음악1" -> {
                 strReturn = "music_01"
             }
 
-            "16. 치료음악2" -> {
+            "치료음악2" -> {
                 strReturn = "music_02"
             }
 
-            "17. 치료음악3" -> {
+            "치료음악3" -> {
                 strReturn = "music_03"
             }
         }

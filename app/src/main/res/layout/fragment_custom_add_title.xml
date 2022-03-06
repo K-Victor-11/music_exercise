@@ -29,12 +29,20 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_radius3_e5e5e5"
-            android:hint="@string/custom_title"
+            android:hint="만드시려는 음원그룹의 이름을 입력하세요."
             android:textColorHint="@color/colorAccent"
             android:padding="5dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/tvCustom_DescriptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="예) 2022년3월1일 이명음원, 3/1(화) 치료음원,..."
+            android:textColor="@color/color_0091ff"
+            android:textSize="18dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
