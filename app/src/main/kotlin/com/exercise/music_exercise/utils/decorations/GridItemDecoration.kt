@@ -32,6 +32,7 @@ class GridItemDecoration: RecyclerView.ItemDecoration {
             outRect.top = ViewUtils.dp2px(context!!, 5f)
             outRect.bottom = ViewUtils.dp2px(context!!, 10f)
         } else {
+            outRect.top = ViewUtils.dp2px(context!!, 5f)
             outRect.bottom = ViewUtils.dp2px(context!!, 10f)
         }
 

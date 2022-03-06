@@ -88,7 +88,7 @@ class MusicDetailFragment : BaseFragment(), MusicListDetailAdapter.onMusicListDe
             if (adapter == null) {
                 adapter = MusicListDetailAdapter(mContext!!, this, viewType)
                 listHome.adapter = adapter
-                listHome.layoutManager = GridLayoutManager(mContext, 2)
+                listHome.layoutManager = GridLayoutManager(mContext, 3)
                 listHome.addItemDecoration(GridItemDecoration(mContext!!))
             }
 

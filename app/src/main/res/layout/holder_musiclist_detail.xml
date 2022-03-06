@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clMusicDetailItem_Root"
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_width="125dp"
+    android:layout_height="125dp"
     android:background="@drawable/bg_radius3_999999">
     <CheckBox
         android:id="@+id/cbMusicDetailItem_Check"
@@ -27,7 +27,7 @@
         android:padding="10dp"
         android:text="TextView"
         android:textColor="@color/color_font_black"
-        android:textSize="16dp"
+        android:textSize="15dp"
         android:singleLine="true"
         app:layout_constraintStart_toEndOf="@id/cbMusicDetailItem_Check"
         app:layout_constraintTop_toTopOf="parent"
