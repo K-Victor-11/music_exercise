@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="제작 : 두신경과 / 버전 : 1.1.0-(20220220)"
+        android:text="제작 : 두신경과 / 버전 : 1.2.0-(20220306)"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
