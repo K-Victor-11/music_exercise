@@ -473,48 +473,46 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 if (chkLoop.isChecked) {
                     Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_LONG).show()
                 } else {
-//                    var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
-//                    bottomDialogItem.put("1분", "1")
-//                    bottomDialogItem.put("3분", "3")
-//                    bottomDialogItem.put("5분", "5")
-//                    bottomDialogItem.put("10분", "10")
-//                    bottomDialogItem.put("15분", "15")
-//                    bottomDialogItem.put("30분", "30")
-//                    bottomDialogItem.put("60분", "60")
+                    var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
+                    bottomDialogItem.put("1초", "1")
+                    bottomDialogItem.put("5초", "5")
+                    bottomDialogItem.put("1분", "60")
+                    bottomDialogItem.put("3분", "180")
+                    bottomDialogItem.put("5분", "300")
 
-                    var minute: Int = (playTime_millisecond / 1000) / 60
-                    var second: Int = (playTime_millisecond / 1000) % 60
-
-                    DialogUtils.showTimePicker(supportFragmentManager, minute, second, "취소", "확인", object : CustomTimePickerDialog.onTimePickerListener {
-                        override fun onTimePickerCallback(hour: Int, minute: Int, second: Int) {
-                            Log.d("kamuel", "onTimePickerCallback ::: ${hour} : ${minute} : ${second}")
-
-                            Toast.makeText(this@PlayerActivity, "${minute}분 ${second}초 설정되었습니다.", Toast.LENGTH_SHORT).show()
-                            var playTime = minute * 60 + second
-                            playerViewModel.changePlayTime(playTime)
-                            setMilliseconds(playTime)
-                            runningTime = 0
-                        }
-
-                    })
+//                    var minute: Int = (playTime_millisecond / 1000) / 60
+//                    var second: Int = (playTime_millisecond / 1000) % 60
+//
+//                    DialogUtils.showTimePicker(supportFragmentManager, minute, second, "취소", "확인", object : CustomTimePickerDialog.onTimePickerListener {
+//                        override fun onTimePickerCallback(hour: Int, minute: Int, second: Int) {
+//                            Log.d("kamuel", "onTimePickerCallback ::: ${hour} : ${minute} : ${second}")
+//
+//                            Toast.makeText(this@PlayerActivity, "${minute}분 ${second}초 설정되었습니다.", Toast.LENGTH_SHORT).show()
+//                            var playTime = minute * 60 + second
+//                            playerViewModel.changePlayTime(playTime)
+//                            setMilliseconds(playTime)
+//                            runningTime = 0
+//                        }
+//
+//                    })
                     stop()
-//                    DialogUtils.showBottomSheetDialog(
-//                        this,
-//                        bottomDialogItem,
-//                        "닫기",
-//                        R.color.color_font_black,
-//                        true,
-//                        object : DialogUtils.OnBottomSheetSelectedListener {
-//                            override fun onSelected(index: Int, text: String, value: String) {
-//                                /** delete **/
+                    DialogUtils.showBottomSheetDialog(
+                        this,
+                        bottomDialogItem,
+                        "닫기",
+                        R.color.color_font_black,
+                        true,
+                        object : DialogUtils.OnBottomSheetSelectedListener {
+                            override fun onSelected(index: Int, text: String, value: String) {
+                                /** delete **/
 //                                Toast.makeText(this@PlayerActivity, value+"분 설정되었습니다.", Toast.LENGTH_SHORT)
 //                                    .show()
-//                                playerViewModel.changePlayTime(value.toInt())
-//                                setMilliseconds(value.toInt())
-//                                runningTime = 0
-//                            }
-//
-//                        })
+                                playerViewModel.changePlayTime(value.toInt())
+                                setMilliseconds(value.toInt())
+                                runningTime = 0
+                            }
+
+                        })
                 }
             }
         }
