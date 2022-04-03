@@ -26,13 +26,15 @@
                 android:textColor="@color/color_font_black"/>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivPlay_Background"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="fitXY"
-            app:layout_constraintTop_toBottomOf="@id/llPlay_TitleArea"
-            app:layout_constraintBottom_toTopOf="@id/btnPlay_TimeSetting"/>
+    <ImageView
+        android:id="@+id/ivPlay_Background"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
+        app:layout_constraintTop_toBottomOf="@id/llPlay_TitleArea"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <SeekBar
         android:id="@+id/skPlay_Sound"
@@ -58,29 +60,40 @@
         app:layout_constraintTop_toBottomOf="@id/skPlay_Sound"
         app:srcCompat="@drawable/ic_play" />
 
-        <Button
-            android:id="@+id/btnPlay_TimeSetting"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_radius3_99ccff"
-            android:text="재생시간설정"
-            android:textColor="@color/color_font_black"
-            app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/cbnPlay_loop"/>
+    <Button
+        android:id="@+id/btnPlay_TimeSetting"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/color_99ccff"
+        android:text="현재곡 시간설정"
+        android:textColor="@color/color_font_black"
+        app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPlay_TotalTimeSetting"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/color_D8BFD8"
+        android:text="전체 시간설정"
+        android:textColor="@color/color_font_black"
+        app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <CheckBox
         android:id="@+id/cbnPlay_loop"
-        android:layout_width="120dp"
+        android:layout_width="80dp"
         android:layout_height="50dp"
-        android:background="@android:color/holo_orange_light"
+        android:background="@color/transparent"
         android:buttonTint="@color/color_979797"
         android:checked="false"
-        android:text="한곡무한반복"
-        android:textColor="@color/color_font_black"
-        app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnPlay_TimeSetting" />
+        android:text="랜덤"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/btnPlay_TotalTimeSetting"
+        app:layout_constraintEnd_toEndOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clPlay_SettingArea"
             android:layout_width="match_parent"

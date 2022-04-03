@@ -56,8 +56,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var ivBackground :ImageView
     lateinit var seekVolume : SeekBar
     lateinit var btnTimeSetting: Button
+    lateinit var btnTotalTimeSetting: Button
     lateinit var pgPlayTime:ProgressBar
     lateinit var tvRunningTime : TextView
+    lateinit var tvTotalTimeSetting : TextView
     lateinit var chkLoop:CheckBox
 
     var isPlaying:Boolean = false
@@ -74,13 +76,14 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     var volume_level:Int = 0
     var volume_max_level:Int = 0
     var playTime_millisecond:Int = 1000 * 60 /** 1분 **/
+    var totalPlayTime_millisecond:Int = 30000 * 60 /** 30분 **/
     var runningTime:Int = 0 /** 실제 음악이 나온 시간 **/
+    var totalRunningTime:Int = 0 /** 전체리스트 음악이 나온 시간 **/
 
     val handler:Handler by lazy {
         object : Handler(Looper.getMainLooper()){
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
-
                 /** groupType에 따라서 설정되는 시간값을 확인 한다. **/
                 /** 사용자 리스트도 시간 설정을 해야 하는가?? **/
                 if(msg.what == 0){
@@ -88,39 +91,47 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                         /** 초기화 **/
                         if(!isPause) {
                             runningTime = 0
-
-                            if (!chkLoop.isChecked) {
+//                            if (!chkLoop.isChecked) {
                                 pgPlayTime.progress = 0
                                 tvRunningTime.text =
                                     "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
-                            } else {
-                                tvRunningTime.text = "${timeFormat(runningTime)} / -"
-                            }
+//                            } else {
+//                                tvRunningTime.text = "${timeFormat(runningTime)} / -"
+//                            }
                         }
-
                         handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
+                    } else {
+                        runningTime = 0
+                        totalRunningTime = 0
                     }
                 } else if(msg.what == 1) {
                     if(isPlaying){
                         runningTime += 1000
-                        if(chkLoop.isChecked){
-                            if(runningTime == 60000) {
-                                var item = playerViewModel.playList.value!![playerViewModel.selectPos]
-                                saveExercise(item)
-                            }
-                            tvRunningTime.text = "${timeFormat(runningTime)} / -"
-                            handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
-                        } else {
+                        totalRunningTime += 1000
+//                        if(chkLoop.isChecked){
+//                            if(runningTime == 60000) {
+//                                var item = playerViewModel.playList.value!![playerViewModel.selectPos]
+//                                saveExercise(item)
+//                            }
+//                            tvRunningTime.text = "${timeFormat(runningTime)} / -"
+//                            handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
+//                        } else {
                             pgPlayTime.progress = runningTime
                             tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
-                            if (runningTime >= playTime_millisecond) {
-
+                            tvTotalTimeSetting.text = "${"전체 시간설정"} : ${timeFormat(totalRunningTime)} / ${timeFormat(totalPlayTime_millisecond)}"
+                            if (runningTime >= playTime_millisecond || totalRunningTime >= totalPlayTime_millisecond) {
                                 stop()
                                 var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                                 saveExercise(item)
 
-                                // 2022.03.05_han - 모든그룹 다음곡 재생하도록
-                                handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
+                                if(totalRunningTime >= totalPlayTime_millisecond) {
+//                                    Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
+                                    handler.sendEmptyMessage(HANDLER_WHAT_SETTING)
+                                } else {
+                                    // 2022.03.05_han - 모든그룹 다음곡 재생하도록
+                                    handler.sendEmptyMessage(HANDLER_WHAT_NEXT)
+//                                    totalRunningTime += 1000
+//                                    Toast.makeText(this@PlayerActivity, "TotalTime = "+totalRunningTime.toString(), Toast.LENGTH_SHORT).show()
 //                                if (playerViewModel.groupType == "C") {
 //                                    /** 음원 Next **/
 ////                                    Toast.makeText(this@PlayerActivity, "다음 음원 변경!!!", Toast.LENGTH_SHORT).show()
@@ -129,14 +140,21 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 ////                                    Toast.makeText(this@PlayerActivity, "음원종료!!!", Toast.LENGTH_SHORT).show()
 //                                    handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
 //                                }
+                                }
                             } else {
                                 handler.sendEmptyMessageDelayed(HANDLER_WHAT_PLAYING, 1000)
                             }
-                        }
+//                        }
                     }
                 } else if(msg.what == 2){
                     isPause = false
-                    playerViewModel.selectPos ++
+                    // 2022.04.03_han - 랜덤재생
+                    if(!chkLoop.isChecked) {
+                        playerViewModel.selectPos ++
+                    } else {
+                        val random = Random()
+                        playerViewModel.selectPos = random.nextInt(17)
+                    }
                     if(playerViewModel.selectPos >= playerViewModel.playList.value!!.size){
                         handler.sendEmptyMessage(HANDLER_WHAT_COMPLETE)
                     } else {
@@ -146,16 +164,12 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     }
                 } else if(msg.what == 3){
                     /** 음원리스트 모두 플레이 완료 **/
-                    // (참고코드) 2022.03.05_han - 랜덤재생
-//                    val random = Random()
-//                    playerViewModel.selectPos = random.nextInt(17)
                     // 2022.03.05_han - 모든그룹 다음곡 재생 무한반복
                     playerViewModel.selectPos = 0
                     var item = playerViewModel.playList.value!![playerViewModel.selectPos]
                     onPlay(item.musicTitle_kor, item.hertz)
                     handler.sendEmptyMessage(HANDLER_WHAT_SETTING)
                 }
-
             }
         }
     }
@@ -206,28 +220,33 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         btnTimeSetting = findViewById(R.id.btnPlay_TimeSetting)
         btnTimeSetting.setOnClickListener(this)
 
+        btnTotalTimeSetting = findViewById(R.id.btnPlay_TotalTimeSetting)
+        btnTotalTimeSetting.setOnClickListener(this)
+
         pgPlayTime = findViewById(R.id.pbPlay_PlayTime)
         tvRunningTime = findViewById(R.id.tvPlay_RunningTime)
 
-        chkLoop = findViewById(R.id.cbnPlay_loop)
-        chkLoop.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
-                stop()
-                runningTime = 0
-                if (isChecked) {
-                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_999999)
-                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
-                    pgPlayTime.progress = 1
-                    pgPlayTime.max = 1
-                } else {
-                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_99ccff)
-                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
-                    pgPlayTime.progress = 0
-                    pgPlayTime.max = playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime * 60 * 1000
-                }
-            }
+        tvTotalTimeSetting = findViewById(R.id.btnPlay_TotalTimeSetting)
 
-        })
+        chkLoop = findViewById(R.id.cbnPlay_loop)
+//        chkLoop.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
+//            override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
+//                stop()
+//                runningTime = 0
+//                if (isChecked) {
+//                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_999999)
+//                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
+//                    pgPlayTime.progress = 1
+//                    pgPlayTime.max = 1
+//                } else {
+//                    btnTimeSetting.background = ContextCompat.getDrawable(this@PlayerActivity, R.drawable.bg_radius3_99ccff)
+//                    btnTimeSetting.setTextColor(ContextCompat.getColor(this@PlayerActivity, R.color.color_font_black))
+//                    pgPlayTime.progress = 0
+//                    pgPlayTime.max = playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime * 60 * 1000
+//                }
+//            }
+//
+//        })
 
         seekVolume.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, position: Int, fromUser: Boolean) {
@@ -255,7 +274,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             getPlayTitle(it.get(playerViewModel.selectPos).musicTitle_kor, it.get(playerViewModel.selectPos).hertz)
         })
 
-        openGuidePopup()
+//        openGuidePopup()
     }
 
 
@@ -353,10 +372,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                 var titleName = playerViewModel.playList.value!!.get(playerViewModel.selectPos).musicTitle_kor
                 var hertz = playerViewModel.playList.value!!.get(playerViewModel.selectPos).hertz
 
-                if(!chkLoop.isChecked) {
+//                if(!chkLoop.isChecked) {
                     playTime_millisecond = 1000 * playerViewModel.playList.value!!.get(playerViewModel.selectPos).playTime
                     pgPlayTime.max = playTime_millisecond
-                }
+//                }
 
                 var rawId = resources.getIdentifier(getRawName(titleName, hertz), "raw", "com.exercise.music_exercise")
                 mNextPlayer = MediaPlayer.create(this, rawId)
@@ -470,9 +489,9 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             }
 
             R.id.btnPlay_TimeSetting -> {
-                if (chkLoop.isChecked) {
-                    Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_LONG).show()
-                } else {
+//                if (chkLoop.isChecked) {
+//                    Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_LONG).show()
+//                } else {
                     var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
                     bottomDialogItem.put("1초", "1")
                     bottomDialogItem.put("5초", "5")
@@ -513,13 +532,68 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                             }
 
                         })
-                }
+//                }
             }
+
+            R.id.btnPlay_TotalTimeSetting -> {
+//                if (chkLoop.isChecked) {
+//                    Toast.makeText(this, "무한반복이 설정 되어 있을 경우 시간 설정이 불가능합니다.", Toast.LENGTH_LONG).show()
+//                } else {
+                    var bottomDialogItem: LinkedHashMap<String, String> = LinkedHashMap()
+                    bottomDialogItem.put("10초", "10")
+                    bottomDialogItem.put("15초", "15")
+                    bottomDialogItem.put("5분", "300")
+                    bottomDialogItem.put("30분", "1800")
+                    bottomDialogItem.put("1시간", "3600")
+                    bottomDialogItem.put("2시간", "7200")
+
+//                    var minute: Int = (playTime_millisecond / 1000) / 60
+//                    var second: Int = (playTime_millisecond / 1000) % 60
+//
+//                    DialogUtils.showTimePicker(supportFragmentManager, minute, second, "취소", "확인", object : CustomTimePickerDialog.onTimePickerListener {
+//                        override fun onTimePickerCallback(hour: Int, minute: Int, second: Int) {
+//                            Log.d("kamuel", "onTimePickerCallback ::: ${hour} : ${minute} : ${second}")
+//
+//                            Toast.makeText(this@PlayerActivity, "${minute}분 ${second}초 설정되었습니다.", Toast.LENGTH_SHORT).show()
+//                            var playTime = minute * 60 + second
+//                            playerViewModel.changePlayTime(playTime)
+//                            setMilliseconds(playTime)
+//                            runningTime = 0
+//                        }
+//
+//                    })
+                    stop()
+                    DialogUtils.showBottomSheetDialog(
+                            this,
+                            bottomDialogItem,
+                            "닫기",
+                            R.color.color_font_black,
+                            true,
+                            object : DialogUtils.OnBottomSheetSelectedListener {
+                                override fun onSelected(index: Int, text: String, value: String) {
+                                    /** delete **/
+                                    Toast.makeText(this@PlayerActivity, value+"분 설정되었습니다.", Toast.LENGTH_SHORT)
+//                                    .show()
+//                                    playerViewModel.changePlayTime(value.toInt())
+                                    setMilliseconds2(value.toInt())
+                                    runningTime = 0
+                                    totalRunningTime = 0
+                                }
+
+                            })
+//                }
+            }
+
+
         }
     }
 
     fun setMilliseconds(second: Int){
         playTime_millisecond = 1000 * second
+    }
+
+    fun setMilliseconds2(second: Int){
+        totalPlayTime_millisecond = 1000 * second
     }
 
     fun onMusicPause() {
