@@ -18,7 +18,7 @@ class HolderSettingItem(var context:Context, itemView:View, var listener:HolderS
     }
     fun setSelectExercise(data: List_DefaultItemDataModel, position:Int, max:Int){
         with(itemView){
-            var musicHertz = "원본"
+            var musicHertz = "0KHz"
 
             if(data.hertz != 0)
                 musicHertz = "${data.hertz}KHz"

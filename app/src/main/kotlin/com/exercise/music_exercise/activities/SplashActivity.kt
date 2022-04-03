@@ -68,12 +68,12 @@ class SplashActivity : AppCompatActivity() {
             groupList.add(List_HeaderDataModel("바람2", "바람2", "wind_02", "D"))
             groupList.add(List_HeaderDataModel("파도1", "파도1", "wave_01", "D"))
             groupList.add(List_HeaderDataModel("파도2", "파도2", "wave_02", "D"))
-            groupList.add(List_HeaderDataModel("화이트노이즈1", "화이트노이즈1", "pink_noise", "D"))
-            groupList.add(List_HeaderDataModel("화이트노이즈2", "화이트노이즈2", "white_noise", "D"))
-            groupList.add(List_HeaderDataModel("치료음악1", "치료음악1", "music_01", "D"))
-            groupList.add(List_HeaderDataModel("치료음악2", "치료음악2", "music_02", "D"))
-            groupList.add(List_HeaderDataModel("치료음악3", "치료음악3", "music_03", "D"))
-            groupList.add(List_HeaderDataModel("원본", "원본", "", "CD"))
+//            groupList.add(List_HeaderDataModel("화이트노이즈1", "화이트노이즈1", "pink_noise", "D"))
+//            groupList.add(List_HeaderDataModel("화이트노이즈2", "화이트노이즈2", "white_noise", "D"))
+//            groupList.add(List_HeaderDataModel("치료음악1", "치료음악1", "music_01", "D"))
+//            groupList.add(List_HeaderDataModel("치료음악2", "치료음악2", "music_02", "D"))
+//            groupList.add(List_HeaderDataModel("치료음악3", "치료음악3", "music_03", "D"))
+            groupList.add(List_HeaderDataModel("0KHz", "0KHz", "", "CD"))
             groupList.add(List_HeaderDataModel("2KHz", "2KHz", "", "CD"))
             groupList.add(List_HeaderDataModel("4KHz", "4KHz", "", "CD"))
             groupList.add(List_HeaderDataModel("8KHz", "8KHz", "", "CD"))
@@ -163,7 +163,7 @@ class SplashActivity : AppCompatActivity() {
                                 var parentImage = it.image_path
 
                                 var hertz = 0
-                                if (parentTitle_kor == "원본") {
+                                if (parentTitle_kor == "0KHz") {
                                     hertz = 0
                                 } else if (parentTitle_kor == "2KHz") {
                                     hertz = 2

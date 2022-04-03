@@ -17,7 +17,7 @@ class MusicDetailItemHolder(itemView: View, var listener : onDetailItemListener)
 
     fun setDetailItem(itemData:List_DefaultItemDataModel, position:Int, type:String){
         with(itemView){
-            tvMusicDetailItem_Title.text = String.format("%s\n(%s)", itemData.musicTitle_kor, if(itemData.hertz == 0)  "원본" else "${itemData.hertz}KHz".toString())
+            tvMusicDetailItem_Title.text = String.format("%s\n(%s)", itemData.musicTitle_kor, if(itemData.hertz == 0)  "0KHz" else "${itemData.hertz}KHz".toString())
             ViewUtils.loadImage(itemData.image_path, null).into(ivMusicDetailItem_Image)
             clMusicDetailItem_Root.setTag(R.id.list_data, itemData)
             clMusicDetailItem_Root.setTag(R.id.list_position, position)

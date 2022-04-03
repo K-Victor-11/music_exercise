@@ -662,7 +662,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         var strHertz:String = ""
         when(hertz){
             0 -> {
-                strHertz = "원본"
+                strHertz = "0KHz"
             }
             else ->{
                 strHertz = "${hertz}KHz"

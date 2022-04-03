@@ -12,7 +12,7 @@ class CompleteItemHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
             var strHertz:String = ""
             when(data.hertz){
                 0 ->{
-                    strHertz = "(원본)"
+                    strHertz = "(0KHz)"
                 }
                 else ->{
                     strHertz = "(${data.hertz}KHz)"
