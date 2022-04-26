@@ -56,6 +56,13 @@ class MainActivity:BaseActivity(), View.OnClickListener, HomeFragment.onHomeFrag
             drawerLayout.openDrawer(nav_view)
         }
 
+        // 20220424_han : 앱시작시 open drawer
+        drawerLayout.openDrawer(nav_view)
+
+        // 20220424_han : 앱시작시 open guide/settings
+        var intent: Intent = Intent(this, GuidePopupActivity::class.java)
+        startActivity(intent)
+
         nav_view.setNavigationItemSelectedListener {
 
             when (it.itemId) {
@@ -69,6 +76,16 @@ class MainActivity:BaseActivity(), View.OnClickListener, HomeFragment.onHomeFrag
 
                 R.id.nav_complete -> {
                     setMenu(resources.getString(R.string.menu_complete_list), 3)
+                }
+
+                R.id.app_guide ->{
+                    var intent: Intent = Intent(this, GuidePopupActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.nav_info ->{
+                    var intent: Intent = Intent(this, InfoActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.nav_kakao ->{
@@ -118,7 +135,6 @@ class MainActivity:BaseActivity(), View.OnClickListener, HomeFragment.onHomeFrag
                     if (isOk) finish()
                 }
             })
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

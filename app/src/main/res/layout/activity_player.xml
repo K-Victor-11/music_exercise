@@ -75,12 +75,23 @@
         app:srcCompat="@drawable/ic_play" />
 
     <Button
+        android:id="@+id/btn_Guide"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/colorAccent"
+        android:text="사용방법"
+        android:textColor="@color/color_font_black"
+        app:layout_constraintBottom_toTopOf="@id/btnPlay_TimeSetting"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/btnPlay_TimeSetting"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:background="@color/color_99ccff"
-        android:text="현재곡 시간설정"
+        android:text="현재곡 재생시간 설정"
         android:textColor="@color/color_font_black"
         app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
         app:layout_constraintStart_toStartOf="parent" />
@@ -91,7 +102,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="10dp"
         android:background="@color/color_D8BFD8"
-        android:text="전체 시간설정"
+        android:text="전체리스트 재생시간 설정"
         android:textColor="@color/color_font_black"
         app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
         app:layout_constraintEnd_toEndOf="parent" />

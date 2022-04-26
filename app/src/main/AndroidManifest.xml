@@ -35,6 +35,10 @@
             android:theme="@style/Theme.Music_exercise.NoActionBar"/>
         <activity android:name=".activities.GuidePopupActivity"
             android:theme="@style/guideActivity"/>
+        <activity android:name=".activities.InfoActivity"
+            android:theme="@style/Theme.Music_exercise.NoActionBar"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

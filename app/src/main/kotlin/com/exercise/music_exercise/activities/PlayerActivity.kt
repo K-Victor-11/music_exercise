@@ -55,6 +55,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
     lateinit var ivPlayer:ImageView
     lateinit var ivBackground :ImageView
     lateinit var seekVolume : SeekBar
+    lateinit var btnGuide : Button
     lateinit var btnTimeSetting: Button
     lateinit var btnTotalTimeSetting: Button
     lateinit var pgPlayTime:ProgressBar
@@ -118,7 +119,7 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
 //                        } else {
                             pgPlayTime.progress = runningTime
                             tvRunningTime.text = "${timeFormat(runningTime)} / ${timeFormat(playTime_millisecond)}"
-                            tvTotalTimeSetting.text = "${"전체 시간설정"} : ${timeFormat(totalRunningTime)} / ${timeFormat(totalPlayTime_millisecond)}"
+                            tvTotalTimeSetting.text = "${"전체 재생시간 설정"} : ${timeFormat(totalRunningTime)} / ${timeFormat(totalPlayTime_millisecond)}"
                             if (runningTime >= playTime_millisecond || totalRunningTime >= totalPlayTime_millisecond) {
                                 stop()
                                 var item = playerViewModel.playList.value!![playerViewModel.selectPos]
@@ -216,6 +217,9 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
         seekVolume = findViewById(R.id.skPlay_Sound)
         seekVolume.max = volume_max_level
         seekVolume.setProgress(volume_level)
+
+        btnGuide = findViewById(R.id.btn_Guide)
+        btnGuide.setOnClickListener(this)
 
         btnTimeSetting = findViewById(R.id.btnPlay_TimeSetting)
         btnTimeSetting.setOnClickListener(this)
@@ -486,6 +490,10 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
                     onPlay(item.musicTitle_kor, item.hertz)
                     handler.sendEmptyMessage(HANDLER_WHAT_SETTING)
                 }
+            }
+
+            R.id.btn_Guide -> {
+                openGuidePopup()
             }
 
             R.id.btnPlay_TimeSetting -> {

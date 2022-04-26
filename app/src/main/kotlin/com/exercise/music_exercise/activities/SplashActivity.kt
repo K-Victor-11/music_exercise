@@ -49,7 +49,7 @@ class SplashActivity : AppCompatActivity() {
             var intent: Intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2000)
+        }, 3000)
     }
 
     fun init() {
@@ -148,7 +148,7 @@ class SplashActivity : AppCompatActivity() {
                                         0,
                                         parentIdx,
                                         listDefaultitemdatamodel.idx,
-                                        1,
+                                        5,
                                         index
                                     )
                                 )
@@ -180,7 +180,7 @@ class SplashActivity : AppCompatActivity() {
                                                 0,
                                                 parentIdx,
                                                 listDefaultitemdatamodel.idx,
-                                                1,
+                                                5,
                                                 index
                                             )
                                         )
