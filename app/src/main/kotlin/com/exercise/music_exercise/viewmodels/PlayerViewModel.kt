@@ -29,7 +29,11 @@ class PlayerViewModel(val application: Application) : ViewModel() {
     }
 
     fun changePlayTime(playTime:Int){
-        _playList.value?.get(selectPos)!!.playTime = playTime
+        // 2022.05.01_han - 현재곡 재생시간설정을 전체 개별재생시간설정이 한번에 변경되도록 수정
+//        _playList.value?.get(selectPos)!!.playTime = playTime
+        _playList.value?.forEachIndexed { index, listDefaultitemdatamodel ->
+            listDefaultitemdatamodel.playTime = playTime
+        }
     }
 
     fun saveExercise(reportData:PlayReportDataModel){
