@@ -91,7 +91,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:background="@color/color_99ccff"
-        android:text="현재곡 재생시간 설정"
+        android:text="개별음향 재생시간 설정"
         android:textColor="@color/color_font_black"
         app:layout_constraintBottom_toTopOf="@id/clPlay_SettingArea"
         app:layout_constraintStart_toStartOf="parent" />
