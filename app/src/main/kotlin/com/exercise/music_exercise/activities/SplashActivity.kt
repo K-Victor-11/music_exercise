@@ -68,15 +68,21 @@ class SplashActivity : AppCompatActivity() {
             groupList.add(List_HeaderDataModel("바람2", "바람2", "wind_02", "D"))
             groupList.add(List_HeaderDataModel("파도1", "파도1", "wave_01", "D"))
             groupList.add(List_HeaderDataModel("파도2", "파도2", "wave_02", "D"))
-//            groupList.add(List_HeaderDataModel("화이트노이즈1", "화이트노이즈1", "pink_noise", "D"))
-//            groupList.add(List_HeaderDataModel("화이트노이즈2", "화이트노이즈2", "white_noise", "D"))
+            groupList.add(List_HeaderDataModel("화이트노이즈1", "화이트노이즈1", "pink_noise", "D"))
+            groupList.add(List_HeaderDataModel("화이트노이즈2", "화이트노이즈2", "white_noise", "D"))
 //            groupList.add(List_HeaderDataModel("치료음악1", "치료음악1", "music_01", "D"))
 //            groupList.add(List_HeaderDataModel("치료음악2", "치료음악2", "music_02", "D"))
 //            groupList.add(List_HeaderDataModel("치료음악3", "치료음악3", "music_03", "D"))
+            groupList.add(List_HeaderDataModel("개구리소리", "개구리소리", "frog", "E"))
+            groupList.add(List_HeaderDataModel("새소리", "새소리", "bird", "E"))
+            groupList.add(List_HeaderDataModel("발자국소리", "발자국소리", "footprint", "E"))
+            groupList.add(List_HeaderDataModel("숲속소리", "숲속소리", "forest", "E"))
+            groupList.add(List_HeaderDataModel("계곡물소리", "계곡물소리", "valley", "E"))
             groupList.add(List_HeaderDataModel("0KHz", "0KHz", "", "CD"))
             groupList.add(List_HeaderDataModel("2KHz", "2KHz", "", "CD"))
             groupList.add(List_HeaderDataModel("4KHz", "4KHz", "", "CD"))
             groupList.add(List_HeaderDataModel("8KHz", "8KHz", "", "CD"))
+            groupList.add(List_HeaderDataModel("자연의소리", "자연의소리", "", "CD"))
 
             var musicDao = AppDataBase.getInstance(this, callback).musicListDao()
             var musicDefault = AppDataBase.getInstance(this, callback).musicListDefaultDetailDao()
@@ -127,6 +133,22 @@ class SplashActivity : AppCompatActivity() {
                             8
                         )
                     )
+                } else if(musicListDataModel.customType == "E"){
+                    /** 개구리 소리 **/
+                    musicDefault.insert(
+                            List_DefaultItemDataModel(
+                                    0,
+                                    "",
+                                    musicListDataModel.listTitle_kor,
+                                    musicListDataModel.listTitle_eng,
+                                    "${musicListDataModel.image_path}_01",
+                                    -1
+                            )
+                    )
+                    /** 계곡물 소리 **/
+                    /** 발자국 소리 **/
+                    /** 새소리 **/
+                    /** 숲속소리 **/
                 }
             }
 
@@ -154,7 +176,23 @@ class SplashActivity : AppCompatActivity() {
                                 )
                             }
                         })
-                    } else{
+                    } else if (parentType == "E") {
+                        Log.d("kamuel", "DefaultTitleName ::: ${parentTitle_kor}")
+                        musicDefault.getDefaultItemList(parentTitle_kor).observe(this, Observer {
+                            Log.d("kamuel", "DefaultItemListSize ::: ${it.size}")
+                            it.forEachIndexed { index, listDefaultitemdatamodel ->
+                                musicDetailDao.insert(
+                                        List_ItemsDataModel(
+                                                0,
+                                                parentIdx,
+                                                listDefaultitemdatamodel.idx,
+                                                5,
+                                                index
+                                        )
+                                )
+                            }
+                        })
+                    } else {
                         musicDao.getGroupListForCustom(parentTitle_kor)?.observe(this, Observer {
                             it.forEach {
                                 var parentIdx = it.idx
@@ -171,6 +209,8 @@ class SplashActivity : AppCompatActivity() {
                                     hertz = 4
                                 } else if (parentTitle_kor == "8KHz") {
                                     hertz = 8
+                                } else if (parentTitle_kor == "자연의소리") {
+                                    hertz = -1
                                 }
 
                                 musicDefault.getDefaultHertzList(hertz).observe(this, Observer {

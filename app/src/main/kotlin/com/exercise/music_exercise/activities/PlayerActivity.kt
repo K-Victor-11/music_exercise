@@ -464,6 +464,26 @@ class PlayerActivity : BaseActivity(), View.OnClickListener{
             "치료음악3" -> {
                 strReturn = "music_03"
             }
+
+            "개구리소리" -> {
+                strReturn = "frog"
+            }
+
+            "새소리" -> {
+                strReturn = "bird"
+            }
+
+            "발자국소리" -> {
+                strReturn = "footprint"
+            }
+
+            "숲속소리" -> {
+                strReturn = "forest"
+            }
+
+            "계곡물소리" -> {
+                strReturn = "valley"
+            }
         }
 
         if (hertz == 0) {

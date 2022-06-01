@@ -60,8 +60,8 @@ class MainActivity:BaseActivity(), View.OnClickListener, HomeFragment.onHomeFrag
         drawerLayout.openDrawer(nav_view)
 
         // 20220424_han : 앱시작시 open guide/settings
-        var intent: Intent = Intent(this, GuidePopupActivity::class.java)
-        startActivity(intent)
+//        var intent: Intent = Intent(this, GuidePopupActivity::class.java)
+//        startActivity(intent)
 
         nav_view.setNavigationItemSelectedListener {
 
